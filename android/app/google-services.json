@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "293543549906",
+    "firebase_url": "https://dayly-77869.firebaseio.com",
+    "project_id": "dayly-77869",
+    "storage_bucket": "dayly-77869.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293543549906:android:d0acaad8ab09d8b6d9460b",
+        "android_client_info": {
+          "package_name": "com.yungweezy.dayly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "293543549906-du5vrvqsoc2o4knoc1390nr77ch8i0qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yungweezy.dayly",
+            "certificate_hash": "96abdc7aae6c101e5ed1a8cacbe2f087a4ff61d8"
+          }
+        },
+        {
+          "client_id": "293543549906-9djiiqmmo6g13gvuutl6p37u9cmv86pk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5JrB2ZUuF6nM4jzkpICdWI_wcMEvC8r4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "293543549906-9djiiqmmo6g13gvuutl6p37u9cmv86pk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
