@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/components/rounded-button.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _LandingState extends State<Landing> {
                 ],
               )
             ),
-            SizedBox(height: 20.0),
+            SizedBox(height: 10.0),
             Center(
               child: Image.asset(
                 'assets/images/landing-main.png',
@@ -53,7 +54,7 @@ class _LandingState extends State<Landing> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Hello there, \nWelcome back!',
+                      'Hey there, \nWelcome to Dayly!',
                       style: TextStyle(
                         fontSize: 30,
                         color: Colors.black,
@@ -64,52 +65,24 @@ class _LandingState extends State<Landing> {
                 )
               ),
             ),
-            SizedBox(height: 5.0),
+            SizedBox(height: 15.0),
             RoundedButton(
               text: "LOGIN",
               color: primaryPurple,
-              press: () {},
+              press: () {
+                Navigator.pushNamed(context, '/login');
+              },
             ),
             RoundedButton(
               text: "SIGN UP",
               color: primaryLightColor,
-              textColor: Colors.black,
-              press: () {},
+              textColor: primaryPurple,
+              press: () {
+                Navigator.pushNamed(context, '/signup');
+              },
             )
           ],
         )
-      ),
-    );
-  }
-}
-
-class RoundedButton extends StatelessWidget {
-  final String text;
-  final Function press;
-  final Color color, textColor;
-  
-  const RoundedButton({
-    Key key,
-    this.text,
-    this.press,
-    this.color,
-    this.textColor = Colors.white,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 5.0),
-      width: size.width * 0.8,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(29),
-        child: FlatButton(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-          color: color,
-          onPressed: press,
-          child: Text(text, style: TextStyle(color: textColor)),
-        ),
       ),
     );
   }

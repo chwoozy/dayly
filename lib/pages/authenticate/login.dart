@@ -1,14 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:dayly/components/constants.dart';
+import 'package:dayly/components/rounded-button.dart';
 import 'package:dayly/services/auth.dart';
+import 'package:flutter/material.dart';
 
-class Register extends StatefulWidget {
+class Login extends StatefulWidget {
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _LoginState createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
-  
+class _LoginState extends State<Login> {
+
   final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
 
@@ -17,14 +19,20 @@ class _RegisterState extends State<Register> {
   String password = '';
   String error = '';
 
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurpleAccent,
+      backgroundColor: primaryBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: primaryPurple,
         elevation: 0.0,
-        title: Text('Sign up to Dayly'),
+        title: Text(
+          'Login to Dayly',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          )
+        ),
       ),
       body: Container(
         padding:  EdgeInsets.symmetric(horizontal: 50.0, vertical: 20.0),
@@ -34,7 +42,7 @@ class _RegisterState extends State<Register> {
             children: <Widget>[
               SizedBox(height: 20.0,),
               TextFormField(
-                validator: (value) => value.isEmpty ?  'Enter an email' : null,
+                validator: (value) => value.isEmpty ?  'Enter a valid email address' : null,
                 onChanged: (value) {
                   setState(() {
                     email = value;
@@ -43,28 +51,24 @@ class _RegisterState extends State<Register> {
               ),
               SizedBox(height: 20.0,),
               TextFormField(
-                validator: (value) => value.length < 6 ?  'Enter a password of 7 characters or more' : null,
-                obscureText: true,
+                obscureText: true, 
                 onChanged: (value) {
                   setState(() {
                     password = value;
                   });
                 },
               ),
-              SizedBox(height: 20.0,),
-              RaisedButton(
-                color: Colors.deepPurple,
-                child: Text(
-                  'Register',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-                onPressed: () async {
+              SizedBox(height: 40.0,),
+              RoundedButton(
+                text: "LOGIN",
+                color: primaryPurple,
+                press: () async {
                   if(_formKey.currentState.validate()) {
-                    dynamic result = await _authService.registerWithEmailAndPassword(email, password);
+                    dynamic result = await _authService.loginWithEmailAndPassword(email, password);
                     if (result == null) {
-                      setState(() => error = 'Please use a valid email address');
+                      setState(() => error = 'Wrong email or password, please try again.');
+                    } else {
+                      Navigator.pop(context);
                     }
                   }
                 },
