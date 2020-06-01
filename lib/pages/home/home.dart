@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
 
-  final AuthService _auth = AuthService();
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       backgroundColor: primaryBackgroundColor,
       appBar: AppBar(
@@ -18,11 +19,27 @@ class Home extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.exit_to_app),
             onPressed: () async {
-              await _auth.signOut();
+              await _authService.signOut();
             },
           )
         ],
       ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 20.0),
+            Text(
+              'Welcome back, \nUser',
+              style: TextStyle(
+                fontWeight:  FontWeight.bold,
+                fontSize: 30.0,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+      )
     );
   }
 }
