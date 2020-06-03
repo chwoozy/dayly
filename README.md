@@ -9,7 +9,7 @@ A smart planner in the form of a mobile app.
 ## Timeline
 Mandatory events:
 - [x] 11-18 May - Liftoff
-- [ ] 1 June - Evaluation Milestone 1 - Ideation
+- [x] 1 June - Evaluation Milestone 1 - Ideation
 - [ ] 29 June - Evaluation Milestone 2 - Prototyping
 - [ ] 27 July - Evaluation Milestone 3 - Extension
 - [ ] 26 August - Splashdown - Refinement
