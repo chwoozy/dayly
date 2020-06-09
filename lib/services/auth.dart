@@ -23,7 +23,7 @@ class AuthService {
       AuthResult result = await _auth.signInAnonymously();
       FirebaseUser user = result.user;
       return _userFromFirebaseUser(user);
-    } catch(e) {
+    } catch(e) { 
       print(e.toString());
       return null;
     }
@@ -48,7 +48,7 @@ class AuthService {
       FirebaseUser user = result.user;
 
       // Create a new collection document for user with the uid
-      await DatabaseService(uid: user.uid).updateUserData(name, "student");
+      await DatabaseService(uid: user.uid).updateUserData(name, email, "student", '');
       return _userFromFirebaseUser(user);
     } catch(e) {
       print(e.toString());
