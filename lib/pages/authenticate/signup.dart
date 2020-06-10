@@ -20,6 +20,7 @@ class _SignUpState extends State<SignUp> {
   //Sign in details state
   String email = '';
   String password = '';
+  String name = '';
   String error = '';
 
   @override
@@ -65,13 +66,23 @@ class _SignUpState extends State<SignUp> {
                   },
                 ),
                 SizedBox(height: 20.0,),
+                TextFormField(
+                  decoration: authTextInputDecoration.copyWith(hintText: 'Name'),
+                  validator: (value) => value.length < 1 ?  'Name cannot be blank!' : null,
+                  onChanged: (value) {
+                    setState(() {
+                      name = value;
+                    });
+                  },
+                ),
+                SizedBox(height: 20.0,),
                 RoundedButton(
                   color: primaryPurple,
                   text: 'SIGN UP',
                   press: () async {
                     if(_formKey.currentState.validate()) {
-                      loading = true;
-                      dynamic result = await _authService.signUpWithEmailAndPassword(email, password);
+                      setState(() => loading = true);
+                      dynamic result = await _authService.signUpWithEmailAndPassword(email, password, name);
                       if (result == null) {
                         setState(() {
                           error = 'Email address is already in use!';

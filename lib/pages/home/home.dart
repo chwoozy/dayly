@@ -1,45 +1,58 @@
 import 'package:dayly/components/constants.dart';
-import 'package:dayly/services/auth.dart';
+import 'package:dayly/pages/home/calendar.dart';
+import 'package:dayly/pages/home/profile.dart';
+import 'package:dayly/pages/home/todo.dart';
 import 'package:flutter/material.dart';
+import 'package:dayly/services/database.dart';
+import 'package:provider/provider.dart';
+import 'package:dayly/pages/models/user.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
 
-  final AuthService _authService = AuthService();
+  final User user;
+  Home({ this.user });
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    Calendar(),
+    ToDo(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     
-    return Scaffold(
-      backgroundColor: primaryBackgroundColor,
-      appBar: AppBar(
-        title: Text('Your Profile'),
-        backgroundColor: primaryPurple,
-        elevation: 0.0,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.exit_to_app),
-            onPressed: () async {
-              await _authService.signOut();
-            },
-          )
-        ],
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 20.0),
-            Text(
-              'Welcome back, \nUser',
-              style: TextStyle(
-                fontWeight:  FontWeight.bold,
-                fontSize: 30.0,
-                color: Colors.black,
-              ),
-            ),
+    return StreamProvider<UserData>.value(
+      value: DatabaseService(uid: widget.user.uid).userData,
+      child: Scaffold(
+        backgroundColor: primaryBackgroundColor,
+        body: _children[_currentIndex],
+        bottomNavigationBar: CurvedNavigationBar(
+          height: 55,
+          index: _currentIndex,
+          backgroundColor: primaryBackgroundColor,
+          color: secondaryBackgroundColor,
+          items: <Widget>[
+            Icon(Icons.event, size: 30, color: primaryPurple),
+            Icon(Icons.assignment, size: 30, color: primaryPurple),
+            Icon(Icons.perm_identity, size: 30, color: primaryPurple),
           ],
-        ),
-      )
+          animationDuration: Duration(
+            milliseconds: 200,
+          ),
+          onTap: (index) {
+            //Handle button tap
+            setState( () => _currentIndex = index);
+          },
+        )
+      ),
     );
   }
 }
