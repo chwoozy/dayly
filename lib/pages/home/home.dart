@@ -1,44 +1,42 @@
 import 'package:dayly/components/constants.dart';
-import 'package:dayly/pages/profile/profile.dart';
-import 'package:dayly/services/auth.dart';
+import 'package:dayly/pages/home/calendar.dart';
+import 'package:dayly/pages/home/profile.dart';
+import 'package:dayly/pages/home/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/pages/models/user.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
 
-  final AuthService _authService = AuthService();
   final User user;
-
   Home({ this.user });
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+  int _currentIndex = 0;
+  final List<Widget> _children = [
+    Calendar(),
+    ToDo(),
+    Profile(),
+  ];
 
   @override
   Widget build(BuildContext context) {
     
     return StreamProvider<UserData>.value(
-      value: DatabaseService(uid: user.uid).userData,
+      value: DatabaseService(uid: widget.user.uid).userData,
       child: Scaffold(
         backgroundColor: primaryBackgroundColor,
-        // appBar: AppBar(
-        //   title: Text('Home'),
-        //   backgroundColor: primaryPurple,
-        //   elevation: 0.0,
-        //   actions: <Widget>[
-        //     IconButton(
-        //       padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //       icon: Icon(Icons.exit_to_app),
-        //       onPressed: () async {
-        //         await _authService.signOut();
-        //       },
-        //     )
-        //   ],
-        // ),
-        body: Profile(),
+        body: _children[_currentIndex],
         bottomNavigationBar: CurvedNavigationBar(
           height: 55,
-          index: 0,
+          index: _currentIndex,
           backgroundColor: primaryBackgroundColor,
           color: secondaryBackgroundColor,
           items: <Widget>[
@@ -51,6 +49,7 @@ class Home extends StatelessWidget {
           ),
           onTap: (index) {
             //Handle button tap
+            setState( () => _currentIndex = index);
           },
         )
       ),
