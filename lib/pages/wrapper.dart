@@ -9,12 +9,19 @@ class Wrapper extends StatelessWidget {
   Widget build(BuildContext context) {
 
      final user = Provider.of<User>(context);
-     print("Logged in with:" + user.toString());
+     
+     return FutureBuilder<User>(
+       future: Future.value(Provider.of<User>(context)),
+       builder: (context, snapshot) {
+         if (snapshot.hasData) {
+           print("Successfully logged in!");
+           return Home();
+         } else {
+           print("Trying to login...");
+           return Landing();
+         }
+       }
 
-    if (user == null) {
-      return Landing();
-    } else {
-      return Home(user: user);
-    }
+     );
   }
 }
