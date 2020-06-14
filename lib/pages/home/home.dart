@@ -11,7 +11,6 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
   int _currentIndex = 0;
   final List<Widget> _children = [
     Calendar(),
@@ -21,28 +20,26 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      backgroundColor: primaryBackgroundColor,
-      body: _children[_currentIndex],
-      bottomNavigationBar: CurvedNavigationBar(
-        height: 55,
-        index: _currentIndex,
         backgroundColor: primaryBackgroundColor,
-        color: secondaryBackgroundColor,
-        items: <Widget>[
-          Icon(Icons.event, size: 30, color: primaryPurple),
-          Icon(Icons.assignment, size: 30, color: primaryPurple),
-          Icon(Icons.perm_identity, size: 30, color: primaryPurple),
-        ],
-        animationDuration: Duration(
-          milliseconds: 200,
-        ),
-        onTap: (index) {
-          //Handle button tap
-          setState( () => _currentIndex = index);
-        },
-      )
-    );
+        body: _children[_currentIndex],
+        bottomNavigationBar: CurvedNavigationBar(
+          height: 55,
+          index: _currentIndex,
+          backgroundColor: primaryBackgroundColor,
+          color: secondaryBackgroundColor,
+          items: <Widget>[
+            Icon(Icons.event, size: 30, color: primaryPurple),
+            Icon(Icons.assignment, size: 30, color: primaryPurple),
+            Icon(Icons.perm_identity, size: 30, color: primaryPurple),
+          ],
+          animationDuration: Duration(
+            milliseconds: 200,
+          ),
+          onTap: (index) {
+            //Handle button tap
+            setState(() => _currentIndex = index);
+          },
+        ));
   }
 }
