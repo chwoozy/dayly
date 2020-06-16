@@ -2,6 +2,7 @@ import 'package:dayly/pages/authenticate/landing.dart';
 import 'package:dayly/pages/authenticate/signup.dart';
 import 'package:dayly/pages/authenticate/login.dart';
 import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/pages/todo/models/task_data.dart';
 import 'package:dayly/pages/wrapper.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +18,14 @@ class Dayly extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-          child: MaterialApp(
-            initialRoute: '/wrapper',
-            routes: {
-              '/landing': (context) => Landing(),
-              '/login': (context) => Login(),
-              '/signup': (context) => SignUp(),
-              '/wrapper': (context) => Wrapper(),
-            }
+      child: ChangeNotifierProvider(
+        create: (context) => TaskData(),
+        child: MaterialApp(initialRoute: '/wrapper', routes: {
+          '/landing': (context) => Landing(),
+          '/login': (context) => Login(),
+          '/signup': (context) => SignUp(),
+          '/wrapper': (context) => Wrapper(),
+        }),
       ),
     );
   }

@@ -2,8 +2,10 @@ import 'package:dayly/components/constants.dart';
 import 'package:dayly/pages/home/calendar.dart';
 import 'package:dayly/pages/profile/profile.dart';
 import 'package:dayly/pages/home/todo.dart';
+import 'package:dayly/pages/todo/screens/tasks_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:dayly/pages/todo/screens/tasks_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -14,7 +16,7 @@ class _HomeState extends State<Home> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     Calendar(),
-    ToDo(),
+    TasksScreen(),
     Profile(),
   ];
 
