@@ -7,21 +7,18 @@ import 'package:dayly/pages/models/user.dart';
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final _user = Provider.of<User>(context);
 
-     final user = Provider.of<User>(context);
-     
-     return FutureBuilder<User>(
-       future: Future.value(Provider.of<User>(context)),
-       builder: (context, snapshot) {
-         if (snapshot.hasData) {
-           print("Successfully logged in!");
-           return Home();
-         } else {
-           print("Trying to login...");
-           return Landing();
-         }
-       }
-
-     );
+    return FutureBuilder<User>(
+        future: Future.value(_user),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            print("Successfully logged in!");
+            return Home();
+          } else {
+            print("Trying to login...");
+            return Landing();
+          }
+        });
   }
 }
