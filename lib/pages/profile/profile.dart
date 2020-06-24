@@ -18,10 +18,10 @@ class _ProfileState extends State<Profile> {
   final _formKey = GlobalKey<FormState>();
 
   // Form States
-  String _name = '';
+  String _displayName = '';
   String _email = '';
   String _uid = '';
-  String _imageUrl = '';
+  String _photoUrl = '';
   bool loading = false;
   bool updating = false;
   File _uploadedImage;
@@ -40,8 +40,8 @@ class _ProfileState extends State<Profile> {
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_uploadedImage);
     StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
     print('Upload Complete');
-    _imageUrl = await taskSnapshot.ref.getDownloadURL();
-    print(_imageUrl);
+    _photoUrl = await taskSnapshot.ref.getDownloadURL();
+    print(_photoUrl);
   }
 
   @override
@@ -54,10 +54,10 @@ class _ProfileState extends State<Profile> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             // Initialise Variables
-            _name = snapshot.data.name;
+            _displayName = snapshot.data.displayName;
             _email = snapshot.data.email;
             _uid = snapshot.data.uid;
-            _imageUrl = snapshot.data.imageUrl;
+            _photoUrl = snapshot.data.photoUrl;
 
             return loading
                 ? Loading()
@@ -98,10 +98,10 @@ class _ProfileState extends State<Profile> {
                                           image: DecorationImage(
                                             image: _uploadedImage != null
                                                 ? FileImage(_uploadedImage)
-                                                : _imageUrl == ''
+                                                : _photoUrl == ''
                                                     ? AssetImage(
                                                         'assets/images/avatar.png')
-                                                    : NetworkImage(_imageUrl),
+                                                    : NetworkImage(_photoUrl),
                                             fit: BoxFit.fill,
                                           ),
                                           shape: BoxShape.circle,
@@ -136,7 +136,7 @@ class _ProfileState extends State<Profile> {
                             ),
                             // SizedBox(height: 10.0,),
                             Center(
-                              child: Text(_name,
+                              child: Text(_displayName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 30,
@@ -161,23 +161,12 @@ class _ProfileState extends State<Profile> {
                                             fontSize: 13,
                                           ),
                                         ),
-                                        TextFormField(
-                                          initialValue: _email,
+                                        Text(
+                                          _email,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 20,
-                                          ),
-                                          validator: (value) => value.isEmpty
-                                              ? 'Enter a valid email address'
-                                              : null,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              _email = value;
-                                            });
-                                          },
-                                          decoration: InputDecoration(
-                                            enabledBorder: InputBorder.none,
-                                            focusedBorder: InputBorder.none,
+                                            height: 2,
                                           ),
                                         ),
                                         SizedBox(height: 10),
@@ -216,7 +205,7 @@ class _ProfileState extends State<Profile> {
                             Center(
                               child: RoundedButton(
                                 color: primaryPurple,
-                                text: 'Edit Profile',
+                                text: 'Save Changes',
                                 press: () async {
                                   print(_email);
                                   if (_formKey.currentState.validate()) {
@@ -228,12 +217,7 @@ class _ProfileState extends State<Profile> {
                                     }
                                     DatabaseService(uid: _uid)
                                         .updateUserData(
-                                            _name,
-                                            _email == ''
-                                                ? snapshot.data.email
-                                                : _email,
-                                            snapshot.data.type,
-                                            _imageUrl)
+                                            _email, _displayName, _photoUrl)
                                         .whenComplete(() async {
                                       setState(() {
                                         loading = false;

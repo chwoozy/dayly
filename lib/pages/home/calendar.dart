@@ -8,7 +8,6 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
-
   final AuthService _authService = AuthService();
 
   @override
@@ -24,7 +23,7 @@ class _CalendarState extends State<Calendar> {
             padding: EdgeInsets.symmetric(horizontal: 20.0),
             icon: Icon(Icons.exit_to_app),
             onPressed: () async {
-              await _authService.signOut();
+              await _authService.signOutGoogle();
             },
           )
         ],

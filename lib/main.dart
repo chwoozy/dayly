@@ -17,15 +17,10 @@ class Dayly extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-          child: MaterialApp(
-            initialRoute: '/wrapper',
-            routes: {
-              '/landing': (context) => Landing(),
-              '/login': (context) => Login(),
-              '/signup': (context) => SignUp(),
-              '/wrapper': (context) => Wrapper(),
-            }
-      ),
+      child: MaterialApp(initialRoute: '/wrapper', routes: {
+        '/landing': (context) => Landing(),
+        '/wrapper': (context) => Wrapper(),
+      }),
     );
   }
 }
