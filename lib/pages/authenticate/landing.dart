@@ -71,14 +71,6 @@ class _LandingState extends State<Landing> {
                   // Navigator.pushNamed(context, '/login');
                 },
               ),
-              RoundedButton(
-                text: "SIGN UP",
-                color: primaryLightColor,
-                textColor: primaryPurple,
-                press: () {
-                  Navigator.pushNamed(context, '/signup');
-                },
-              )
             ],
           )),
     );
