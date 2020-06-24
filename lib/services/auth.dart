@@ -11,7 +11,6 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
     CalendarApi.CalendarScope,
   ]);
-  Map<String, String> _authHeaders;
 
   // User Object from FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -34,7 +33,7 @@ class AuthService {
     final headers = await googleSignInAccount.authHeaders;
     final httpClient = GoogleHttpClient(headers);
     var calendar = CalendarApi(httpClient);
-    DateTime firstDayOfMonth = DateTime.;
+    DateTime firstDayOfMonth = Utils.firstDayOfMonth(DateTime.now());
     DateTime lastDayOfMonth = Utils.lastDayOfMonth(DateTime.now());
     var calEvents = calendar.events.list("primary",
         timeMax: lastDayOfMonth.toUtc(), timeMin: firstDayOfMonth.toUtc());
@@ -71,10 +70,6 @@ class AuthService {
           .updateUserData(user.email, user.displayName, user.photoUrl);
       print("First-time sign up with Google success!");
     }
-
-    print("Getting Auth Headers...");
-    _authHeaders = await googleSignInAccount.authHeaders;
-    print("Retrieved Auth Headers!");
 
     return 'Sign in with google succeeded: $user';
   }
