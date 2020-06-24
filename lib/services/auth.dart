@@ -1,11 +1,17 @@
+import 'package:date_utils/date_utils.dart';
 import 'package:dayly/pages/models/user.dart';
 import 'package:dayly/services/database.dart';
+import 'package:dayly/services/googlehttpclient.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:googleapis/calendar/v3.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: <String>[
+    CalendarApi.CalendarScope,
+  ]);
+  Map<String, String> _authHeaders;
 
   // User Object from FirebaseUser
   User _userFromFirebaseUser(FirebaseUser user) {
@@ -16,6 +22,26 @@ class AuthService {
   Stream<User> get user {
     return _auth.onAuthStateChanged
         .map((FirebaseUser user) => _userFromFirebaseUser(user));
+  }
+
+  Future<FirebaseUser> get authUser {
+    return _auth.currentUser();
+  }
+
+  Future getEvents() async {
+    final GoogleSignInAccount googleSignInAccount =
+        await _googleSignIn.signIn();
+    final headers = await googleSignInAccount.authHeaders;
+    final httpClient = GoogleHttpClient(headers);
+    var calendar = CalendarApi(httpClient);
+    DateTime firstDayOfMonth = DateTime.;
+    DateTime lastDayOfMonth = Utils.lastDayOfMonth(DateTime.now());
+    var calEvents = calendar.events.list("primary",
+        timeMax: lastDayOfMonth.toUtc(), timeMin: firstDayOfMonth.toUtc());
+    calEvents.then((events) => {
+          events.items.forEach((value) => print(
+              "EVENT ${value.summary}, from ${value.start.dateTime.toLocal()} to ${value.end.dateTime.toLocal()}"))
+        });
   }
 
   // Sign In with Google
@@ -43,8 +69,12 @@ class AuthService {
     if (!(await DatabaseService(uid: user.uid).checkUser).exists) {
       await DatabaseService(uid: user.uid)
           .updateUserData(user.email, user.displayName, user.photoUrl);
-      print("Completed!!");
+      print("First-time sign up with Google success!");
     }
+
+    print("Getting Auth Headers...");
+    _authHeaders = await googleSignInAccount.authHeaders;
+    print("Retrieved Auth Headers!");
 
     return 'Sign in with google succeeded: $user';
   }
@@ -90,7 +120,7 @@ class AuthService {
   // }
 
   // Sign Out with Google
-  void signOutGoogle() async {
+  Future signOutGoogle() async {
     try {
       await _auth.signOut();
       print('FirebaseAuth: Successfully logged out!');

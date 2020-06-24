@@ -1,6 +1,9 @@
+import 'package:date_utils/date_utils.dart';
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/services/auth.dart';
+import 'package:dayly/services/googlehttpclient.dart';
 import 'package:flutter/material.dart';
+import 'package:googleapis/calendar/v3.dart';
 
 class Calendar extends StatefulWidget {
   @override
@@ -27,6 +30,14 @@ class _CalendarState extends State<Calendar> {
             },
           )
         ],
+      ),
+      body: Center(
+        child: FlatButton(
+          child: Text('Retrieve Calendar'),
+          onPressed: () {
+            _authService.getEvents();
+          },
+        ),
       ),
     );
   }
