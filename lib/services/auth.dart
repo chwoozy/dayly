@@ -3,8 +3,8 @@ import 'package:dayly/pages/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/services/googlehttpclient.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:googleapis/calendar/v3.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
