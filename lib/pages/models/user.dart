@@ -1,19 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-
 class User {
   final String uid;
 
-  User({ this.uid });
+  User({this.uid});
 }
 
-class UserData extends ChangeNotifier {
+class UserData {
   final String uid;
   final String email;
-  final String name;
-  final String type;
-  final String imageUrl;
+  final String displayName;
+  final String photoUrl;
 
-  UserData({ this.uid, this.email, this.name, this.type, this.imageUrl});
-
+  UserData({this.uid, this.email, this.displayName, this.photoUrl});
 }

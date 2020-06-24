@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "293543549906-du5vrvqsoc2o4knoc1390nr77ch8i0qm.apps.googleusercontent.com",
+          "client_id": "293543549906-1enc8brlp5lm6ecuu56cfhlt53evurvs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.yungweezy.dayly",
-            "certificate_hash": "96abdc7aae6c101e5ed1a8cacbe2f087a4ff61d8"
+            "certificate_hash": "c12d57d4482b15842cef06c14dff61a5c65d020a"
           }
         },
         {
