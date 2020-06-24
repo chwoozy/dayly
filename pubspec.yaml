@@ -40,8 +40,6 @@ dependencies:
   email_validator: ^1.0.4
   curved_navigation_bar: ^0.3.2
   image_picker: ^0.6.7+1
-  googleapis: ^0.55.0
-  date_utils: ^0.1.0+3
   google_fonts: ^1.1.0
   percent_indicator: ^2.1.5
   circular_check_box: ^1.0.2
