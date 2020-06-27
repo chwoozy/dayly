@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:dayly/components/task_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/pages/models/task_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayly/services/database.dart';
+import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/pages/models/task.dart';
 
 class TasksList extends StatefulWidget {
   @override
@@ -11,6 +15,7 @@ class TasksList extends StatefulWidget {
 class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
+    final _user = Provider.of<User>(context);
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
         return ListView.builder(
@@ -20,17 +25,20 @@ class _TasksListState extends State<TasksList> {
             return Dismissible(
               direction: DismissDirection.endToStart,
               key: UniqueKey(),
-              onDismissed: (direction) {
+              onDismissed: (direction) async {
                 setState(() {
                   taskData.deleteTask(task);
                 });
+                await DatabaseService(uid: _user.uid).deleteTask(task);
               },
               child: TaskTile(
                 taskTitle: task.name,
                 taskDescription: task.description,
                 isChecked: task.isDone,
-                checkboxCallback: (checkboxState) {
+                checkboxCallback: (checkboxState) async {
                   taskData.updateTask(task);
+                  await DatabaseService(uid: _user.uid)
+                      .updateTask(task, task.isDone);
                 },
                 categoryColor: task.color,
               ),
