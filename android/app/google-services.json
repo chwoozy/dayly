@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "293543549906-41aappklkq98nukfj5kufnc2j52e3qh4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yungweezy.dayly",
+            "certificate_hash": "a1c61fc057bb7a044f105d4fe46e34ae02aac846"
+          }
+        },
+        {
           "client_id": "293543549906-1enc8brlp5lm6ecuu56cfhlt53evurvs.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -38,6 +46,13 @@
             {
               "client_id": "293543549906-9djiiqmmo6g13gvuutl6p37u9cmv86pk.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "293543549906-mqi3u3g0gfb7fsve97vani6rv2v0ksm4.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yungweezy.dayly"
+              }
             }
           ]
         }

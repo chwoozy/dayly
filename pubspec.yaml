@@ -33,6 +33,7 @@ dependencies:
   cloud_firestore: ^0.13.6
   firebase_storage: ^3.1.6
   firebase_analytics: ^5.0.15
+  firebase_helpers: ^0.1.9
   
   # Streams
   rxdart: ^0.24.1
@@ -55,9 +56,14 @@ dependencies:
 
   # Validations
   email_validator: ^1.0.4
-  
+
   # Utilities
-  date_utils: ^0.1.0+3
+  uuid: ^2.1.0
+  intl: ^0.16.1
+
+  
+  # Calendar
+  table_calendar: ^2.2.3
   
 
 

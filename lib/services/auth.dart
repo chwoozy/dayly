@@ -1,4 +1,3 @@
-import 'package:date_utils/date_utils.dart';
 import 'package:dayly/pages/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/services/googlehttpclient.dart';
@@ -33,13 +32,10 @@ class AuthService {
     final headers = await googleSignInAccount.authHeaders;
     final httpClient = GoogleHttpClient(headers);
     var calendar = CalendarApi(httpClient);
-    DateTime firstDayOfMonth = Utils.firstDayOfMonth(DateTime.now());
-    DateTime lastDayOfMonth = Utils.lastDayOfMonth(DateTime.now());
-    var calEvents = calendar.events.list("primary",
-        timeMax: lastDayOfMonth.toUtc(), timeMin: firstDayOfMonth.toUtc());
+    var calEvents = calendar.events.list("primary");
     calEvents.then((events) => {
           events.items.forEach((value) => print(
-              "EVENT ${value.summary}, from ${value.start.dateTime.toLocal()} to ${value.end.dateTime.toLocal()}"))
+              "EVENT ${value.summary}, from ${value.start.dateTime} to ${value.end.dateTime}"))
         });
   }
 
