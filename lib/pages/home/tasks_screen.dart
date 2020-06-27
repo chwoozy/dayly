@@ -18,6 +18,7 @@ class TasksScreen extends StatefulWidget {
 class _TasksScreenState extends State<TasksScreen> {
   bool _loadingInProgress = false;
 
+  //Obtain task data from Firebase
   @override
   void initState() {
     super.initState();

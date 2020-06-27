@@ -239,6 +239,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   Provider.of<TaskData>(context, listen: false)
                       .addTask(newTaskTitle, taskDescription, tagColor);
 
+                  //Add new task to database
                   DocumentReference docReference = await Firestore.instance
                       .collection('task_data')
                       .document(_user.uid)

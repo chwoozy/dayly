@@ -22,6 +22,7 @@ class Task {
     isDone = !isDone;
   }
 
+  //Convert to Json format
   Map<String, dynamic> toMap() {
     return {
       'taskName': name,
@@ -31,6 +32,7 @@ class Task {
     };
   }
 
+  //Read snapshot from Firebase
   Task.fromSnapshot(DocumentSnapshot snapshot) {
     name = snapshot['taskName'];
     description = snapshot['taskDescription'];

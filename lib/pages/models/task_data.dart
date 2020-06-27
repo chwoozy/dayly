@@ -25,6 +25,7 @@ class TaskData extends ChangeNotifier {
     _finishedTaskCount = finishedTask;
   }
 
+  //Add new task to list
   void addTask(String taskTitle, String taskDescription, Color tagColor) {
     final task =
         Task(name: taskTitle, description: taskDescription, color: tagColor);
@@ -32,6 +33,7 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Update the status of task
   void updateTask(Task task) {
     if (!task.isDone) {
       _finishedTaskCount += 1;
