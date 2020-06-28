@@ -83,6 +83,7 @@ class DatabaseService {
       description: snapshot.data['description'],
       eventDate: snapshot.data['eventDate'].toDate(),
     );
+  }
     
   Stream<QuerySnapshot> getUserTaskStreamSnapShots(
       BuildContext context) async* {
