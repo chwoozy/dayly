@@ -1,5 +1,5 @@
 import 'package:dayly/components/constants.dart';
-import 'package:dayly/pages/home/calendar.dart';
+import 'package:dayly/pages/calendar/calendar.dart';
 import 'package:dayly/pages/profile/profile.dart';
 import 'package:dayly/pages/home/todo.dart';
 import 'package:flutter/material.dart';

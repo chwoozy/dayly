@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayly/pages/models/event.dart';
 import 'package:dayly/pages/models/user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:googleapis/customsearch/v1.dart';
@@ -7,6 +8,7 @@ import 'package:dayly/pages/models/task.dart';
 
 class DatabaseService {
   final String uid;
+
   DatabaseService({this.uid});
 
   // Collection Reference
@@ -18,10 +20,27 @@ class DatabaseService {
 
   Future updateUserData(
       String email, String displayName, String photoUrl) async {
-    return await userCollection.document(uid).setData({
+    return await userCollection
+        .document(uid)
+        .collection('profile')
+        .document('userinfo')
+        .setData({
       'email': email,
       'displayName': displayName,
       'photoUrl': photoUrl,
+    });
+  }
+
+  Future updateEvent(Event event) async {
+    return await userCollection
+        .document(uid)
+        .collection('event')
+        .document(event.eid)
+        .setData({
+      'id': event.eid,
+      'title': event.title,
+      'description': event.description,
+      'eventDate': event.eventDate,
     });
   }
 
@@ -31,7 +50,19 @@ class DatabaseService {
 
   // Get User Data Stream
   Stream<UserData> get userData {
-    return userCollection.document(uid).snapshots().map(_userDataFromSnapshot);
+    return userCollection
+        .document(uid)
+        .collection('profile')
+        .document('userinfo')
+        .snapshots()
+        .map(_userDataFromSnapshot);
+  }
+
+  // Get List of Event
+  Future<List<Event>> get allEvents async {
+    final QuerySnapshot result =
+        await userCollection.document(uid).collection('event').getDocuments();
+    return result.documents.map(_eventFromSnapshot).toList();
   }
 
   // User Data from Snapshot
@@ -44,6 +75,15 @@ class DatabaseService {
     );
   }
 
+  // Event from Snapshot
+  Event _eventFromSnapshot(DocumentSnapshot snapshot) {
+    return Event(
+      eid: snapshot.data['eid'],
+      title: snapshot.data['title'],
+      description: snapshot.data['description'],
+      eventDate: snapshot.data['eventDate'].toDate(),
+    );
+    
   Stream<QuerySnapshot> getUserTaskStreamSnapShots(
       BuildContext context) async* {
     yield* taskCollection.document(uid).collection('tasks').snapshots();

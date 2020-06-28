@@ -1,4 +1,5 @@
 import 'package:dayly/pages/authenticate/landing.dart';
+import 'package:dayly/pages/calendar/add_event.dart';
 import 'package:dayly/pages/models/user.dart';
 import 'package:dayly/pages/wrapper.dart';
 import 'package:dayly/services/auth.dart';
@@ -18,6 +19,7 @@ class Dayly extends StatelessWidget {
       child: MaterialApp(initialRoute: '/wrapper', routes: {
         '/landing': (context) => Landing(),
         '/wrapper': (context) => Wrapper(),
+        '/addevent': (context) => AddEvent(),
       }),
     );
   }
