@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/rounded-button.dart';
-import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

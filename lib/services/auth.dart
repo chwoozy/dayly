@@ -1,4 +1,4 @@
-import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/services/googlehttpclient.dart';
 import 'package:firebase_auth/firebase_auth.dart';

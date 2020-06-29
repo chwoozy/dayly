@@ -24,13 +24,15 @@ class TaskTile extends StatelessWidget {
         height: 136,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: categoryColor,
+          //color: categoryColor,
+          color: Colors.purple,
         ),
         child: ListTile(
           title: Text(
             taskTitle,
             style: GoogleFonts.lato(
               textStyle: TextStyle(
+                  color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.w600,
                   decoration: isChecked ? TextDecoration.lineThrough : null),
@@ -42,6 +44,7 @@ class TaskTile extends StatelessWidget {
                   taskDescription,
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(
+                      color: Colors.white,
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
                     ),
