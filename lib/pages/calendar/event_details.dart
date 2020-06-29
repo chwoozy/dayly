@@ -1,6 +1,6 @@
 import 'package:dayly/components/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:dayly/pages/models/event.dart';
+import 'package:dayly/models/event.dart';
 import 'package:intl/intl.dart';
 
 class EventDetails extends StatelessWidget {

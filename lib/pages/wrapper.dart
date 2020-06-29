@@ -2,7 +2,7 @@ import 'package:dayly/pages/authenticate/landing.dart';
 import 'package:dayly/pages/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/models/user.dart';
 
 class Wrapper extends StatelessWidget {
   @override
