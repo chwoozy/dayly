@@ -3,7 +3,7 @@ import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/rounded-button.dart';
 import 'package:dayly/pages/calendar/event_details.dart';
 import 'package:dayly/pages/models/event.dart';
-import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
