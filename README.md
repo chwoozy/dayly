@@ -1,5 +1,9 @@
 # dayly
-This is a smart planner in the form of a mobile app that provides the main functions you'd expect from Calendars and Todo-Lists.
+dayly is a mobile app that features a smart planner that provides the main functions you'd expect from Calendars, To-Do Lists and so much more!
+
+## Features
+ - Displays Intuitive and Insightful Calendar Views
+ - Create To-Do Lists.
 
 ## Resources
 [Root Document](https://docs.google.com/document/d/1Wapib8dYOP_gKQft_BRPQViQaZkGyq15EofuNCDpVCQ/edit)  
