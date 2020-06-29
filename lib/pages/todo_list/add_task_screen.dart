@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:dayly/components/category_tag.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/pages/models/user.dart';
+import 'tasks_screen.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -240,7 +241,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       .addTask(newTaskTitle, taskDescription, tagColor);
 
                   //Add new task to database
-                  DocumentReference docReference = await Firestore.instance
+                  await Firestore.instance
                       .collection('task_data')
                       .document(_user.uid)
                       .collection('tasks')
@@ -249,19 +250,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     'taskDescription': taskDescription,
                     'isDone': false,
                   });
-//                  String documentId = docReference.documentID;
-//                  await Firestore.instance
-//                      .collection('task_data')
-//                      .document(_user.uid)
-//                      .collection('tasks')
-//                      .document(documentId)
-//                      .setData({
-//                    'taskName': newTaskTitle,
-//                    'taskDescription': taskDescription,
-//                    'isDone': false,
-//                    'documentId': documentId,
-//                  });
-                  Navigator.pop(context);
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TasksScreen()));
                 },
               ),
             ),

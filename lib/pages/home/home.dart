@@ -1,7 +1,7 @@
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/pages/calendar/calendar.dart';
 import 'package:dayly/pages/profile/profile.dart';
-import 'package:dayly/pages/home/todo.dart';
+import 'package:dayly/pages/todo_list/todo.dart';
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 

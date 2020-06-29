@@ -2,7 +2,7 @@ import 'package:dayly/components/constants.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components//tasks_list.dart';
-import 'package:dayly/pages/home/add_task_screen.dart';
+import 'package:dayly/pages/todo_list/add_task_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/pages/models/task_data.dart';
 import 'package:google_fonts/google_fonts.dart';
