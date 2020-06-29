@@ -1,6 +1,7 @@
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/rounded-button.dart';
+import 'package:dayly/pages/calendar/event_details.dart';
 import 'package:dayly/pages/models/event.dart';
 import 'package:dayly/pages/models/user.dart';
 import 'package:dayly/services/database.dart';
@@ -20,10 +21,12 @@ class AddEvent extends StatefulWidget {
 class _AddEventState extends State<AddEvent> {
   TextEditingController _title;
   TextEditingController _description;
-  DateTime _eventDate;
+  DateTime _eventFromDate;
+  DateTime _eventToDate;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
+  String _errorMsg;
 
   @override
   void initState() {
@@ -33,8 +36,10 @@ class _AddEventState extends State<AddEvent> {
     _description = TextEditingController(
         text:
             widget.currentEvent != null ? widget.currentEvent.description : "");
-    _eventDate = DateTime.now();
+    _eventFromDate = DateTime.now();
+    _eventToDate = DateTime.now();
     processing = false;
+    _errorMsg = '';
   }
 
   @override
@@ -58,25 +63,71 @@ class _AddEventState extends State<AddEvent> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        child: ListTile(
-                          leading: Icon(Icons.access_time),
-                          title: Align(
-                            child: Text(
-                                "${_eventDate.day} ${DateFormat('MMMM').format(_eventDate)}"),
-                            alignment: Alignment(-1.2, 0),
-                          ),
-                          onTap: () async {
-                            DateTime picked = await showDatePicker(
-                                context: context,
-                                initialDate: _eventDate,
-                                firstDate: DateTime(_eventDate.year - 5),
-                                lastDate: DateTime(_eventDate.year + 5));
-                            if (picked != null) {
-                              setState(() {
-                                _eventDate = picked;
-                              });
-                            }
-                          },
+                        child: Row(
+                          children: <Widget>[
+                            Flexible(
+                              child: ListTile(
+                                leading: Icon(Icons.access_time),
+                                title: Text(
+                                  "Begins: ${_eventFromDate.day} ${DateFormat('MMMM').format(_eventFromDate)}",
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  DateTime picked = await showDatePicker(
+                                      context: context,
+                                      initialDate: _eventFromDate,
+                                      firstDate:
+                                          DateTime(_eventFromDate.year - 5),
+                                      lastDate:
+                                          DateTime(_eventFromDate.year + 5));
+                                  if (picked != null) {
+                                    if (_eventToDate.isBefore(picked)) {
+                                      setState(() {
+                                        _eventFromDate = picked;
+                                        _eventToDate = picked;
+                                      });
+                                    } else {
+                                      setState(() {
+                                        _eventFromDate = picked;
+                                      });
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                            Flexible(
+                              child: ListTile(
+                                title: Text(
+                                  "Ends: ${_eventToDate.day} ${DateFormat('MMMM').format(_eventToDate)}",
+                                  style: TextStyle(
+                                    fontSize: 15.0,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  DateTime picked = await showDatePicker(
+                                      context: context,
+                                      initialDate: _eventToDate,
+                                      firstDate:
+                                          DateTime(_eventToDate.year - 5),
+                                      lastDate:
+                                          DateTime(_eventToDate.year + 5));
+                                  if (picked != null) {
+                                    if (picked.isBefore(_eventFromDate)) {
+                                      setState(() {
+                                        _errorMsg = 'Invalid dates selected!';
+                                      });
+                                    } else {
+                                      setState(() {
+                                        _eventToDate = picked;
+                                      });
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Padding(
@@ -112,6 +163,14 @@ class _AddEventState extends State<AddEvent> {
                         ),
                       ),
                       SizedBox(height: 10.0),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: Text(
+                          _errorMsg,
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
                       processing
                           ? Center(child: CircularProgressIndicator())
                           : Padding(
@@ -123,22 +182,31 @@ class _AddEventState extends State<AddEvent> {
                                     setState(() {
                                       processing = true;
                                     });
+                                    Event _event;
                                     if (widget.currentEvent != null) {
-                                      await DatabaseService(
+                                      _event = await DatabaseService(
                                               uid: snapshot.data.uid)
                                           .updateEvent(widget.currentEvent);
                                     } else {
+                                      _event = Event.newEvent(
+                                          _title.text,
+                                          _description.text,
+                                          _eventFromDate,
+                                          _eventToDate);
                                       await DatabaseService(
                                               uid: snapshot.data.uid)
-                                          .updateEvent(Event.newEvent(
-                                              _title.text,
-                                              _description.text,
-                                              DateTime.now()));
+                                          .updateEvent(_event);
                                     }
                                     Navigator.pop(context);
                                     setState(() {
                                       processing = false;
                                     });
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (_) => EventDetails(
+                                                  event: _event,
+                                                )));
                                   }
                                 },
                                 text: 'Save',

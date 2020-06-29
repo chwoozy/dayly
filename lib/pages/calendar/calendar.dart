@@ -34,8 +34,8 @@ class _CalendarState extends State<Calendar> {
   Map<DateTime, List<dynamic>> _groupEvents(List<Event> allEvents) {
     Map<DateTime, List<dynamic>> data = {};
     allEvents.forEach((event) {
-      DateTime date = DateTime(
-          event.eventDate.year, event.eventDate.month, event.eventDate.day, 12);
+      DateTime date = DateTime(event.eventFromDate.year,
+          event.eventFromDate.month, event.eventFromDate.day, 12);
       if (data[date] == null) data[date] = [];
       data[date].add(event);
     });
@@ -44,12 +44,16 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    final _user = Provider.of<User>(context);
+
     return Scaffold(
         backgroundColor: primaryBackgroundColor,
         floatingActionButton: FloatingActionButton.extended(
           backgroundColor: primaryPurple,
           onPressed: () {
-            Navigator.pushNamed(context, '/addevent');
+            Navigator.pushNamed(context, '/addevent').then((value) {
+              setState(() {});
+            });
           },
           label: Text("Add Event"),
         ),
@@ -68,8 +72,7 @@ class _CalendarState extends State<Calendar> {
           ],
         ),
         body: FutureBuilder<List<Event>>(
-            future:
-                DatabaseService(uid: Provider.of<User>(context).uid).allEvents,
+            future: DatabaseService(uid: _user.uid).allEvents,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 List<Event> allEvents = snapshot.data;

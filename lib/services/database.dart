@@ -33,12 +33,17 @@ class DatabaseService {
       'id': event.eid,
       'title': event.title,
       'description': event.description,
-      'eventDate': event.eventDate,
+      'eventFromDate': event.eventFromDate,
+      'eventToDate': event.eventToDate,
     });
   }
 
   Future<DocumentSnapshot> get checkUser {
-    return userCollection.document(uid).get();
+    return userCollection
+        .document(uid)
+        .collection('profile')
+        .document('userinfo')
+        .get();
   }
 
   // Get User Data Stream
@@ -74,7 +79,8 @@ class DatabaseService {
       eid: snapshot.data['eid'],
       title: snapshot.data['title'],
       description: snapshot.data['description'],
-      eventDate: snapshot.data['eventDate'].toDate(),
+      eventFromDate: snapshot.data['eventFromDate'].toDate(),
+      eventToDate: snapshot.data['eventToDate'].toDate(),
     );
   }
 }
