@@ -5,11 +5,18 @@ class Event {
   final String eid;
   final String title;
   final String description;
-  final DateTime eventDate;
+  final DateTime eventFromDate;
+  final DateTime eventToDate;
 
-  Event({this.eid, this.title, this.description, this.eventDate});
+  Event(
+      {this.eid,
+      this.title,
+      this.description,
+      this.eventFromDate,
+      this.eventToDate});
 
-  Event.newEvent(this.title, this.description, this.eventDate)
+  Event.newEvent(
+      this.title, this.description, this.eventFromDate, this.eventToDate)
       : this.eid = _uuid.v4();
 
   // factory Event.fromMap(Map data) {

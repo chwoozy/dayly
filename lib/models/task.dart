@@ -21,7 +21,6 @@ class Task {
   void toggleDone() {
     isDone = !isDone;
   }
-
   //Convert to Json format
   Map<String, dynamic> toMap() {
     return {
