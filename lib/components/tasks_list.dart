@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:dayly/components/task_tile.dart';
 import 'package:provider/provider.dart';
-import 'package:dayly/pages/models/task_data.dart';
+import 'package:dayly/models/task_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/services/database.dart';
-import 'package:dayly/pages/models/user.dart';
-import 'package:dayly/pages/models/task.dart';
+import 'package:dayly/models/user.dart';
+import 'package:dayly/models/task.dart';
 
 class TasksList extends StatefulWidget {
   @override

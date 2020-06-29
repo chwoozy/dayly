@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:dayly/pages/models/task.dart';
+import 'package:dayly/models/task.dart';
 import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';

@@ -2,11 +2,11 @@ import 'package:dayly/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
-import 'package:dayly/pages/models/task_data.dart';
+import 'package:dayly/models/task_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dayly/components/category_tag.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/models/user.dart';
 import 'tasks_screen.dart';
 
 class AddTaskScreen extends StatefulWidget {
@@ -15,10 +15,11 @@ class AddTaskScreen extends StatefulWidget {
 }
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
-  String newTaskTitle;
-  String taskDescription;
-  Color tagColor = Colors.white;
-  String categoryTag;
+  String _newTaskTitle = '';
+  String _taskDescription = '';
+  Color _tagColor = Colors.white;
+  String _categoryTag = '';
+  bool _validate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -94,12 +95,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           showCursor: true,
                           decoration: InputDecoration(
                             hintText: 'Add Task Name',
+                            errorText:
+                                _validate ? 'Please enter a task title' : null,
                           ),
                           cursorColor: Colors.white,
                           autofocus: true,
                           textAlign: TextAlign.left,
                           onChanged: (newText) {
-                            newTaskTitle = newText;
+                            _newTaskTitle = newText;
                           },
                         )
                       ],
@@ -133,7 +136,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           autofocus: true,
                           textAlign: TextAlign.left,
                           onChanged: (newText) {
-                            taskDescription = newText;
+                            _taskDescription = newText;
                           },
                         )
                       ],
@@ -171,24 +174,24 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'Work',
                                   tagColor: Colors.red.shade300,
                                   onPressCallback: () {
-                                    categoryTag = 'Work';
-                                    tagColor = Colors.red.shade300;
+                                    _categoryTag = 'Work';
+                                    _tagColor = Colors.red.shade300;
                                   },
                                 ),
                                 CategoryTag(
                                   categoryTag: 'Study',
                                   tagColor: Colors.yellow,
                                   onPressCallback: () {
-                                    categoryTag = 'Study';
-                                    tagColor = Colors.yellow;
+                                    _categoryTag = 'Study';
+                                    _tagColor = Colors.yellow;
                                   },
                                 ),
                                 CategoryTag(
                                   categoryTag: 'Event',
                                   tagColor: Colors.orangeAccent,
                                   onPressCallback: () {
-                                    categoryTag = 'Event';
-                                    tagColor = Colors.orangeAccent;
+                                    _categoryTag = 'Event';
+                                    _tagColor = Colors.orangeAccent;
                                   },
                                 ),
                               ],
@@ -201,16 +204,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'LifeStyle',
                                   tagColor: Colors.blueAccent.shade100,
                                   onPressCallback: () {
-                                    categoryTag = 'LifeStyle';
-                                    tagColor = Colors.blueAccent.shade100;
+                                    _categoryTag = 'LifeStyle';
+                                    _tagColor = Colors.blueAccent.shade100;
                                   },
                                 ),
                                 CategoryTag(
                                   categoryTag: 'Miscellaneous',
                                   tagColor: Colors.greenAccent,
                                   onPressCallback: () {
-                                    categoryTag = 'Miscellaneous';
-                                    tagColor = Colors.greenAccent;
+                                    _categoryTag = 'Miscellaneous';
+                                    _tagColor = Colors.greenAccent;
                                   },
                                 ),
                               ],
@@ -237,22 +240,27 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   size: 30,
                 ),
                 onPressed: () async {
-                  Provider.of<TaskData>(context, listen: false)
-                      .addTask(newTaskTitle, taskDescription, tagColor);
-
-                  //Add new task to database
-                  await Firestore.instance
-                      .collection('task_data')
-                      .document(_user.uid)
-                      .collection('tasks')
-                      .add({
-                    'taskName': newTaskTitle,
-                    'taskDescription': taskDescription,
-                    'isDone': false,
+                  setState(() {
+                    _newTaskTitle == '' ? _validate = true : _validate = false;
                   });
+                  if (!_validate) {
+                    Provider.of<TaskData>(context, listen: false)
+                        .addTask(_newTaskTitle, _taskDescription, _tagColor);
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TasksScreen()));
+                    //Add new task to database
+                    await Firestore.instance
+                        .collection('task_data')
+                        .document(_user.uid)
+                        .collection('tasks')
+                        .add({
+                      'taskName': _newTaskTitle,
+                      'taskDescription': _taskDescription,
+                      'isDone': false,
+                    });
+
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TasksScreen()));
+                  }
                 },
               ),
             ),

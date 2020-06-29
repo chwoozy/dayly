@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dayly/pages/models/event.dart';
-import 'package:dayly/pages/models/user.dart';
+import 'package:dayly/models/event.dart';
+import 'package:dayly/models/user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:googleapis/customsearch/v1.dart';
-import 'package:dayly/pages/models/task_data.dart';
-import 'package:dayly/pages/models/task.dart';
+import 'package:dayly/models/task_data.dart';
+import 'package:dayly/models/task.dart';
 
 class DatabaseService {
   final String uid;
