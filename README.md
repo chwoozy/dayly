@@ -5,6 +5,11 @@ dayly is a mobile app that features a smart planner that provides the main funct
  - Displays Intuitive and Insightful Calendar Views
  - Create To-Do Lists.
 
+## Getting Started
+ - Import a local repository using ```git clone https://github.com/yungweezy/dayly.git```
+ - Use a flutter compatible IDE, preferably Android Studio or Visual Studio Code
+ - Open the project and build the application on a mobile simulator
+
 ## Resources
 [Root Document](https://docs.google.com/document/d/1Wapib8dYOP_gKQft_BRPQViQaZkGyq15EofuNCDpVCQ/edit)  
 [Proposal](https://docs.google.com/document/d/1igmVL5-dhH8DqmlhI6OwF6UagX08Vwv3uPCLREm6P3k/edit)  
