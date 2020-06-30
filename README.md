@@ -6,9 +6,9 @@ dayly is a mobile app that features a smart planner that provides the main funct
  - Create To-Do Lists.
 
 ## Getting Started
- - Import a local repository using ```git clone https://github.com/yungweezy/dayly.git```
- - Use a flutter compatible IDE, preferably Android Studio or Visual Studio Code
- - Open the project and build the application on a mobile simulator
+ 1. Import a local repository using ```git clone https://github.com/yungweezy/dayly.git```
+ 2. Use a flutter compatible IDE, preferably Android Studio or Visual Studio Code
+ 3. Open the project and build the application on a mobile simulator
 
 ## Resources
 [Root Document](https://docs.google.com/document/d/1Wapib8dYOP_gKQft_BRPQViQaZkGyq15EofuNCDpVCQ/edit)  
@@ -20,7 +20,7 @@ dayly is a mobile app that features a smart planner that provides the main funct
 Mandatory events:
 - [x] 11-18 May - Liftoff
 - [x] 1 June - Evaluation Milestone 1 - Ideation
-- [ ] 29 June - Evaluation Milestone 2 - Prototyping
+- [x] 29 June - Evaluation Milestone 2 - Prototyping
 - [ ] 27 July - Evaluation Milestone 3 - Extension
 - [ ] 26 August - Splashdown - Refinement
 
