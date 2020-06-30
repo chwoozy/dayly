@@ -6,21 +6,22 @@ class Task {
   String name;
   String description;
   bool isDone;
-  dynamic color;
-  //final String tag;
+  //dynamic color;
+  String tag;
   String documentId;
 
   Task(
       {@required this.name,
       this.isDone = false,
       this.description,
-      this.color = Colors.blueAccent,
-      //this.tag,
+      //this.color = Colors.blueAccent,
+      this.tag,
       this.documentId});
 
   void toggleDone() {
     isDone = !isDone;
   }
+
   //Convert to Json format
   Map<String, dynamic> toMap() {
     return {
@@ -28,6 +29,7 @@ class Task {
       'taskDescription': description,
       'isDone': isDone,
       'documentId': documentId,
+      'tag': tag,
     };
   }
 
@@ -36,5 +38,6 @@ class Task {
     name = snapshot['taskName'];
     description = snapshot['taskDescription'];
     documentId = snapshot.documentID;
+    tag = snapshot['tag'];
   }
 }

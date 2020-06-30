@@ -13,6 +13,26 @@ class TasksList extends StatefulWidget {
 }
 
 class _TasksListState extends State<TasksList> {
+//  Color getTagColor(String tag) {
+//    if (tag == null) {
+//      return Colors.white;
+//    } else {
+//      if (tag == 'Work') {
+//        return Colors.red.shade300;
+//      } else if (tag == 'Study') {
+//        return Colors.yellow;
+//      } else if (tag == 'Event') {
+//        return Colors.orangeAccent;
+//      } else if (tag == 'LifeStyle') {
+//        return Colors.blueAccent.shade100;
+//      } else if (tag == 'Miscellaneous') {
+//        return Colors.greenAccent;
+//      } else {
+//        return Colors.white;
+//      }
+//    }
+//  }
+
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
@@ -40,7 +60,7 @@ class _TasksListState extends State<TasksList> {
                   await DatabaseService(uid: _user.uid)
                       .updateTask(task, task.isDone);
                 },
-                categoryColor: task.color,
+                category: task.tag,
               ),
               background: Container(
                 child: Align(

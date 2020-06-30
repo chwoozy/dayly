@@ -26,9 +26,8 @@ class TaskData extends ChangeNotifier {
   }
 
   //Add new task to list
-  void addTask(String taskTitle, String taskDescription, Color tagColor) {
-    final task =
-        Task(name: taskTitle, description: taskDescription, color: tagColor);
+  void addTask(String taskTitle, String taskDescription, String tag) {
+    final task = Task(name: taskTitle, description: taskDescription, tag: tag);
     _tasks.add(task);
     notifyListeners();
   }

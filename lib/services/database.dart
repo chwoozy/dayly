@@ -107,13 +107,15 @@ class DatabaseService {
       String taskTitle = document.data['taskName'];
       String taskSummary = document.data['taskDescription'];
       bool isDone = document.data['isDone'];
+      String tag = document.data['tag'];
       String documentId = document.reference.documentID;
       print(documentId);
       Task task = Task(
           name: taskTitle,
           description: taskSummary,
           isDone: isDone,
-          documentId: documentId);
+          documentId: documentId,
+          tag: tag);
       _taskList.add(task);
       if (task.isDone) {
         _finishedTaskCount += 1;
@@ -135,6 +137,7 @@ class DatabaseService {
       'taskDescription': task.description,
       'isDone': isDone,
       'documentId': task.documentId,
+      'tag': task.tag,
     });
   }
 

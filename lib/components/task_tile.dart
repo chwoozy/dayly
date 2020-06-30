@@ -6,14 +6,34 @@ class TaskTile extends StatelessWidget {
   final String taskTitle;
   final String taskDescription;
   final Function checkboxCallback;
-  final Color categoryColor;
+  final String category;
 
   TaskTile(
       {this.isChecked,
       this.taskTitle,
       this.checkboxCallback,
       this.taskDescription,
-      this.categoryColor});
+      this.category});
+
+  Color getTagColor(String tag) {
+//    if (tag == null) {
+//      return Colors.white;
+//    } else {
+    if (tag == 'Work') {
+      return Colors.red.shade300;
+    } else if (tag == 'Study') {
+      return Colors.yellow;
+    } else if (tag == 'Event') {
+      return Colors.orangeAccent;
+    } else if (tag == 'LifeStyle') {
+      return Colors.blueAccent.shade100;
+    } else if (tag == 'Miscellaneous') {
+      return Colors.greenAccent;
+    } else {
+      return Colors.white;
+    }
+    //}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +44,7 @@ class TaskTile extends StatelessWidget {
         height: 136,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          //color: categoryColor,
-          color: Colors.purple,
+          color: getTagColor(this.category),
         ),
         child: ListTile(
           title: Text(

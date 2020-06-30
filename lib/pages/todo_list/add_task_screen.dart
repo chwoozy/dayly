@@ -17,8 +17,8 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   String _newTaskTitle = '';
   String _taskDescription = '';
-  Color _tagColor = Colors.white;
-  String _categoryTag = '';
+  Color _tagColor;
+  String _tag = '';
   bool _validate = false;
 
   @override
@@ -174,7 +174,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'Work',
                                   tagColor: Colors.red.shade300,
                                   onPressCallback: () {
-                                    _categoryTag = 'Work';
+                                    _tag = 'Work';
                                     _tagColor = Colors.red.shade300;
                                   },
                                 ),
@@ -182,7 +182,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'Study',
                                   tagColor: Colors.yellow,
                                   onPressCallback: () {
-                                    _categoryTag = 'Study';
+                                    _tag = 'Study';
                                     _tagColor = Colors.yellow;
                                   },
                                 ),
@@ -190,7 +190,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'Event',
                                   tagColor: Colors.orangeAccent,
                                   onPressCallback: () {
-                                    _categoryTag = 'Event';
+                                    _tag = 'Event';
                                     _tagColor = Colors.orangeAccent;
                                   },
                                 ),
@@ -204,7 +204,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'LifeStyle',
                                   tagColor: Colors.blueAccent.shade100,
                                   onPressCallback: () {
-                                    _categoryTag = 'LifeStyle';
+                                    _tag = 'LifeStyle';
                                     _tagColor = Colors.blueAccent.shade100;
                                   },
                                 ),
@@ -212,7 +212,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   categoryTag: 'Miscellaneous',
                                   tagColor: Colors.greenAccent,
                                   onPressCallback: () {
-                                    _categoryTag = 'Miscellaneous';
+                                    _tag = 'Miscellaneous';
                                     _tagColor = Colors.greenAccent;
                                   },
                                 ),
@@ -245,7 +245,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   });
                   if (!_validate) {
                     Provider.of<TaskData>(context, listen: false)
-                        .addTask(_newTaskTitle, _taskDescription, _tagColor);
+                        .addTask(_newTaskTitle, _taskDescription, _tag);
 
                     //Add new task to database
                     await Firestore.instance
@@ -256,6 +256,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       'taskName': _newTaskTitle,
                       'taskDescription': _taskDescription,
                       'isDone': false,
+                      'tag': _tag,
                     });
 
                     Navigator.push(context,
