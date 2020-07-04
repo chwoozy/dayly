@@ -64,6 +64,7 @@ dependencies:
   
   # Calendar
   table_calendar: ^2.2.3
+  syncfusion_flutter_calendar: ^18.1.59-beta
   
 
 

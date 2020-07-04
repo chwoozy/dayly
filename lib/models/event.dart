@@ -1,3 +1,5 @@
+import 'dart:ui';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:uuid/uuid.dart';
 
 class Event {
@@ -7,41 +9,56 @@ class Event {
   final String description;
   final DateTime eventFromDate;
   final DateTime eventToDate;
+  final Color eventColor;
+  final bool isAllDay;
 
-  Event(
-      {this.eid,
-      this.title,
-      this.description,
-      this.eventFromDate,
-      this.eventToDate});
+  Event({
+    this.eid,
+    this.title,
+    this.description,
+    this.eventFromDate,
+    this.eventToDate,
+    this.eventColor,
+  }) : this.isAllDay = eventFromDate.compareTo(eventToDate) != 0 ? false : true;
 
-  Event.newEvent(
-      this.title, this.description, this.eventFromDate, this.eventToDate)
-      : this.eid = _uuid.v4();
+  Event.newEvent(this.title, this.description, this.eventFromDate,
+      this.eventToDate, this.eventColor)
+      : this.eid = _uuid.v4(),
+        this.isAllDay =
+            eventFromDate.compareTo(eventToDate) != 0 ? false : true;
+}
 
-  // factory Event.fromMap(Map data) {
-  //   return Event(
-  //     title: data['title'],
-  //     description: data['description'],
-  //     eventDate: data['event_date'],
-  //   );
-  // }
+class EventDataSource extends CalendarDataSource {
+  EventDataSource(List<Event> source) {
+    appointments = source;
+  }
 
-  // factory Event.fromDS(String id, Map<String, dynamic> data) {
-  //   return Event(
-  //     id: id,
-  //     title: data['title'],
-  //     description: data['description'],
-  //     eventDate: data['event_date'].toDate(),
-  //   );
-  // }
+  @override
+  String getSubject(int index) {
+    return appointments[index].title;
+  }
 
-  // Map<String, dynamic> toMap() {
-  //   return {
-  //     "title": title,
-  //     "description": description,
-  //     "event_date": eventDate,
-  //     "uid": id,
-  //   };
-  // }
+  String getDescription(int index) {
+    return appointments[index].description;
+  }
+
+  @override
+  DateTime getStartTime(int index) {
+    return appointments[index].eventFromDate;
+  }
+
+  @override
+  DateTime getEndTime(int index) {
+    return appointments[index].eventToDate;
+  }
+
+  @override
+  Color getColor(int index) {
+    return appointments[index].eventColor;
+  }
+
+  @override
+  bool isAllDay(int index) {
+    return appointments[index].isAllDay;
+  }
 }
