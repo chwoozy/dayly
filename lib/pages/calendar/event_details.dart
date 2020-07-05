@@ -25,10 +25,10 @@ class EventDetails extends StatelessWidget {
               style: Theme.of(context).textTheme.headline4,
             ),
             Text(
-              "Begins: ${event.eventFromDate.day} ${DateFormat("MMMM").format(event.eventFromDate)} ${DateFormat("y").format(event.eventFromDate)}",
+              "Begins: ${event.eventFromDate.day} ${DateFormat("MMMM").format(event.eventFromDate)} ${DateFormat("y").format(event.eventFromDate)} ${DateFormat("jm").format(event.eventFromDate)}",
             ),
             Text(
-              "Ends: ${event.eventToDate.day} ${DateFormat("MMMM").format(event.eventToDate)} ${DateFormat("y").format(event.eventToDate)}",
+              "Ends: ${event.eventToDate.day} ${DateFormat("MMMM").format(event.eventToDate)} ${DateFormat("y").format(event.eventToDate)} ${DateFormat("MMMM").format(event.eventToDate)} ${DateFormat("jm").format(event.eventToDate)}",
             ),
             SizedBox(height: 20.0),
             Text(event.description)

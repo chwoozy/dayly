@@ -5,6 +5,7 @@ import 'package:dayly/pages/calendar/event_details.dart';
 import 'package:dayly/models/event.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,7 @@ class _AddEventState extends State<AddEvent> {
   TextEditingController _description;
   DateTime _eventFromDate;
   DateTime _eventToDate;
+  Color _eventColor;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
@@ -38,6 +40,7 @@ class _AddEventState extends State<AddEvent> {
             widget.currentEvent != null ? widget.currentEvent.description : "");
     _eventFromDate = DateTime.now();
     _eventToDate = DateTime.now();
+    _eventColor = const Color(0xFF0F8644);
     processing = false;
     _errorMsg = '';
   }
@@ -69,20 +72,36 @@ class _AddEventState extends State<AddEvent> {
                               child: ListTile(
                                 leading: Icon(Icons.access_time),
                                 title: Text(
-                                  "Begins: ${_eventFromDate.day} ${DateFormat('MMMM').format(_eventFromDate)}",
+                                  "Begins: ${_eventFromDate.day} ${DateFormat('MMMM').format(_eventFromDate)} ${DateFormat('jm').format(_eventFromDate)}",
                                   style: TextStyle(
                                     fontSize: 15.0,
                                   ),
                                 ),
                                 onTap: () async {
-                                  DateTime picked = await showDatePicker(
+                                  DateTime picked;
+                                  await showModalBottomSheet(
                                       context: context,
-                                      initialDate: _eventFromDate,
-                                      firstDate:
-                                          DateTime(_eventFromDate.year - 5),
-                                      lastDate:
-                                          DateTime(_eventFromDate.year + 5));
-                                  if (picked != null) {
+                                      builder: (BuildContext builder) {
+                                        return Container(
+                                          height: MediaQuery.of(context)
+                                                  .copyWith()
+                                                  .size
+                                                  .height /
+                                              3,
+                                          child: CupertinoDatePicker(
+                                            initialDateTime: _eventFromDate,
+                                            onDateTimeChanged: (dateTime) {
+                                              setState(() {
+                                                picked = dateTime;
+                                              });
+                                            },
+                                            minuteInterval: 1,
+                                            mode: CupertinoDatePickerMode
+                                                .dateAndTime,
+                                          ),
+                                        );
+                                      });
+                                  if (picked != null && _eventToDate != null) {
                                     if (_eventToDate.isBefore(picked)) {
                                       setState(() {
                                         _eventFromDate = picked;
@@ -100,20 +119,37 @@ class _AddEventState extends State<AddEvent> {
                             Flexible(
                               child: ListTile(
                                 title: Text(
-                                  "Ends: ${_eventToDate.day} ${DateFormat('MMMM').format(_eventToDate)}",
+                                  "Ends: ${_eventToDate.day} ${DateFormat('MMMM').format(_eventToDate)} ${DateFormat('jm').format(_eventToDate)}",
                                   style: TextStyle(
                                     fontSize: 15.0,
                                   ),
                                 ),
                                 onTap: () async {
-                                  DateTime picked = await showDatePicker(
+                                  DateTime picked;
+                                  await showModalBottomSheet(
                                       context: context,
-                                      initialDate: _eventToDate,
-                                      firstDate:
-                                          DateTime(_eventToDate.year - 5),
-                                      lastDate:
-                                          DateTime(_eventToDate.year + 5));
-                                  if (picked != null) {
+                                      builder: (BuildContext builder) {
+                                        return Container(
+                                          height: MediaQuery.of(context)
+                                                  .copyWith()
+                                                  .size
+                                                  .height /
+                                              3,
+                                          child: CupertinoDatePicker(
+                                            initialDateTime: _eventToDate,
+                                            onDateTimeChanged: (dateTime) {
+                                              setState(() {
+                                                picked = dateTime;
+                                              });
+                                            },
+                                            minuteInterval: 1,
+                                            mode: CupertinoDatePickerMode
+                                                .dateAndTime,
+                                          ),
+                                        );
+                                      });
+                                  if (picked != null &&
+                                      _eventFromDate != null) {
                                     if (picked.isBefore(_eventFromDate)) {
                                       setState(() {
                                         _errorMsg = 'Invalid dates selected!';
@@ -189,10 +225,12 @@ class _AddEventState extends State<AddEvent> {
                                           .updateEvent(widget.currentEvent);
                                     } else {
                                       _event = Event.newEvent(
-                                          _title.text,
-                                          _description.text,
-                                          _eventFromDate,
-                                          _eventToDate);
+                                        _title.text,
+                                        _description.text,
+                                        _eventFromDate,
+                                        _eventToDate,
+                                        _eventColor,
+                                      );
                                       await DatabaseService(
                                               uid: snapshot.data.uid)
                                           .updateEvent(_event);

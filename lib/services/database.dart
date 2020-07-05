@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/models/event.dart';
 import 'package:dayly/models/user.dart';
 import 'package:flutter/widgets.dart';
-import 'package:googleapis/customsearch/v1.dart';
 import 'package:dayly/models/task_data.dart';
 import 'package:dayly/models/task.dart';
 
@@ -42,23 +41,20 @@ class DatabaseService {
       'description': event.description,
       'eventFromDate': event.eventFromDate,
       'eventToDate': event.eventToDate,
+      'eventColor': event.eventColor.value,
     });
   }
 
   Future<DocumentSnapshot> get checkUser {
-    return userCollection
-        .document(uid)
-        .collection('profile')
-        .document('userinfo')
-        .get();
+    return userCollection.document(uid).get();
   }
 
   // Get User Data Stream
   Stream<UserData> get userData {
     return userCollection
         .document(uid)
-        .collection('profile')
-        .document('userinfo')
+        .collection("profile")
+        .document("userinfo")
         .snapshots()
         .map(_userDataFromSnapshot);
   }
@@ -67,7 +63,9 @@ class DatabaseService {
   Future<List<Event>> get allEvents async {
     final QuerySnapshot result =
         await userCollection.document(uid).collection('event').getDocuments();
-    return result.documents.map(_eventFromSnapshot).toList();
+    final mapped = result.documents.map(_eventFromSnapshot);
+    print(mapped.toList());
+    return mapped.toList();
   }
 
   // User Data from Snapshot
@@ -88,6 +86,7 @@ class DatabaseService {
       description: snapshot.data['description'],
       eventFromDate: snapshot.data['eventFromDate'].toDate(),
       eventToDate: snapshot.data['eventToDate'].toDate(),
+      eventColor: Color(snapshot.data['eventColor']).withOpacity(1),
     );
   }
 

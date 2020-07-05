@@ -5,8 +5,11 @@ import 'package:dayly/pages/wrapper.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_core/core.dart';
 
 void main() {
+  SyncfusionLicense.registerLicense(
+      'NT8mJyc2IWhia31ifWN9ZmpoYmF8YGJ8ampqanNiYmlmamlmanMDHmgwOzw8PSQ2OiQTND4yOj99MDw+');
   runApp(Dayly());
 }
 

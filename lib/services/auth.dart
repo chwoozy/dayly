@@ -1,9 +1,12 @@
+import 'dart:ui';
+
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/services/googlehttpclient.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:dayly/models/event.dart' as eventModel;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,7 +29,7 @@ class AuthService {
     return _auth.currentUser();
   }
 
-  Future getEvents() async {
+  Future getEvents(String uid) async {
     final GoogleSignInAccount googleSignInAccount =
         await _googleSignIn.signIn();
     final headers = await googleSignInAccount.authHeaders;
@@ -34,8 +37,18 @@ class AuthService {
     var calendar = CalendarApi(httpClient);
     var calEvents = calendar.events.list("primary");
     calEvents.then((events) => {
-          events.items.forEach((value) => print(
-              "EVENT ${value.summary}, from ${value.start.dateTime} to ${value.end.dateTime}"))
+          events.items.forEach((value) async {
+            eventModel.Event newEvent = eventModel.Event.newEvent(
+              value.summary,
+              value.description,
+              value.start.dateTime,
+              value.end.dateTime,
+              Color(int.parse(value.colorId)),
+            );
+            await DatabaseService(uid: uid).updateEvent(newEvent);
+          }
+              // print("EVENT ${value.summary}, from ${value.start.dateTime} to ${value.end.dateTime}"))
+              )
         });
   }
 
@@ -61,10 +74,11 @@ class AuthService {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    if (!(await DatabaseService(uid: user.uid).checkUser).exists) {
+    bool isNewUser = !(await DatabaseService(uid: user.uid).checkUser).exists;
+    if (isNewUser) {
       await DatabaseService(uid: user.uid)
           .updateUserData(user.email, user.displayName, user.photoUrl);
-      print("First-time sign up with Google success!");
+      print("First time sign up with Google success!");
     }
 
     return 'Sign in with google succeeded: $user';
