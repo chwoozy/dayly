@@ -40,7 +40,7 @@ class _TasksListState extends State<TasksList> {
                   await DatabaseService(uid: _user.uid)
                       .updateTask(task, task.isDone);
                 },
-                categoryColor: task.color,
+                category: task.tag,
               ),
               background: Container(
                 child: Align(
