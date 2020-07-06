@@ -6,17 +6,17 @@ class Task {
   String name;
   String description;
   bool isDone;
-  //dynamic color;
   String tag;
   String documentId;
+  int priorityScore;
 
   Task(
       {@required this.name,
       this.isDone = false,
       this.description,
-      //this.color = Colors.blueAccent,
       this.tag,
-      this.documentId});
+      this.documentId,
+      this.priorityScore});
 
   void toggleDone() {
     isDone = !isDone;
@@ -30,6 +30,7 @@ class Task {
       'isDone': isDone,
       'documentId': documentId,
       'tag': tag,
+      'priorityScore': priorityScore,
     };
   }
 
@@ -39,5 +40,6 @@ class Task {
     description = snapshot['taskDescription'];
     documentId = snapshot.documentID;
     tag = snapshot['tag'];
+    priorityScore = snapshot['priorityScore'];
   }
 }

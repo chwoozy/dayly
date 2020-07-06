@@ -107,14 +107,17 @@ class DatabaseService {
       String taskSummary = document.data['taskDescription'];
       bool isDone = document.data['isDone'];
       String tag = document.data['tag'];
+      int priorityScore = document.data['priorityScore'];
       String documentId = document.reference.documentID;
-      print(documentId);
+      //print(documentId);
       Task task = Task(
-          name: taskTitle,
-          description: taskSummary,
-          isDone: isDone,
-          documentId: documentId,
-          tag: tag);
+        name: taskTitle,
+        description: taskSummary,
+        isDone: isDone,
+        documentId: documentId,
+        tag: tag,
+        priorityScore: priorityScore,
+      );
       _taskList.add(task);
       if (task.isDone) {
         _finishedTaskCount += 1;
@@ -137,6 +140,7 @@ class DatabaseService {
       'isDone': isDone,
       'documentId': task.documentId,
       'tag': task.tag,
+      'priorityScore': task.priorityScore,
     });
   }
 

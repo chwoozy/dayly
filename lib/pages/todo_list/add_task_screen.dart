@@ -1,4 +1,6 @@
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/components/slider_widget.dart';
+import 'package:dayly/models/priority.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +22,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Color _tagColor;
   String _tag = '';
   bool _validate = false;
+  int _priorityScore = 33;
 
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
     var size = MediaQuery.of(context).size;
+    Priority priorityData = Priority();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -143,7 +147,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20),
@@ -163,7 +167,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 20,
                         ),
                         Column(
                           children: <Widget>[
@@ -222,7 +226,33 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Priority',
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        SliderWidget(
+                          //priorityScore: this.priorityScore.toDouble(),
+                          priorityData: priorityData,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -242,10 +272,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 onPressed: () async {
                   setState(() {
                     _newTaskTitle == '' ? _validate = true : _validate = false;
+                    _priorityScore = priorityData.priorityScore == null
+                        ? 66
+                        : priorityData.priorityScore;
+                    //getPriority(_priorityScore);
                   });
+
                   if (!_validate) {
-                    Provider.of<TaskData>(context, listen: false)
-                        .addTask(_newTaskTitle, _taskDescription, _tag);
+                    Provider.of<TaskData>(context, listen: false).addTask(
+                        _newTaskTitle, _taskDescription, _tag, _priorityScore);
 
                     //Add new task to database
                     await Firestore.instance
@@ -257,6 +292,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       'taskDescription': _taskDescription,
                       'isDone': false,
                       'tag': _tag,
+                      'priorityScore': _priorityScore,
                     });
 
                     Navigator.push(context,
