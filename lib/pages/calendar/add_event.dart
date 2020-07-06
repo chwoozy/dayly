@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 class AddEvent extends StatefulWidget {
   final Event currentEvent;
 
-  const AddEvent({Key key, this.currentEvent}) : super(key: key);
+  const AddEvent({this.currentEvent});
 
   @override
   _AddEventState createState() => _AddEventState();
@@ -38,8 +38,12 @@ class _AddEventState extends State<AddEvent> {
     _description = TextEditingController(
         text:
             widget.currentEvent != null ? widget.currentEvent.description : "");
-    _eventFromDate = DateTime.now();
-    _eventToDate = DateTime.now();
+    _eventFromDate = widget.currentEvent != null
+        ? widget.currentEvent.eventFromDate
+        : DateTime.now();
+    _eventToDate = widget.currentEvent != null
+        ? widget.currentEvent.eventToDate
+        : DateTime.now();
     _eventColor = const Color(0xFF0F8644);
     processing = false;
     _errorMsg = '';
@@ -51,6 +55,10 @@ class _AddEventState extends State<AddEvent> {
         future: Future.value(Provider.of<User>(context)),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            if (widget.currentEvent != null) {
+              _eventFromDate = widget.currentEvent.eventFromDate;
+              _eventToDate = widget.currentEvent.eventToDate;
+            }
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: primaryPurple,
