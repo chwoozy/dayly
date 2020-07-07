@@ -40,6 +40,7 @@ class _TasksListState extends State<TasksList> {
                 },
                 category: task.tag,
                 priority: task.priorityScore,
+                duration: task.duration,
               ),
               background: Container(
                 child: Align(

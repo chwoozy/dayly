@@ -8,6 +8,7 @@ class TaskTile extends StatelessWidget {
   final Function checkboxCallback;
   final String category;
   final int priority;
+  final int duration;
 
   TaskTile(
       {this.isChecked,
@@ -15,7 +16,8 @@ class TaskTile extends StatelessWidget {
       this.checkboxCallback,
       this.taskDescription,
       this.category,
-      this.priority});
+      this.priority,
+      this.duration});
 
   Color getTagColor(String tag) {
     if (tag == null) {
@@ -60,16 +62,24 @@ class TaskTile extends StatelessWidget {
   String getPriority(int priorityScore) {
     if (priorityScore < 33) {
       return 'Low';
-      //_priorityScore = priorityScore;
     } else if (priorityScore < 66) {
       return 'Normal';
-      //_priorityScore = priorityScore;
     } else if (priorityScore < 99) {
       return 'Important';
-      //_priorityScore = priorityScore;
     } else {
       return 'Critical';
-      //_priorityScore = priorityScore;
+    }
+  }
+
+  String getDuration(int duration) {
+    if (duration != null) {
+//      int hours = duration ~/ 60;
+//      int mins = duration - hours * 60;
+//      return hours.toString() + 'h ' + mins.toString() + 'm';
+      String hours = (duration / 60).toStringAsFixed(1);
+      return hours + ' h';
+    } else {
+      return ' None ';
     }
   }
 
@@ -97,7 +107,7 @@ class TaskTile extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    flex: 4,
+                    flex: 5,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,6 +140,30 @@ class TaskTile extends StatelessWidget {
                         Row(
                           children: <Widget>[
                             Icon(
+                              Icons.access_alarm,
+                              color: Colors.black,
+                              size: 16,
+                            ),
+                            SizedBox(
+                              width: 8,
+                            ),
+                            Flexible(
+                              child: Text(
+                                'Duration: ' + getDuration(this.duration),
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Icon(
                               Icons.assignment_late,
                               color: Colors.black,
                               size: 16,
@@ -140,12 +174,11 @@ class TaskTile extends StatelessWidget {
                             Flexible(
                               child: Text(
                                 'Priority: ${getPriority(this.priority)}',
-                                //'Priority: Normal',
                                 style: GoogleFonts.lato(
                                   textStyle: TextStyle(
                                     color: Colors.black,
                                     fontSize: 15,
-                                    fontWeight: FontWeight.w900,
+                                    fontWeight: FontWeight.w600,
                                   ),
                                 ),
                               ),

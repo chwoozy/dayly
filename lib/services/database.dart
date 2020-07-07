@@ -108,6 +108,7 @@ class DatabaseService {
       bool isDone = document.data['isDone'];
       String tag = document.data['tag'];
       int priorityScore = document.data['priorityScore'];
+      int duration = document.data['duration'];
       String documentId = document.reference.documentID;
       //print(documentId);
       Task task = Task(
@@ -117,6 +118,7 @@ class DatabaseService {
         documentId: documentId,
         tag: tag,
         priorityScore: priorityScore,
+        duration: duration,
       );
       _taskList.add(task);
       if (task.isDone) {
@@ -141,6 +143,7 @@ class DatabaseService {
       'documentId': task.documentId,
       'tag': task.tag,
       'priorityScore': task.priorityScore,
+      'duration': task.duration,
     });
   }
 

@@ -25,13 +25,15 @@ class TaskData extends ChangeNotifier {
   }
 
   //Add new task to list
-  void addTask(
-      String taskTitle, String taskDescription, String tag, int priorityScore) {
+  void addTask(String taskTitle, String taskDescription, String tag,
+      int priorityScore, int duration) {
     final task = Task(
-        name: taskTitle,
-        description: taskDescription,
-        tag: tag,
-        priorityScore: priorityScore);
+      name: taskTitle,
+      description: taskDescription,
+      tag: tag,
+      priorityScore: priorityScore,
+      duration: duration,
+    );
     _tasks.add(task);
     notifyListeners();
   }

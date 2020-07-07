@@ -9,6 +9,7 @@ class Task {
   String tag;
   String documentId;
   int priorityScore;
+  int duration;
 
   Task(
       {@required this.name,
@@ -16,30 +17,33 @@ class Task {
       this.description,
       this.tag,
       this.documentId,
-      this.priorityScore});
+      this.priorityScore,
+      this.duration});
 
   void toggleDone() {
     isDone = !isDone;
   }
 
   //Convert to Json format
-  Map<String, dynamic> toMap() {
-    return {
-      'taskName': name,
-      'taskDescription': description,
-      'isDone': isDone,
-      'documentId': documentId,
-      'tag': tag,
-      'priorityScore': priorityScore,
-    };
-  }
+//  Map<String, dynamic> toMap() {
+//    return {
+//      'taskName': name,
+//      'taskDescription': description,
+//      'isDone': isDone,
+//      'documentId': documentId,
+//      'tag': tag,
+//      'priorityScore': priorityScore,
+//      'duration': duration,
+//    };
+//  }
 
   //Read snapshot from Firebase
-  Task.fromSnapshot(DocumentSnapshot snapshot) {
-    name = snapshot['taskName'];
-    description = snapshot['taskDescription'];
-    documentId = snapshot.documentID;
-    tag = snapshot['tag'];
-    priorityScore = snapshot['priorityScore'];
-  }
+//  Task.fromSnapshot(DocumentSnapshot snapshot) {
+//    name = snapshot['taskName'];
+//    description = snapshot['taskDescription'];
+//    documentId = snapshot.documentID;
+//    tag = snapshot['tag'];
+//    priorityScore = snapshot['priorityScore'];
+//    duration = snapshot['duration']
+//  }
 }
