@@ -121,7 +121,8 @@ class _CalendarState extends State<Calendar> {
                                       '',
                                       details.date,
                                       details.date,
-                                      primaryPurple))));
+                                      primaryPurple),
+                                  clickAdd: true)));
                     }
                   },
                   // monthViewSettings: MonthViewSettings(

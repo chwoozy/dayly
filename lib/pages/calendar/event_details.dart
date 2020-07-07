@@ -1,4 +1,5 @@
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/pages/calendar/add_event.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/models/event.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,21 @@ class EventDetails extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: primaryPurple,
         title: Text('Event Details'),
+        actions: <Widget>[
+          FlatButton(
+            child: Icon(
+              Icons.create,
+              color: primaryBackgroundColor,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (_) => AddEvent(currentEvent: event)));
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),

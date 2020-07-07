@@ -12,8 +12,9 @@ import 'package:provider/provider.dart';
 
 class AddEvent extends StatefulWidget {
   final Event currentEvent;
+  final bool clickAdd;
 
-  const AddEvent({this.currentEvent});
+  const AddEvent({Key key, this.currentEvent, this.clickAdd}) : super(key: key);
 
   @override
   _AddEventState createState() => _AddEventState();
@@ -55,15 +56,12 @@ class _AddEventState extends State<AddEvent> {
         future: Future.value(Provider.of<User>(context)),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (widget.currentEvent != null) {
-              _eventFromDate = widget.currentEvent.eventFromDate;
-              _eventToDate = widget.currentEvent.eventToDate;
-            }
             return Scaffold(
               appBar: AppBar(
                 backgroundColor: primaryPurple,
-                title: Text(
-                    widget.currentEvent != null ? "Edit Event" : "Add Event"),
+                title: Text(widget.currentEvent == null
+                    ? "Add Event"
+                    : widget.clickAdd == true ? "Add Event" : "Edit Event"),
               ),
               key: _key,
               body: Form(
@@ -109,7 +107,7 @@ class _AddEventState extends State<AddEvent> {
                                           ),
                                         );
                                       });
-                                  if (picked != null && _eventToDate != null) {
+                                  if (picked != null) {
                                     if (_eventToDate.isBefore(picked)) {
                                       setState(() {
                                         _eventFromDate = picked;
@@ -156,8 +154,7 @@ class _AddEventState extends State<AddEvent> {
                                           ),
                                         );
                                       });
-                                  if (picked != null &&
-                                      _eventFromDate != null) {
+                                  if (picked != null) {
                                     if (picked.isBefore(_eventFromDate)) {
                                       setState(() {
                                         _errorMsg = 'Invalid dates selected!';
@@ -228,9 +225,14 @@ class _AddEventState extends State<AddEvent> {
                                     });
                                     Event _event;
                                     if (widget.currentEvent != null) {
-                                      _event = await DatabaseService(
-                                              uid: snapshot.data.uid)
-                                          .updateEvent(widget.currentEvent);
+                                      _event = Event(
+                                        eid: widget.currentEvent.eid,
+                                        title: _title.text,
+                                        description: _description.text,
+                                        eventFromDate: _eventFromDate,
+                                        eventToDate: _eventToDate,
+                                        eventColor: _eventColor,
+                                      );
                                     } else {
                                       _event = Event.newEvent(
                                         _title.text,
@@ -239,10 +241,10 @@ class _AddEventState extends State<AddEvent> {
                                         _eventToDate,
                                         _eventColor,
                                       );
-                                      await DatabaseService(
-                                              uid: snapshot.data.uid)
-                                          .updateEvent(_event);
                                     }
+                                    await DatabaseService(
+                                            uid: snapshot.data.uid)
+                                        .updateEvent(_event);
                                     Navigator.pop(context);
                                     setState(() {
                                       processing = false;

@@ -46,9 +46,7 @@ class AuthService {
               Color(int.parse(value.colorId)),
             );
             await DatabaseService(uid: uid).updateEvent(newEvent);
-          }
-              // print("EVENT ${value.summary}, from ${value.start.dateTime} to ${value.end.dateTime}"))
-              )
+          })
         });
   }
 

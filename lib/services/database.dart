@@ -36,7 +36,7 @@ class DatabaseService {
         .collection('event')
         .document(event.eid)
         .setData({
-      'id': event.eid,
+      'eid': event.eid,
       'title': event.title,
       'description': event.description,
       'eventFromDate': event.eventFromDate,
@@ -64,7 +64,6 @@ class DatabaseService {
     final QuerySnapshot result =
         await userCollection.document(uid).collection('event').getDocuments();
     final mapped = result.documents.map(_eventFromSnapshot);
-    print(mapped.toList());
     return mapped.toList();
   }
 
@@ -81,7 +80,7 @@ class DatabaseService {
   // Event from Snapshot
   Event _eventFromSnapshot(DocumentSnapshot snapshot) {
     return Event(
-      eid: snapshot.data['eid'],
+      eid: snapshot.data['eid'].toString(),
       title: snapshot.data['title'],
       description: snapshot.data['description'],
       eventFromDate: snapshot.data['eventFromDate'].toDate(),
