@@ -19,13 +19,14 @@ class Event {
     this.eventFromDate,
     this.eventToDate,
     this.eventColor,
-  }) : this.isAllDay = eventFromDate.compareTo(eventToDate) != 0 ? false : true;
+  }) : this.isAllDay = false;
+  // }) : this.isAllDay = eventFromDate.compareTo(eventToDate) != 0 ? false : true;
 
   Event.newEvent(this.title, this.description, this.eventFromDate,
       this.eventToDate, this.eventColor)
       : this.eid = _uuid.v4(),
-        this.isAllDay =
-            eventFromDate.compareTo(eventToDate) != 0 ? false : true;
+        this.isAllDay = false;
+  // eventFromDate.compareTo(eventToDate) != 0 ? false : true;
 }
 
 class EventDataSource extends CalendarDataSource {

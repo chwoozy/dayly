@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:flutter/material.dart' as material;
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/services/googlehttpclient.dart';
@@ -36,20 +36,21 @@ class AuthService {
     final httpClient = GoogleHttpClient(headers);
     var calendar = CalendarApi(httpClient);
     var calEvents = calendar.events.list("primary");
-    calEvents.then((events) => {
-          events.items.forEach((value) async {
-            eventModel.Event newEvent = eventModel.Event.newEvent(
-              value.summary,
-              value.description,
-              value.start.dateTime,
-              value.end.dateTime,
-              Color(int.parse(value.colorId)),
-            );
-            await DatabaseService(uid: uid).updateEvent(newEvent);
-          }
-              // print("EVENT ${value.summary}, from ${value.start.dateTime} to ${value.end.dateTime}"))
-              )
-        });
+    calEvents.then((events) {
+      events.items.forEach((value) async {
+        print(value.summary);
+        eventModel.Event newEvent = eventModel.Event.newEvent(
+          value.summary,
+          value.description,
+          value.start.dateTime ?? value.start.date,
+          value.end.dateTime ?? value.end.date,
+          material.Colors.orange,
+        );
+        await DatabaseService(uid: uid).updateEvent(newEvent);
+        // print(value.colorId);
+      });
+      print("Complete import from Google Calendar!");
+    });
   }
 
   // Sign In with Google
@@ -75,6 +76,7 @@ class AuthService {
     assert(user.uid == currentUser.uid);
 
     bool isNewUser = !(await DatabaseService(uid: user.uid).checkUser).exists;
+    print(isNewUser.toString());
     if (isNewUser) {
       await DatabaseService(uid: user.uid)
           .updateUserData(user.email, user.displayName, user.photoUrl);

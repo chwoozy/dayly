@@ -2,6 +2,7 @@ import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/models/event.dart';
 import 'package:dayly/models/user.dart';
+import 'package:dayly/pages/calendar/add_event.dart';
 import 'package:dayly/pages/calendar/event_details.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
@@ -95,6 +96,7 @@ class _CalendarState extends State<Calendar> {
                   backgroundColor: primaryBackgroundColor,
                   timeSlotViewSettings: TimeSlotViewSettings(
                     timeIntervalHeight: 70,
+                    minimumAppointmentDuration: Duration(minutes: 30),
                   ),
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
@@ -105,10 +107,27 @@ class _CalendarState extends State<Calendar> {
                     List tappedEvent = details.appointments;
                     if (tappedEvent != null) {
                       Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      EventDetails(event: tappedEvent[0])))
+                          .then((value) {
+                        setState(() {});
+                      });
+                    } else {
+                      Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (_) =>
-                                  EventDetails(event: tappedEvent[0])));
+                              builder: (_) => AddEvent(
+                                  currentEvent: Event.newEvent(
+                                      '',
+                                      '',
+                                      details.date,
+                                      details.date.add(Duration(minutes: 30)),
+                                      primaryPurple),
+                                  clickAdd: true))).then((value) {
+                        setState(() {});
+                      });
                     }
                   },
                   // monthViewSettings: MonthViewSettings(
