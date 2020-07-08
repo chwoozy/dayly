@@ -3,6 +3,7 @@ import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/rounded-button.dart';
 import 'package:dayly/models/user.dart';
+import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _formKey = GlobalKey<FormState>();
+  final AuthService _authService = AuthService();
 
   // Form States
   String _displayName = '';
@@ -24,6 +26,8 @@ class _ProfileState extends State<Profile> {
   String _photoUrl = '';
   bool loading = false;
   bool updating = false;
+  bool processing = false;
+  String _errorMsg = '';
   File _uploadedImage;
   final _picker = ImagePicker();
 
@@ -228,7 +232,31 @@ class _ProfileState extends State<Profile> {
                                 },
                                 textColor: Colors.white,
                               ),
-                            )
+                            ),
+                            processing
+                                ? Center(child: CircularProgressIndicator())
+                                : Center(
+                                    child: RoundedButton(
+                                      color: Colors.grey,
+                                      text: 'Import from Google Calendar',
+                                      press: () async {
+                                        setState(() {
+                                          processing = true;
+                                        });
+                                        try {
+                                          await _authService
+                                              .getEvents(snapshot.data.uid);
+                                          print("Success!");
+                                        } catch (e) {
+                                          print(e);
+                                        }
+                                        setState(() {
+                                          processing = false;
+                                        });
+                                      },
+                                      textColor: Colors.black,
+                                    ),
+                                  ),
                           ]),
                     ),
                   );

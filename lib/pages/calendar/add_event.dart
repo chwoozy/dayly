@@ -44,7 +44,7 @@ class _AddEventState extends State<AddEvent> {
         : DateTime.now();
     _eventToDate = widget.currentEvent != null
         ? widget.currentEvent.eventToDate
-        : DateTime.now();
+        : DateTime.now().add(Duration(minutes: 30));
     _eventColor = const Color(0xFF0F8644);
     processing = false;
     _errorMsg = '';

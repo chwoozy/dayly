@@ -107,10 +107,13 @@ class _CalendarState extends State<Calendar> {
                     List tappedEvent = details.appointments;
                     if (tappedEvent != null) {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) =>
-                                  EventDetails(event: tappedEvent[0])));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      EventDetails(event: tappedEvent[0])))
+                          .then((value) {
+                        setState(() {});
+                      });
                     } else {
                       Navigator.push(
                           context,
@@ -120,9 +123,11 @@ class _CalendarState extends State<Calendar> {
                                       '',
                                       '',
                                       details.date,
-                                      details.date,
+                                      details.date.add(Duration(minutes: 30)),
                                       primaryPurple),
-                                  clickAdd: true)));
+                                  clickAdd: true))).then((value) {
+                        setState(() {});
+                      });
                     }
                   },
                   // monthViewSettings: MonthViewSettings(

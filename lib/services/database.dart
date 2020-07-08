@@ -45,6 +45,14 @@ class DatabaseService {
     });
   }
 
+  Future<void> deleteEvent(Event event) async {
+    return await userCollection
+        .document(uid)
+        .collection('event')
+        .document(event.eid)
+        .delete();
+  }
+
   Future<DocumentSnapshot> get checkUser {
     return userCollection.document(uid).get();
   }
