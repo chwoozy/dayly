@@ -42,8 +42,8 @@ class AuthService {
         eventModel.Event newEvent = eventModel.Event.newEvent(
           value.summary,
           value.description,
-          value.start.dateTime,
-          value.end.dateTime,
+          value.start.dateTime ?? value.start.date,
+          value.end.dateTime ?? value.end.date,
           material.Colors.orange,
         );
         await DatabaseService(uid: uid).updateEvent(newEvent);
