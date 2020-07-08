@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:dayly/models/task.dart';
 import 'dart:collection';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskData extends ChangeNotifier {
   int _finishedTaskCount = 0;
@@ -26,8 +25,15 @@ class TaskData extends ChangeNotifier {
   }
 
   //Add new task to list
-  void addTask(String taskTitle, String taskDescription, String tag) {
-    final task = Task(name: taskTitle, description: taskDescription, tag: tag);
+  void addTask(String taskTitle, String taskDescription, String tag,
+      int priorityScore, int duration) {
+    final task = Task(
+      name: taskTitle,
+      description: taskDescription,
+      tag: tag,
+      priorityScore: priorityScore,
+      duration: duration,
+    );
     _tasks.add(task);
     notifyListeners();
   }

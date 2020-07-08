@@ -83,7 +83,7 @@ class _TasksScreenState extends State<TasksScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 10,
                         ),
                         Align(
                           alignment: Alignment.center,
@@ -92,7 +92,7 @@ class _TasksScreenState extends State<TasksScreen> {
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                 color: Colors.black,
-                                fontSize: 40,
+                                fontSize: 35,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
@@ -102,8 +102,8 @@ class _TasksScreenState extends State<TasksScreen> {
                           height: 20,
                         ),
                         Container(
-                          padding: EdgeInsets.all(15),
-                          height: 136,
+                          padding: EdgeInsets.all(20),
+                          height: 120,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
                             color: Colors.white,
