@@ -18,12 +18,14 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   final AuthService _authService = AuthService();
+  CalendarController _calendarController;
   DateTime selectedDate;
 
   @override
   void initState() {
+    _calendarController = CalendarController();
+    _calendarController.displayDate = DateTime.now();
     super.initState();
-    selectedDate = DateTime.now();
   }
   // CalendarController _controller;
   // Map<DateTime, List<dynamic>> _events;
@@ -86,14 +88,14 @@ class _CalendarState extends State<Calendar> {
             IconButton(
               icon: Icon(Icons.calendar_today),
               onPressed: () async {
-                final dateTime = await showModalBottomSheet(
+                DateTime dateTime = await showModalBottomSheet(
                     context: context,
                     builder: (BuildContext builder) {
                       return MonthView(user: _user);
                     });
                 if (dateTime != null) {
                   setState(() {
-                    selectedDate = dateTime;
+                    _calendarController.displayDate = dateTime;
                   });
                 }
               },
@@ -113,6 +115,8 @@ class _CalendarState extends State<Calendar> {
               if (snapshot.hasData) {
                 return SfCalendar(
                   view: CalendarView.day,
+                  initialDisplayDate: selectedDate,
+                  controller: _calendarController,
                   dataSource: EventDataSource(snapshot.data),
                   todayHighlightColor: primaryPurple,
                   cellBorderColor: Colors.grey[500],
