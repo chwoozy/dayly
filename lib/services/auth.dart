@@ -38,7 +38,6 @@ class AuthService {
     var calEvents = calendar.events.list("primary");
     calEvents.then((events) {
       events.items.forEach((value) async {
-        print(value.summary);
         eventModel.Event newEvent = eventModel.Event.newEvent(
           value.summary,
           value.description,

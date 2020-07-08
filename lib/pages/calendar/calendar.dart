@@ -4,6 +4,7 @@ import 'package:dayly/models/event.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/pages/calendar/add_event.dart';
 import 'package:dayly/pages/calendar/event_details.dart';
+import 'package:dayly/pages/calendar/month_view.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,13 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   final AuthService _authService = AuthService();
+  DateTime selectedDate;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedDate = DateTime.now();
+  }
   // CalendarController _controller;
   // Map<DateTime, List<dynamic>> _events;
   // List<dynamic> _selectedEvents;
@@ -75,6 +83,21 @@ class _CalendarState extends State<Calendar> {
           backgroundColor: primaryPurple,
           elevation: 0.0,
           actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.calendar_today),
+              onPressed: () async {
+                final dateTime = await showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext builder) {
+                      return MonthView(user: _user);
+                    });
+                if (dateTime != null) {
+                  setState(() {
+                    selectedDate = dateTime;
+                  });
+                }
+              },
+            ),
             IconButton(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               icon: Icon(Icons.exit_to_app),
