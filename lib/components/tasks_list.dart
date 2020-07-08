@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:dayly/components/task_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/models/task_data.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/models/user.dart';
-import 'package:dayly/models/task.dart';
 
 class TasksList extends StatefulWidget {
   @override
@@ -41,6 +39,8 @@ class _TasksListState extends State<TasksList> {
                       .updateTask(task, task.isDone);
                 },
                 category: task.tag,
+                priority: task.priorityScore,
+                duration: task.duration,
               ),
               background: Container(
                 child: Align(

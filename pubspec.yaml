@@ -53,6 +53,7 @@ dependencies:
   google_fonts: ^1.1.0
   percent_indicator: ^2.1.5
   circular_check_box: ^1.0.2
+  numberpicker: ^1.2.0
 
   # Validations
   email_validator: ^1.0.4

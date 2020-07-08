@@ -1,4 +1,6 @@
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/components/slider_widget.dart';
+import 'package:dayly/models/priority.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +10,7 @@ import 'package:dayly/components/category_tag.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/models/user.dart';
 import 'tasks_screen.dart';
+import 'package:flutter/cupertino.dart';
 
 class AddTaskScreen extends StatefulWidget {
   @override
@@ -20,11 +23,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Color _tagColor;
   String _tag = '';
   bool _validate = false;
+  int _priorityScore = 33;
+  Duration _initialTimer = Duration(hours: 0, minutes: 0);
 
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
     var size = MediaQuery.of(context).size;
+    Priority priorityData = Priority();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -92,6 +98,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           height: 10,
                         ),
                         TextField(
+                          textInputAction: TextInputAction.done,
                           showCursor: true,
                           decoration: InputDecoration(
                             hintText: 'Add Task Name',
@@ -99,8 +106,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 _validate ? 'Please enter a task title' : null,
                           ),
                           cursorColor: Colors.white,
-                          autofocus: true,
+                          //autofocus: true,
                           textAlign: TextAlign.left,
+                          onSubmitted: (value) {
+                            FocusNode().unfocus();
+                          },
                           onChanged: (newText) {
                             _newTaskTitle = newText;
                           },
@@ -129,12 +139,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           height: 10,
                         ),
                         TextField(
+                          textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             hintText: 'Add Description',
                           ),
                           cursorColor: Colors.white,
-                          autofocus: true,
+                          autofocus: false,
                           textAlign: TextAlign.left,
+                          onSubmitted: (value) {
+                            FocusNode().unfocus();
+                          },
                           onChanged: (newText) {
                             _taskDescription = newText;
                           },
@@ -143,7 +157,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 20,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20),
@@ -156,14 +170,14 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                 color: Colors.black,
-                                fontSize: 30,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: 40,
+                          height: 15,
                         ),
                         Column(
                           children: <Widget>[
@@ -196,7 +210,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 ),
                               ],
                             ),
-                            SizedBox(height: 20),
+                            SizedBox(height: 10),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
@@ -222,7 +236,153 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                         ),
                       ],
                     ),
-                  )
+                  ),
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Priority',
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SliderWidget(
+                          //priorityScore: this.priorityScore.toDouble(),
+                          priorityData: priorityData,
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Duration',
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 40,
+                            ),
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              textColor: Colors.white,
+                              child: Text(
+                                _initialTimer.compareTo(
+                                            Duration(hours: 0, minutes: 0)) ==
+                                        1
+                                    ? _initialTimer.inHours.toString() +
+                                        "h " +
+                                        (_initialTimer.inMinutes -
+                                                _initialTimer.inHours * 60)
+                                            .toString() +
+                                        'min'
+                                    : "Add Duration",
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              color: Colors.lightBlue,
+                              onPressed: () async {
+                                await showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext builder) {
+                                      return Container(
+                                        padding: EdgeInsets.only(top: 20),
+                                        height: MediaQuery.of(context)
+                                                .copyWith()
+                                                .size
+                                                .height /
+                                            3,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                SizedBox(
+                                                  width: 65,
+                                                ),
+                                                Center(
+                                                  child: Text(
+                                                    'Duration',
+                                                    style: GoogleFonts.lato(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 25,
+                                                ),
+                                                RaisedButton(
+                                                  color: Colors.lightBlue,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18),
+                                                  ),
+                                                  padding: EdgeInsets.all(12),
+                                                  textColor: Colors.white,
+                                                  child: Text('Done'),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            CupertinoTimerPicker(
+                                              mode: CupertinoTimerPickerMode.hm,
+                                              minuteInterval: 1,
+                                              secondInterval: 1,
+                                              initialTimerDuration:
+                                                  _initialTimer,
+                                              onTimerDurationChanged:
+                                                  (Duration changedTimer) {
+                                                setState(() {
+                                                  _initialTimer = changedTimer;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -242,10 +402,19 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 onPressed: () async {
                   setState(() {
                     _newTaskTitle == '' ? _validate = true : _validate = false;
+                    _priorityScore = priorityData.priorityScore == null
+                        ? 66
+                        : priorityData.priorityScore;
+                    //getPriority(_priorityScore);
                   });
+
                   if (!_validate) {
-                    Provider.of<TaskData>(context, listen: false)
-                        .addTask(_newTaskTitle, _taskDescription, _tag);
+                    Provider.of<TaskData>(context, listen: false).addTask(
+                        _newTaskTitle,
+                        _taskDescription,
+                        _tag,
+                        _priorityScore,
+                        _initialTimer.inMinutes);
 
                     //Add new task to database
                     await Firestore.instance
@@ -257,6 +426,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       'taskDescription': _taskDescription,
                       'isDone': false,
                       'tag': _tag,
+                      'priorityScore': _priorityScore,
+                      'duration': _initialTimer.inMinutes,
                     });
 
                     Navigator.push(context,
