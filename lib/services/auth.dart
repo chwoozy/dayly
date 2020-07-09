@@ -38,12 +38,22 @@ class AuthService {
     var calEvents = calendar.events.list("primary");
     calEvents.then((events) {
       events.items.forEach((value) async {
+        if (value.recurrence != null) {
+          value.recurrence.length == 2
+              ? print(value.recurrence[1].substring(6))
+              : print(value.recurrence[0].substring(6));
+        }
         eventModel.Event newEvent = eventModel.Event.newEvent(
           value.summary,
           value.description,
           value.start.dateTime ?? value.start.date,
           value.end.dateTime ?? value.end.date,
           material.Colors.orange,
+          value.recurrence == null
+              ? null
+              : value.recurrence.length == 2
+                  ? value.recurrence[1].substring(6)
+                  : value.recurrence[0].substring(6),
         );
         await DatabaseService(uid: uid).updateEvent(newEvent);
         // print(value.colorId);

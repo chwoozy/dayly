@@ -10,6 +10,7 @@ class Event {
   final DateTime eventFromDate;
   final DateTime eventToDate;
   final Color eventColor;
+  final String recurrence;
   final bool isAllDay;
 
   Event({
@@ -19,11 +20,12 @@ class Event {
     this.eventFromDate,
     this.eventToDate,
     this.eventColor,
+    this.recurrence,
   }) : this.isAllDay = false;
   // }) : this.isAllDay = eventFromDate.compareTo(eventToDate) != 0 ? false : true;
 
   Event.newEvent(this.title, this.description, this.eventFromDate,
-      this.eventToDate, this.eventColor)
+      this.eventToDate, this.eventColor, this.recurrence)
       : this.eid = _uuid.v4(),
         this.isAllDay = false;
   // eventFromDate.compareTo(eventToDate) != 0 ? false : true;
@@ -56,6 +58,11 @@ class EventDataSource extends CalendarDataSource {
   @override
   Color getColor(int index) {
     return appointments[index].eventColor;
+  }
+
+  @override
+  String getRecurrenceRule(int index) {
+    return appointments[index].recurrence;
   }
 
   @override
