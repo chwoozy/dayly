@@ -39,13 +39,16 @@ class AuthService {
     var calEvents = calendar.events.list("primary");
     calEvents.then((events) {
       events.items.forEach((value) async {
-        eventModel.Event newEvent = eventModel.Event.newEvent(
-          value.summary,
-          value.description,
-          value.start.dateTime ?? value.start.date,
-          value.end.dateTime ?? value.end.date,
-          material.Colors.orange,
-          value.recurrence == null
+        // print(
+        //     "iCalUID: ${value.iCalUID} eTag: ${value.etag} eTag: ${value.etag} id: ${value.id} kind: ${value.kind} status: ${value.status} reminders: ${value.reminders} colorID: ${value.colorId}");
+        eventModel.Event newEvent = eventModel.Event(
+          eid: value.iCalUID,
+          title: value.summary,
+          description: value.description,
+          eventFromDate: value.start.dateTime ?? value.start.date,
+          eventToDate: value.end.dateTime ?? value.end.date,
+          eventColor: material.Colors.orange,
+          recurrenceRule: value.recurrence == null
               ? null
               : value.recurrence.length == 2
                   ? value.recurrence[1].substring(6)
