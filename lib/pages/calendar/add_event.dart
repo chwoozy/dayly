@@ -26,7 +26,7 @@ class _AddEventState extends State<AddEvent> {
   DateTime _eventFromDate;
   DateTime _eventToDate;
   Color _eventColor;
-  String _recurrence;
+  String _recurrenceRule;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
@@ -47,8 +47,8 @@ class _AddEventState extends State<AddEvent> {
         ? widget.currentEvent.eventToDate
         : DateTime.now().add(Duration(minutes: 30));
     _eventColor = const Color(0xFF0F8644);
-    _recurrence =
-        widget.currentEvent != null ? widget.currentEvent.recurrence : null;
+    _recurrenceRule =
+        widget.currentEvent != null ? widget.currentEvent.recurrenceRule : null;
     processing = false;
     _errorMsg = '';
   }
@@ -235,7 +235,7 @@ class _AddEventState extends State<AddEvent> {
                                         eventFromDate: _eventFromDate,
                                         eventToDate: _eventToDate,
                                         eventColor: _eventColor,
-                                        recurrence: _recurrence,
+                                        recurrenceRule: _recurrenceRule,
                                       );
                                     } else {
                                       _event = Event.newEvent(
@@ -244,7 +244,7 @@ class _AddEventState extends State<AddEvent> {
                                         _eventFromDate,
                                         _eventToDate,
                                         _eventColor,
-                                        _recurrence,
+                                        _recurrenceRule,
                                       );
                                     }
                                     await DatabaseService(

@@ -42,6 +42,7 @@ class DatabaseService {
       'eventFromDate': event.eventFromDate,
       'eventToDate': event.eventToDate,
       'eventColor': event.eventColor.value,
+      'recurrenceRule': event.recurrenceRule,
     });
   }
 
@@ -94,6 +95,7 @@ class DatabaseService {
       eventFromDate: snapshot.data['eventFromDate'].toDate(),
       eventToDate: snapshot.data['eventToDate'].toDate(),
       eventColor: Color(snapshot.data['eventColor']).withOpacity(1),
+      recurrenceRule: snapshot.data['recurrenceRule'],
     );
   }
 
@@ -117,7 +119,6 @@ class DatabaseService {
       int priorityScore = document.data['priorityScore'];
       int duration = document.data['duration'];
       String documentId = document.reference.documentID;
-      //print(documentId);
       Task task = Task(
         name: taskTitle,
         description: taskSummary,
@@ -142,7 +143,6 @@ class DatabaseService {
         .document(uid)
         .collection('tasks')
         .document(task.documentId);
-    print(task.documentId);
     return await doc.setData({
       'taskName': task.name,
       'taskDescription': task.description,

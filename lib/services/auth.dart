@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dayly/models/event.dart' as eventModel;
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -38,11 +39,6 @@ class AuthService {
     var calEvents = calendar.events.list("primary");
     calEvents.then((events) {
       events.items.forEach((value) async {
-        if (value.recurrence != null) {
-          value.recurrence.length == 2
-              ? print(value.recurrence[1].substring(6))
-              : print(value.recurrence[0].substring(6));
-        }
         eventModel.Event newEvent = eventModel.Event.newEvent(
           value.summary,
           value.description,
@@ -56,7 +52,6 @@ class AuthService {
                   : value.recurrence[0].substring(6),
         );
         await DatabaseService(uid: uid).updateEvent(newEvent);
-        // print(value.colorId);
       });
       print("Complete import from Google Calendar!");
     });
