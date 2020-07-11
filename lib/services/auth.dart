@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:googleapis/calendar/v3.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:dayly/models/event.dart' as eventModel;
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -44,9 +45,13 @@ class AuthService {
           value.start.dateTime ?? value.start.date,
           value.end.dateTime ?? value.end.date,
           material.Colors.orange,
+          value.recurrence == null
+              ? null
+              : value.recurrence.length == 2
+                  ? value.recurrence[1].substring(6)
+                  : value.recurrence[0].substring(6),
         );
         await DatabaseService(uid: uid).updateEvent(newEvent);
-        // print(value.colorId);
       });
       print("Complete import from Google Calendar!");
     });

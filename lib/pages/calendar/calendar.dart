@@ -18,12 +18,13 @@ class Calendar extends StatefulWidget {
 
 class _CalendarState extends State<Calendar> {
   final AuthService _authService = AuthService();
-  DateTime selectedDate;
+  CalendarController _calendarController;
 
   @override
   void initState() {
+    _calendarController = CalendarController();
+    _calendarController.displayDate = DateTime.now();
     super.initState();
-    selectedDate = DateTime.now();
   }
   // CalendarController _controller;
   // Map<DateTime, List<dynamic>> _events;
@@ -86,14 +87,17 @@ class _CalendarState extends State<Calendar> {
             IconButton(
               icon: Icon(Icons.calendar_today),
               onPressed: () async {
-                final dateTime = await showModalBottomSheet(
+                DateTime dateTime = await showModalBottomSheet(
                     context: context,
                     builder: (BuildContext builder) {
-                      return MonthView(user: _user);
+                      return MonthView(
+                        user: _user,
+                        selectedDate: _calendarController.displayDate,
+                      );
                     });
                 if (dateTime != null) {
                   setState(() {
-                    selectedDate = dateTime;
+                    _calendarController.displayDate = dateTime;
                   });
                 }
               },
@@ -112,7 +116,8 @@ class _CalendarState extends State<Calendar> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return SfCalendar(
-                  view: CalendarView.day,
+                  view: CalendarView.week,
+                  controller: _calendarController,
                   dataSource: EventDataSource(snapshot.data),
                   todayHighlightColor: primaryPurple,
                   cellBorderColor: Colors.grey[500],
@@ -147,7 +152,8 @@ class _CalendarState extends State<Calendar> {
                                       '',
                                       details.date,
                                       details.date.add(Duration(minutes: 30)),
-                                      primaryPurple),
+                                      primaryPurple,
+                                      null),
                                   clickAdd: true))).then((value) {
                         setState(() {});
                       });
