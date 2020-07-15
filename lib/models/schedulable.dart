@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:dayly/models/event.dart';
 
 class Schedulable extends Comparable<Schedulable> {
