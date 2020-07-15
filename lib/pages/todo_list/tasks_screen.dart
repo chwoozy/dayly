@@ -1,14 +1,20 @@
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/models/schedulable.dart';
+import 'package:dayly/pages/todo_list/select_time_screen.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components//tasks_list.dart';
 import 'package:dayly/pages/todo_list/add_task_screen.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/models/task_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/components/loading.dart';
+import 'package:dayly/models/task.dart';
+import 'package:dayly/components/floating_button.dart';
+import 'package:flutter/cupertino.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -16,26 +22,213 @@ class TasksScreen extends StatefulWidget {
 }
 
 class _TasksScreenState extends State<TasksScreen> {
-  bool _loadingInProgress = false;
+  bool _loadingInProgress = true;
+  List<Schedulable> _selectedTask = [];
+  List<Schedulable> _listForScheduling = [];
+  int _totalDuration = 0;
+
+  int getTotalDuration(List<Schedulable> selectedTasks) {
+    int result = 0;
+    for (int i = 0; i < selectedTasks.length; i++) {
+      if (selectedTasks != null &&
+          selectedTasks[i].toBeScheduled &&
+          selectedTasks[i].duration != null) {
+        result += selectedTasks[i].duration;
+      }
+    }
+    return result;
+  }
+
+  List<Schedulable> getSelectedTasks(List<Schedulable> selectedTasks) {
+    List<Schedulable> _selectedTask = [];
+    for (int i = 0; i < selectedTasks.length; i++) {
+      if (selectedTasks != null && selectedTasks[i].toBeScheduled) {
+        _selectedTask.add(selectedTasks[i]);
+      }
+    }
+    return _selectedTask;
+  }
+
+  void _taskEditModalBottomSheet(
+      BuildContext context, List<Schedulable> listForScheduling) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(22),
+            topLeft: Radius.circular(22),
+          ),
+        ),
+        builder: (context) {
+          return Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(22),
+            ),
+            height: MediaQuery.of(context).size.height * .50,
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Text(
+                        'Select Task For Scheduling',
+                        style: GoogleFonts.lato(
+                          textStyle: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      IconButton(
+                        icon: Icon(
+                          Icons.cancel,
+                          color: Colors.orange,
+                          size: 35,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      )
+                    ],
+                  ),
+                  Expanded(
+                    child: ListView.separated(
+                      padding: EdgeInsets.symmetric(vertical: 10),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: listForScheduling.length,
+                      separatorBuilder: (BuildContext context, int index) =>
+                          Divider(),
+                      itemBuilder: (context, index) {
+                        final schedulable = listForScheduling[index];
+                        return Container(
+                          padding: EdgeInsets.only(left: 10),
+                          decoration: BoxDecoration(
+                            border:
+                                Border.all(style: BorderStyle.solid, width: 1),
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white,
+                          ),
+                          child: StatefulBuilder(
+                            builder:
+                                (BuildContext context, StateSetter setState) {
+                              return ListTile(
+                                title: Text(
+                                  schedulable.name,
+                                  style: GoogleFonts.lato(
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  'Duration: ' +
+                                      getDuration(schedulable.duration),
+                                  style: GoogleFonts.lato(
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ),
+                                trailing: Checkbox(
+                                  value: schedulable.toBeScheduled,
+                                  onChanged: (checkboxState) {
+                                    setState(() {
+                                      schedulable.toggleScheduling();
+                                    });
+                                  },
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .03,
+                  ),
+                  RaisedButton(
+                    color: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    padding: EdgeInsets.all(12),
+                    textColor: Colors.white,
+                    child: Text('Next'),
+                    onPressed: () async {
+                      _totalDuration = getTotalDuration(listForScheduling);
+                      _selectedTask = getSelectedTasks(listForScheduling);
+                      //print(_totalDuration);
+                      Navigator.pop(context);
+                      await showModalBottomSheet(
+                          context: context,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(22),
+                              topLeft: Radius.circular(22),
+                            ),
+                          ),
+                          builder: (context) => SelectTimeScreen(
+                                duration: _totalDuration,
+                                listForScheduling: _selectedTask,
+                              ));
+                    },
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  String getDuration(int duration) {
+    if (duration != null) {
+      String hours = (duration / 60).toStringAsFixed(1);
+      return hours + ' h';
+    } else {
+      return ' None ';
+    }
+  }
+
+  void _getTaskData() async {
+    User user = Provider.of<User>(context, listen: false);
+    DatabaseService databaseService = DatabaseService(uid: user.uid);
+    TaskData taskData = Provider.of<TaskData>(context, listen: false);
+    await databaseService.getTasks(taskData);
+    setState(() {
+      _loadingInProgress = false;
+    });
+  }
 
   //Obtain task data from Firebase
   @override
   void initState() {
     super.initState();
-    User user = Provider.of<User>(context, listen: false);
-    DatabaseService databaseService = DatabaseService(uid: user.uid);
-    TaskData taskData = Provider.of<TaskData>(context, listen: false);
-    databaseService.getTasks(taskData);
-    setState(() {
-      _loadingInProgress = true;
-    });
+    _getTaskData();
+//    User user = Provider.of<User>(context, listen: false);
+//    DatabaseService databaseService = DatabaseService(uid: user.uid);
+//    TaskData taskData = Provider.of<TaskData>(context, listen: false);
+//    databaseService.getTasks(taskData);
+//    setState(() {
+//      _loadingInProgress = false;
+//    });
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     TaskData tasks = Provider.of<TaskData>(context, listen: true);
-    return !_loadingInProgress
+    _listForScheduling = tasks.toSchedule();
+    //_selectedTask = [];
+    return _loadingInProgress
         ? Loading()
         : Scaffold(
             body: Stack(
@@ -64,23 +257,28 @@ class _TasksScreenState extends State<TasksScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: FloatingActionButton(
-                            backgroundColor: Colors.red,
-                            elevation: 10,
-                            child: Icon(
-                              Icons.add,
-                              color: Colors.white,
-                              size: 30,
+                        Row(
+                          children: <Widget>[
+                            FloatingButton(
+                              icon: Icons.date_range,
+                              tag: 'btn1',
+                              onPressCallback: () {
+                                _taskEditModalBottomSheet(
+                                    context, _listForScheduling);
+                              },
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => AddTaskScreen()));
-                            },
-                          ),
+                            Spacer(),
+                            FloatingButton(
+                              icon: Icons.add,
+                              tag: 'btn2',
+                              onPressCallback: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddTaskScreen()));
+                              },
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 10,

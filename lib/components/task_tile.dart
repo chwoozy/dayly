@@ -60,11 +60,11 @@ class TaskTile extends StatelessWidget {
   }
 
   String getPriority(int priorityScore) {
-    if (priorityScore < 33) {
+    if (priorityScore < 25) {
       return 'Low';
-    } else if (priorityScore < 66) {
+    } else if (priorityScore < 50) {
       return 'Normal';
-    } else if (priorityScore < 99) {
+    } else if (priorityScore < 75) {
       return 'Important';
     } else {
       return 'Critical';
@@ -85,6 +85,7 @@ class TaskTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(this.priority);
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

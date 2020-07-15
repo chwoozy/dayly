@@ -54,6 +54,11 @@ dependencies:
   percent_indicator: ^2.1.5
   circular_check_box: ^1.0.2
   numberpicker: ^1.2.0
+  timeline_tile: ^0.1.2
+  modal_bottom_sheet: ^0.2.0+1
+#  reorderables:
+#  implicitly_animated_reorderable_list: ^0.2.3
+#  flutter_reorderable_list: ^0.1.4
 
   # Validations
   email_validator: ^1.0.4
