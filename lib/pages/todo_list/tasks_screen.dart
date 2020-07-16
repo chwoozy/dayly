@@ -13,6 +13,8 @@ import 'package:dayly/models/user.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/floating_button.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:flutter_material_pickers/flutter_material_pickers.dart';
 
 class TasksScreen extends StatefulWidget {
   @override
@@ -24,6 +26,12 @@ class _TasksScreenState extends State<TasksScreen> {
   List<Schedulable> _selectedTask = [];
   List<Schedulable> _listForScheduling = [];
   int _totalDuration = 0;
+  String productivityLevel = 'High';
+  List<String> productivity = <String>[
+    'High',
+    'Medium',
+    'Low',
+  ];
 
   int getTotalDuration(List<Schedulable> selectedTasks) {
     int result = 0;
@@ -49,7 +57,7 @@ class _TasksScreenState extends State<TasksScreen> {
 
   void _taskEditModalBottomSheet(
       BuildContext context, List<Schedulable> listForScheduling) {
-    showModalBottomSheet(
+    showBarModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -57,130 +65,200 @@ class _TasksScreenState extends State<TasksScreen> {
             topLeft: Radius.circular(22),
           ),
         ),
-        builder: (context) {
-          return Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(22),
-            ),
-            height: MediaQuery.of(context).size.height * .50,
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text(
-                        'Select Task For Scheduling',
-                        style: GoogleFonts.lato(
-                          textStyle: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      Spacer(),
-                      IconButton(
-                        icon: Icon(
-                          Icons.cancel,
-                          color: Colors.orange,
-                          size: 35,
-                        ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                  ),
-                  Expanded(
-                    child: ListView.separated(
-                      padding: EdgeInsets.symmetric(vertical: 10),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: listForScheduling.length,
-                      separatorBuilder: (BuildContext context, int index) =>
-                          Divider(),
-                      itemBuilder: (context, index) {
-                        final schedulable = listForScheduling[index];
-                        return Container(
-                          padding: EdgeInsets.only(left: 10),
-                          decoration: BoxDecoration(
-                            border:
-                                Border.all(style: BorderStyle.solid, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.white,
-                          ),
-                          child: StatefulBuilder(
-                            builder:
-                                (BuildContext context, StateSetter setState) {
-                              return ListTile(
-                                title: Text(
-                                  schedulable.name,
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  'Duration: ' +
-                                      getDuration(schedulable.duration),
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ),
-                                trailing: Checkbox(
-                                  value: schedulable.toBeScheduled,
-                                  onChanged: (checkboxState) {
-                                    setState(() {
-                                      schedulable.toggleScheduling();
-                                    });
-                                  },
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * .03,
-                  ),
-                  RaisedButton(
-                    color: Colors.black87,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    padding: EdgeInsets.all(12),
-                    textColor: Colors.white,
-                    child: Text('Next'),
-                    onPressed: () async {
-                      _totalDuration = getTotalDuration(listForScheduling);
-                      _selectedTask = getSelectedTasks(listForScheduling);
-                      //print(_totalDuration);
-                      Navigator.pop(context);
-                      await showModalBottomSheet(
-                          context: context,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(22),
-                              topLeft: Radius.circular(22),
+        builder: (context, scrollController) {
+          return Material(
+            type: MaterialType.transparency,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(22),
+              ),
+              height: MediaQuery.of(context).size.height * .80,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Select Task For Scheduling',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
-                          builder: (context) => SelectTimeScreen(
-                                duration: _totalDuration,
-                                listForScheduling: _selectedTask,
-                              ));
-                    },
-                  ),
-                ],
+                        ),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(
+                            Icons.cancel,
+                            color: Colors.orange,
+                            size: 35,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .03,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'How Do You feel Today?',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                        Spacer(),
+                        RaisedButton(
+                          color: Colors.black87,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18),
+                          ),
+                          padding: EdgeInsets.all(12),
+                          textColor: Colors.white,
+                          child: Text('Pick Productivity Level'),
+                          onPressed: () {
+                            showMaterialScrollPicker(
+                              maxLongSide: 280,
+                              maxShortSide: 250,
+                              context: context,
+                              title: "Pick Productivity Level",
+                              items: productivity,
+                              selectedItem: productivityLevel,
+                              onChanged: (value) =>
+                                  setState(() => productivityLevel = value),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .03,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          'Select Your Task',
+                          style: GoogleFonts.lato(
+                            textStyle: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Expanded(
+                      child: ListView.separated(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: listForScheduling.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(),
+                        itemBuilder: (context, index) {
+                          final schedulable = listForScheduling[index];
+                          return Container(
+                            padding: EdgeInsets.only(left: 10),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                  style: BorderStyle.solid, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white,
+                            ),
+                            child: StatefulBuilder(
+                              builder:
+                                  (BuildContext context, StateSetter setState) {
+                                return ListTile(
+                                  title: Text(
+                                    schedulable.name,
+                                    style: GoogleFonts.lato(
+                                      textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    'Duration: ' +
+                                        getDuration(schedulable.duration),
+                                    style: GoogleFonts.lato(
+                                      textStyle: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  trailing: Checkbox(
+                                    value: schedulable.toBeScheduled,
+                                    onChanged: (checkboxState) {
+                                      setState(() {
+                                        schedulable.toggleScheduling();
+                                      });
+                                    },
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * .03,
+                    ),
+                    RaisedButton(
+                      color: Colors.black87,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      padding: EdgeInsets.all(12),
+                      textColor: Colors.white,
+                      child: Text('Next'),
+                      onPressed: () async {
+                        for (Schedulable i in listForScheduling) {
+                          if (productivityLevel == 'High') {
+                            i.changeDuration(0.8);
+                          } else if (productivityLevel == 'Medium') {
+                            continue;
+                          } else {
+                            i.changeDuration(1.2);
+                          }
+                        }
+                        _totalDuration = getTotalDuration(listForScheduling);
+                        _selectedTask = getSelectedTasks(listForScheduling);
+                        //print(_totalDuration);
+                        Navigator.pop(context);
+                        await showBarModalBottomSheet(
+                            backgroundColor: Colors.transparent,
+                            context: context,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(22),
+                                topLeft: Radius.circular(22),
+                              ),
+                            ),
+                            builder: (context, scrollController) =>
+                                SelectTimeScreen(
+                                  duration: _totalDuration,
+                                  listForScheduling: _selectedTask,
+                                ));
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );

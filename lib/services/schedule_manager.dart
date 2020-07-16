@@ -87,6 +87,7 @@ class ScheduleManager {
                   description: i.description,
                   priorityScore: i.priorityScore,
                   duration: j.end - j.start,
+                  category: i.category,
                   toBeScheduled: false,
                   dateTime: i.dateTime = intToTime(j.start),
                   endTime: i.endTime = intToTime(j.end));

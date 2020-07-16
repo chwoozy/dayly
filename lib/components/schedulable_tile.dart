@@ -69,7 +69,7 @@ class SchedulableTile extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'Duration: ' +
+                'Duration(With Buffer): ' +
                     this.schedule.getDuration(this.schedule.duration),
                 style: GoogleFonts.lato(
                   fontSize: 16,
