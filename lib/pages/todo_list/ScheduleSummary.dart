@@ -1,4 +1,5 @@
 import 'package:dayly/models/schedulable.dart';
+import 'package:dayly/services/schedule_manager.dart';
 import 'package:dayly/services/sort_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components/schedulable_tile.dart';
@@ -30,6 +31,7 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
   List<Event> eventList = [];
   DateTime todayDate = DateTime.now();
   bool _loading = true;
+  List<Schedulable> finalResult = [];
 
   final topAppBar = AppBar(
     elevation: 0.1,
@@ -69,6 +71,13 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
       }
     }
     widget.sortManager.sort(widget.listForScheduling);
+    final ScheduleManager scheduleManager = ScheduleManager(
+        startingTime: this.widget.startingTime,
+        endTime: this.widget.endTime,
+        listForScheduling: this.widget.listForScheduling);
+    finalResult = scheduleManager.schedule();
+//    print(scheduleManager.timeToInt(scheduleManager.startingTime));
+//    print(this.widget.listForScheduling.length);
     setState(() {
       _loading = false;
     });
@@ -87,8 +96,17 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
         if (newIndex > oldIndex) {
           newIndex -= 1;
         }
-        final schedulable = widget.listForScheduling.removeAt(oldIndex);
-        widget.listForScheduling.insert(newIndex, schedulable);
+        final schedulable = finalResult.removeAt(oldIndex);
+//        if (newIndex > oldIndex) {
+//          schedulable.dateTime = finalResult[newIndex - 1]
+//              .dateTime
+//              .add(Duration(minutes: finalResult[newIndex - 1].duration));
+//        } else {
+//          schedulable.dateTime = finalResult[newIndex - 1]
+//              .dateTime
+//              .add(Duration(minutes: finalResult[newIndex - 1].duration));
+//        }
+        finalResult.insert(newIndex, schedulable);
       });
     }
 
@@ -123,11 +141,9 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
                   child: ReorderableListView(
                       onReorder: _onReorder,
                       scrollDirection: Axis.vertical,
-                      children: List.generate(widget.listForScheduling.length,
-                          (index) {
+                      children: List.generate(finalResult.length, (index) {
                         return SchedulableTile(
-                            schedule: widget.listForScheduling[index],
-                            key: ValueKey(index));
+                            schedule: finalResult[index], key: ValueKey(index));
                       })),
                 ),
               ],
