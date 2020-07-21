@@ -36,11 +36,61 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
+      appBar: AppBar(
+        //automaticallyImplyLeading: false,
+        elevation: 0.1,
+        //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
+        backgroundColor: Color(0xFF3A3E88),
+        title: Text('New Task'),
+        actions: <Widget>[
+          IconButton(
+            //backgroundColor: Colors.red,
+            //elevation: 0,
+            icon: Icon(
+              Icons.check,
+              color: Colors.white,
+              size: 30,
+            ),
+            onPressed: () async {
+              setState(() {
+                _newTaskTitle == '' ? _validate = true : _validate = false;
+                _priorityScore = priorityData.priorityScore;
+              });
+
+              if (!_validate) {
+                Provider.of<TaskData>(context, listen: false).addTask(
+                    _newTaskTitle,
+                    _taskDescription,
+                    _tag,
+                    _priorityScore,
+                    _initialTimer.inMinutes);
+
+                //Add new task to database
+                await Firestore.instance
+                    .collection('task_data')
+                    .document(_user.uid)
+                    .collection('tasks')
+                    .add({
+                  'taskName': _newTaskTitle,
+                  'taskDescription': _taskDescription,
+                  'isDone': false,
+                  'tag': _tag,
+                  'priorityScore': _priorityScore,
+                  'duration': _initialTimer.inMinutes,
+                });
+
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => TasksScreen()));
+              }
+            },
+          ),
+        ],
+      ),
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
           Container(
-            color: Colors.blueAccent,
+            color: Color(0xFF3A3E88),
             height: size.height,
             width: size.width,
           ),
@@ -196,7 +246,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                   ),
                                 ),
                               ),
-                              color: Colors.lightBlue,
+                              color: Color(0xFF3A3E88),
                               onPressed: () {
                                 showModalBottomSheet(
                                     context: context,
@@ -234,7 +284,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                   width: size.width * .08,
                                                 ),
                                                 RaisedButton(
-                                                  color: Colors.lightBlue,
+                                                  color: Color(0xFF3A3E88),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -293,22 +343,22 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      'Create New Task',
-                      style: GoogleFonts.lato(
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: size.height * 0.03,
-                  ),
+//                  Align(
+//                    alignment: Alignment.topLeft,
+//                    child: Text(
+//                      'Create New Task',
+//                      style: GoogleFonts.lato(
+//                        textStyle: TextStyle(
+//                          color: Colors.white,
+//                          fontSize: 30,
+//                          fontWeight: FontWeight.w500,
+//                        ),
+//                      ),
+//                    ),
+//                  ),
+//                  SizedBox(
+//                    height: size.height * 0.03,
+//                  ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Column(
@@ -330,6 +380,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           height: 10,
                         ),
                         TextField(
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                           textInputAction: TextInputAction.done,
                           showCursor: true,
                           decoration: InputDecoration(
@@ -371,6 +424,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           height: 10,
                         ),
                         TextField(
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             hintText: 'Add Description',
@@ -395,53 +451,53 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 60),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: FloatingActionButton(
-                backgroundColor: Colors.red,
-                elevation: 0,
-                child: Icon(
-                  Icons.check,
-                  color: Colors.white,
-                  size: 30,
-                ),
-                onPressed: () async {
-                  setState(() {
-                    _newTaskTitle == '' ? _validate = true : _validate = false;
-                    _priorityScore = priorityData.priorityScore;
-                  });
-
-                  if (!_validate) {
-                    Provider.of<TaskData>(context, listen: false).addTask(
-                        _newTaskTitle,
-                        _taskDescription,
-                        _tag,
-                        _priorityScore,
-                        _initialTimer.inMinutes);
-
-                    //Add new task to database
-                    await Firestore.instance
-                        .collection('task_data')
-                        .document(_user.uid)
-                        .collection('tasks')
-                        .add({
-                      'taskName': _newTaskTitle,
-                      'taskDescription': _taskDescription,
-                      'isDone': false,
-                      'tag': _tag,
-                      'priorityScore': _priorityScore,
-                      'duration': _initialTimer.inMinutes,
-                    });
-
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => TasksScreen()));
-                  }
-                },
-              ),
-            ),
-          ),
+//          Padding(
+//            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 60),
+//            child: Align(
+//              alignment: Alignment.topRight,
+//              child: FloatingActionButton(
+//                backgroundColor: Colors.red,
+//                elevation: 0,
+//                child: Icon(
+//                  Icons.check,
+//                  color: Colors.white,
+//                  size: 30,
+//                ),
+//                onPressed: () async {
+//                  setState(() {
+//                    _newTaskTitle == '' ? _validate = true : _validate = false;
+//                    _priorityScore = priorityData.priorityScore;
+//                  });
+//
+//                  if (!_validate) {
+//                    Provider.of<TaskData>(context, listen: false).addTask(
+//                        _newTaskTitle,
+//                        _taskDescription,
+//                        _tag,
+//                        _priorityScore,
+//                        _initialTimer.inMinutes);
+//
+//                    //Add new task to database
+//                    await Firestore.instance
+//                        .collection('task_data')
+//                        .document(_user.uid)
+//                        .collection('tasks')
+//                        .add({
+//                      'taskName': _newTaskTitle,
+//                      'taskDescription': _taskDescription,
+//                      'isDone': false,
+//                      'tag': _tag,
+//                      'priorityScore': _priorityScore,
+//                      'duration': _initialTimer.inMinutes,
+//                    });
+//
+//                    Navigator.pushReplacement(context,
+//                        MaterialPageRoute(builder: (context) => TasksScreen()));
+//                  }
+//                },
+//              ),
+//            ),
+//          ),
         ],
       ),
     );

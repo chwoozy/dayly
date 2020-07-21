@@ -7,7 +7,10 @@ class SchedulableTile extends StatelessWidget {
   final Schedulable schedule;
   final key;
 
-  SchedulableTile({this.schedule, this.key});
+  SchedulableTile({
+    this.schedule,
+    this.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +32,27 @@ class SchedulableTile extends StatelessWidget {
       leftChild: Center(
         child: Container(
           alignment: Alignment(0.0, -0.50),
-          child: Text(
-            this.schedule.dateTime == null
-                ? 'None'
-                : '${this.schedule.dateTime.hour.toString().padLeft(2, '0')} : ${this.schedule.dateTime.minute.toString().padLeft(2, '0')}',
-            style: GoogleFonts.lato(
-              fontSize: 18,
-              color: Colors.black.withOpacity(0.6),
-              fontWeight: FontWeight.w800,
-            ),
-          ),
+          child: this.schedule.category == 'Event'
+              ? Text(
+                  this.schedule.dateTime == null
+                      ? 'None'
+                      : '${this.schedule.dateTime.hour.toString().padLeft(2, '0')} : ${this.schedule.dateTime.minute.toString().padLeft(2, '0')}',
+                  style: GoogleFonts.lato(
+                    fontSize: 18,
+                    color: Colors.black.withOpacity(0.6),
+                    fontWeight: FontWeight.w800,
+                  ),
+                )
+              : Text(
+                  this.schedule.dateTime == null
+                      ? 'None'
+                      : '${this.schedule.dateTime.hour.toString().padLeft(2, '0')} : ${this.schedule.dateTime.minute.toString().padLeft(2, '0')}',
+                  style: GoogleFonts.lato(
+                    fontSize: 18,
+                    color: Colors.black.withOpacity(0.6),
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
         ),
       ),
       rightChild: Padding(
@@ -69,7 +83,7 @@ class SchedulableTile extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                'Duration(With Buffer): ' +
+                'Duration(With Break): ' +
                     this.schedule.getDuration(this.schedule.duration),
                 style: GoogleFonts.lato(
                   fontSize: 16,
@@ -91,67 +105,6 @@ class SchedulableTile extends StatelessWidget {
         ),
       ),
     );
-//    //return TimelineTile(
-//      alignment: TimelineAlign.manual,
-//      lineX: 0.2,
-//      topLineStyle: LineStyle(color: Colors.black.withOpacity(0.7)),
-//      rightChild: Card(
-//        //key: ValueKey(this.schedule),
-//        elevation: 2.0,
-//        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-//        child: Container(
-//            decoration: BoxDecoration(
-//              //color: Color.fromRGBO(64, 75, 96, .9),
-//              borderRadius: BorderRadius.circular(16),
-//            ),
-//            child: ListTile(
-//                contentPadding:
-//                    EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-////              leading: Container(
-////                width: 60,
-////                padding: EdgeInsets.only(right: 12.0),
-////                decoration: new BoxDecoration(
-////                    border: new Border(
-////                        right:
-////                            new BorderSide(width: 1.0, color: Colors.white24))),
-////                child: Icon(Icons.autorenew, color: Colors.white),
-////              ),
-//                title: Text(
-//                  schedule.name,
-//                  style: GoogleFonts.lato(
-//                    textStyle: TextStyle(
-//                      color: Colors.black,
-//                      fontSize: 25,
-//                      fontWeight: FontWeight.w800,
-//                    ),
-//                  ),
-//                ),
-//                // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-//
-//                subtitle: Row(
-//                  children: <Widget>[
-//                    //Icon(Icons.linear_scale, color: Colors.yellowAccent),
-//                    Text(
-//                      schedule.description,
-//                      style: GoogleFonts.lato(
-//                        textStyle: TextStyle(
-//                          color: Colors.black,
-//                          fontSize: 15,
-//                          fontWeight: FontWeight.w800,
-//                        ),
-//                      ),
-//                    )
-//                  ],
-//                ),
-//                trailing: Column(
-//                  children: <Widget>[
-//                    Icon(Icons.event_note, color: Colors.black, size: 30.0),
-//                    Text(
-//                        'Duration: ' + schedule.getDuration(schedule.duration)),
-//                  ],
-//                ))),
-//      ),
-//    );
   }
 }
 

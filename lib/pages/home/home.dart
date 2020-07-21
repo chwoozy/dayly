@@ -1,4 +1,6 @@
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/pages/Schedule/schedule_screen.dart';
+import 'package:dayly/pages/Schedule/toschedule.dart';
 import 'package:dayly/pages/calendar/calendar.dart';
 import 'package:dayly/pages/profile/profile.dart';
 import 'package:dayly/pages/todo_list/todo.dart';
@@ -15,6 +17,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Calendar(),
     ToDo(),
+    ToSchedule(),
     Profile(),
   ];
 
@@ -32,6 +35,11 @@ class _HomeState extends State<Home> {
           items: <Widget>[
             Icon(Icons.event, size: 30, color: primaryPurple),
             Icon(Icons.assignment, size: 30, color: primaryPurple),
+            Icon(
+              Icons.format_list_bulleted,
+              size: 30,
+              color: primaryPurple,
+            ),
             Icon(Icons.perm_identity, size: 30, color: primaryPurple),
           ],
           animationDuration: Duration(

@@ -1,5 +1,5 @@
 import 'package:dayly/models/schedulable.dart';
-import 'package:dayly/pages/todo_list/ScheduleSummary.dart';
+import 'package:dayly/pages/todo_list/schedule_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -123,6 +123,7 @@ class _State extends State<SelectTimeScreen> {
                   child: Text('Help Me Compact'),
                   onPressed: () async {
                     _compactDuration();
+                    //Navigator.pop(context);
                     await Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -146,6 +147,7 @@ class _State extends State<SelectTimeScreen> {
         },
       );
     } else {
+      //Navigator.pop(context);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -340,7 +342,7 @@ class _State extends State<SelectTimeScreen> {
                       Column(
                         children: <Widget>[
                           Text(
-                            'Buffer Time: ',
+                            'Break Time: ',
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                 color: Colors.black,
@@ -383,26 +385,26 @@ class _State extends State<SelectTimeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      RaisedButton(
-                        color: Colors.black87,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        padding: EdgeInsets.all(12),
-                        textColor: Colors.white,
-                        child: Text('Previous'),
+                      FloatingActionButton.extended(
+                        backgroundColor: Color(0xFF3A3E88),
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.circular(18),
+//                        ),
+//                        padding: EdgeInsets.all(12),
+//                        textColor: Colors.white,
+                        label: Text('Previous'),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
-                      RaisedButton(
-                        color: Colors.black87,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        padding: EdgeInsets.all(12),
-                        textColor: Colors.white,
-                        child: Text('Confirm'),
+                      FloatingActionButton.extended(
+                        backgroundColor: Color(0xFF3A3E88),
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.circular(18),
+//                        ),
+//                        padding: EdgeInsets.all(12),
+//                        textColor: Colors.white,
+                        label: Text('Confirm'),
                         onPressed: () {
                           _startingDateTime.isAfter(_endDateTime)
                               ? _showDialog()
