@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dayly/models/score.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
@@ -82,8 +83,11 @@ class AuthService {
     bool isNewUser = !(await DatabaseService(uid: user.uid).checkUser).exists;
     print(isNewUser.toString());
     if (isNewUser) {
-      await DatabaseService(uid: user.uid)
-          .updateUserData(user.email, user.displayName, user.photoUrl);
+      DatabaseService databaseService = DatabaseService(uid: user.uid);
+      await databaseService.updateUserData(
+          user.email, user.displayName, user.photoUrl);
+      await databaseService
+          .updateScore(Score(uid: user.uid, name: user.displayName, score: 0));
       print("First time sign up with Google success!");
     }
 

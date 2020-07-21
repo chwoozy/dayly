@@ -13,17 +13,32 @@ void main() {
   runApp(Dayly());
 }
 
+final ThemeData _themeData = ThemeData(
+  brightness: Brightness.dark,
+  buttonColor: Colors.tealAccent[400],
+  // appBarTheme: AppBarTheme(
+  //   color: Color(0xFF303030),
+  // ),
+  fontFamily: 'Falling',
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: Colors.tealAccent[400],
+  ),
+  accentColor: Colors.red[400],
+);
+
 class Dayly extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return StreamProvider<User>.value(
       value: AuthService().user,
-      child: MaterialApp(initialRoute: '/wrapper', routes: {
-        '/landing': (context) => Landing(),
-        '/wrapper': (context) => Wrapper(),
-        '/addevent': (context) => AddEvent(),
-      }),
+      child: MaterialApp(
+          initialRoute: '/wrapper',
+          routes: {
+            '/landing': (context) => Landing(),
+            '/wrapper': (context) => Wrapper(),
+            '/addevent': (context) => AddEvent(),
+          },
+          theme: _themeData),
     );
   }
 }

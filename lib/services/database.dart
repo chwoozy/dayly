@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/models/event.dart';
+import 'package:dayly/models/score.dart';
 import 'package:dayly/models/user.dart';
 import 'package:flutter/widgets.dart';
 import 'package:dayly/models/task_data.dart';
@@ -16,6 +17,9 @@ class DatabaseService {
 
   final CollectionReference taskCollection =
       Firestore.instance.collection('task_data');
+
+  final CollectionReference scoreCollection =
+      Firestore.instance.collection('score');
 
   Future updateUserData(
       String email, String displayName, String photoUrl) async {
@@ -46,6 +50,22 @@ class DatabaseService {
     });
   }
 
+  Future updateScore(Score score) async {
+    return await scoreCollection.document(uid).setData({
+      'uid': score.uid,
+      'name': score.name,
+      'score': score.score,
+    });
+  }
+
+  Future addScore(Score score, int gems) async {
+    return await scoreCollection.document(uid).setData({
+      'uid': score.uid,
+      'name': score.name,
+      'score': score.score + gems,
+    });
+  }
+
   Future<void> deleteEvent(Event event) async {
     return await userCollection
         .document(uid)
@@ -68,12 +88,35 @@ class DatabaseService {
         .map(_userDataFromSnapshot);
   }
 
+  // Get Single User Data
+  Future<UserData> get fetchUserData async {
+    DocumentSnapshot result = await userCollection
+        .document(uid)
+        .collection("profile")
+        .document("userinfo")
+        .get();
+    return _userDataFromSnapshot(result);
+  }
+
   // Get List of Event
   Future<List<Event>> get allEvents async {
     final QuerySnapshot result =
         await userCollection.document(uid).collection('event').getDocuments();
     final mapped = result.documents.map(_eventFromSnapshot);
     return mapped.toList();
+  }
+
+  // Get Score
+  Future<List<Score>> get getScore async {
+    final QuerySnapshot result = await scoreCollection.getDocuments();
+    final mapped = result.documents.map(_scoreFromSnapshot);
+    return mapped.toList();
+  }
+
+  // Get Single Score Data
+  Future<Score> get getPersonalScore async {
+    DocumentSnapshot result = await scoreCollection.document(uid).get();
+    return _scoreFromSnapshot(result);
   }
 
   // User Data from Snapshot
@@ -96,6 +139,15 @@ class DatabaseService {
       eventToDate: snapshot.data['eventToDate'].toDate(),
       eventColor: Color(snapshot.data['eventColor']).withOpacity(1),
       recurrenceRule: snapshot.data['recurrenceRule'],
+    );
+  }
+
+  // Score from Snapshot
+  Score _scoreFromSnapshot(DocumentSnapshot snapshot) {
+    return Score(
+      uid: snapshot.data['uid'],
+      name: snapshot.data['name'],
+      score: snapshot.data['score'],
     );
   }
 

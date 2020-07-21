@@ -49,6 +49,39 @@ class MonthView extends StatelessWidget {
           if (snapshot.hasData) {
             return SfCalendar(
                 view: CalendarView.month,
+                cellBorderColor: Color(0xFF303030),
+                headerStyle: CalendarHeaderStyle(
+                    textStyle: TextStyle(
+                      fontFamily: 'Falling',
+                      fontSize: 25,
+                    ),
+                    textAlign: TextAlign.center),
+                selectionDecoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: const BorderRadius.all(Radius.circular(4)),
+                  shape: BoxShape.rectangle,
+                ),
+                monthViewSettings: MonthViewSettings(
+                    dayFormat: 'EEE',
+                    monthCellStyle: MonthCellStyle(
+                      textStyle: TextStyle(
+                        fontFamily: 'Falling',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      trailingDatesTextStyle: TextStyle(
+                        color: Color(0xFF5E5E5E),
+                        fontFamily: 'Falling',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      leadingDatesTextStyle: TextStyle(
+                        color: Color(0xFF5E5E5E),
+                        fontFamily: 'Falling',
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )),
                 initialDisplayDate: selectedDate,
                 dataSource: EventDataSource(snapshot.data),
                 onTap: (CalendarTapDetails details) {

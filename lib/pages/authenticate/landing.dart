@@ -19,7 +19,6 @@ class _LandingState extends State<Landing> {
       width: double.infinity,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: primaryBackgroundColor,
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -56,7 +55,6 @@ class _LandingState extends State<Landing> {
                         Text('Hey there, \nWelcome to Dayly!',
                             style: TextStyle(
                               fontSize: 30,
-                              color: Colors.black,
                               fontWeight: FontWeight.bold,
                             ))
                       ],
@@ -65,7 +63,8 @@ class _LandingState extends State<Landing> {
               SizedBox(height: 15.0),
               RoundedButton(
                 text: "LOGIN WITH GOOGLE",
-                color: primaryPurple,
+                color: Colors.tealAccent[400],
+                textColor: Colors.black,
                 press: () async {
                   await _authService.signInWithGoogle();
                   // Navigator.pushNamed(context, '/login');

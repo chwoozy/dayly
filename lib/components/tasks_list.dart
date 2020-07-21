@@ -1,3 +1,4 @@
+import 'package:dayly/models/score.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components/task_tile.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +36,13 @@ class _TasksListState extends State<TasksList> {
                 isChecked: task.isDone,
                 checkboxCallback: (checkboxState) async {
                   taskData.updateTask(task);
-                  await DatabaseService(uid: _user.uid)
-                      .updateTask(task, task.isDone);
+                  DatabaseService databaseService =
+                      DatabaseService(uid: _user.uid);
+                  Score score = await databaseService.getPersonalScore;
+                  await databaseService.updateTask(task, task.isDone);
+                  if (task.isDone) {
+                    await databaseService.addScore(score, 1);
+                  }
                 },
                 category: task.tag,
                 priority: task.priorityScore,
