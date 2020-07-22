@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
 class TaskTile extends StatelessWidget {
   final bool isChecked;
@@ -86,122 +87,134 @@ class TaskTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(this.priority);
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: 110,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: getTagColor(this.category),
+    return TimelineTile(
+      alignment: TimelineAlign.manual,
+      lineX: 0.1,
+      topLineStyle: LineStyle(color: Color(0xFF3A3E88), width: 3),
+      indicatorStyle: IndicatorStyle(
+        indicatorY: 0.5,
+        drawGap: true,
+        width: 12,
+        height: 12,
+        color: Color(0xFF3A3E88),
+      ),
+      rightChild: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Stack(
+            children: <Widget>[
+              Container(
+                height: 110,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: getTagColor(this.category),
+                ),
               ),
-            ),
-            Positioned.fill(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 2,
-                    child: Icon(
-                      getTagIcon(this.category),
+              Positioned.fill(
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 2,
+                      child: Icon(
+                        getTagIcon(this.category),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 5,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          taskTitle,
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
+                    Expanded(
+                      flex: 5,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            taskTitle,
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w800,
+                                  decoration: isChecked
+                                      ? TextDecoration.lineThrough
+                                      : null),
+                            ),
+                          ),
+                          Text(
+                            taskDescription == null ? '' : taskDescription,
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
                                 color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                                decoration: isChecked
-                                    ? TextDecoration.lineThrough
-                                    : null),
-                          ),
-                        ),
-                        Text(
-                          taskDescription == null ? '' : taskDescription,
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w500,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w500,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.access_alarm,
-                              color: Colors.black,
-                              size: 16,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                              child: Text(
-                                'Duration: ' + getDuration(this.duration),
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                          SizedBox(
+                            height: 16,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.access_alarm,
+                                color: Colors.black,
+                                size: 16,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  'Duration: ' + getDuration(this.duration),
+                                  style: GoogleFonts.lato(
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.assignment_late,
-                              color: Colors.black,
-                              size: 16,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Flexible(
-                              child: Text(
-                                'Priority: ${getPriority(this.priority)}',
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w600,
+                            ],
+                          ),
+                          Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.assignment_late,
+                                color: Colors.black,
+                                size: 16,
+                              ),
+                              SizedBox(
+                                width: 8,
+                              ),
+                              Flexible(
+                                child: Text(
+                                  'Priority: ${getPriority(this.priority)}',
+                                  style: GoogleFonts.lato(
+                                    textStyle: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Checkbox(
-                      value: isChecked,
-                      materialTapTargetSize: MaterialTapTargetSize.padded,
-                      activeColor: Colors.purple,
-                      onChanged: checkboxCallback,
+                    Expanded(
+                      flex: 2,
+                      child: Checkbox(
+                        value: isChecked,
+                        materialTapTargetSize: MaterialTapTargetSize.padded,
+                        activeColor: Colors.purple,
+                        onChanged: checkboxCallback,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

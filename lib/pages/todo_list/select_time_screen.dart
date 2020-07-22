@@ -1,5 +1,5 @@
 import 'package:dayly/models/schedulable.dart';
-import 'package:dayly/pages/todo_list/ScheduleSummary.dart';
+import 'package:dayly/pages/todo_list/schedule_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,40 +112,44 @@ class _State extends State<SelectTimeScreen> {
 
     if (totalDuration > workingDuration) {
       showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: Text("Notice"),
-            content: Text("More time needed to finish these tasks!"),
-            actions: <Widget>[
-              FlatButton(
-                  child: Text('Help Me Compact'),
-                  onPressed: () async {
-                    _compactDuration();
-                    await Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => ScheduleSummary(
-                          listForScheduling: widget.listForScheduling,
-                          startingTime: _startingDateTime,
-                          endTime: _endDateTime,
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: Text("Notice"),
+              content: Text("More time needed to finish these tasks!"),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text('Help Me Compact'),
+                    onPressed: () {
+                      setState(() {
+                        _compactDuration();
+                      });
+                      //_compactDuration();
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacement(
+                        this.context,
+                        MaterialPageRoute(
+                          builder: (_) => ScheduleSummary(
+                            listForScheduling: widget.listForScheduling,
+                            startingTime: _startingDateTime,
+                            endTime: _endDateTime,
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-              // usually buttons at the bottom of the dialog
-              FlatButton(
-                child: new Text("Close"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+                      );
+                    }),
+                // usually buttons at the bottom of the dialog
+                FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
     } else {
+      //Navigator.pop(context);
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -340,7 +344,7 @@ class _State extends State<SelectTimeScreen> {
                       Column(
                         children: <Widget>[
                           Text(
-                            'Buffer Time: ',
+                            'Break Time: ',
                             style: GoogleFonts.lato(
                               textStyle: TextStyle(
                                 color: Colors.black,
@@ -383,26 +387,26 @@ class _State extends State<SelectTimeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      RaisedButton(
-                        color: Colors.black87,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        padding: EdgeInsets.all(12),
-                        textColor: Colors.white,
-                        child: Text('Previous'),
+                      FloatingActionButton.extended(
+                        backgroundColor: Color(0xFF3A3E88),
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.circular(18),
+//                        ),
+//                        padding: EdgeInsets.all(12),
+//                        textColor: Colors.white,
+                        label: Text('Previous'),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
-                      RaisedButton(
-                        color: Colors.black87,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
-                        ),
-                        padding: EdgeInsets.all(12),
-                        textColor: Colors.white,
-                        child: Text('Confirm'),
+                      FloatingActionButton.extended(
+                        backgroundColor: Color(0xFF3A3E88),
+//                        shape: RoundedRectangleBorder(
+//                          borderRadius: BorderRadius.circular(18),
+//                        ),
+//                        padding: EdgeInsets.all(12),
+//                        textColor: Colors.white,
+                        label: Text('Confirm'),
                         onPressed: () {
                           _startingDateTime.isAfter(_endDateTime)
                               ? _showDialog()

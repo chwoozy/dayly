@@ -164,33 +164,28 @@ class ScheduleManager {
   }
 }
 
-//void main() {
-//  DateTime startingTime = DateTime(2020, 1, 1, 9, 0);
-//  DateTime endTime = DateTime(2020, 1, 1, 18, 0);
-//  List<Schedulable> testingList = [
-//    Schedulable(
-//        name: 'Event1',
-//        dateTime: DateTime(2020, 1, 1, 10, 0),
-//        endTime: DateTime(2020, 1, 1, 11, 0),
-//        category: 'Event'),
-//    Schedulable(
-//        name: 'Event2',
-//        dateTime: DateTime(2020, 1, 1, 13, 0),
-//        endTime: DateTime(2020, 1, 1, 14, 0),
-//        category: 'Event'),
-//    Schedulable(
-//        name: 'Task1', duration: 120, category: 'Task', toBeScheduled: true),
-//    Schedulable(
-//        name: 'Task2', duration: 60, category: 'Task', toBeScheduled: true),
-//    Schedulable(
-//        name: 'Task3', duration: 30, category: 'Task', toBeScheduled: true),
-//  ];
-//  ScheduleManager manager = ScheduleManager(
-//      startingTime: startingTime,
-//      endTime: endTime,
-//      listForScheduling: testingList);
-//  List<Schedulable> resultList = manager.schedule();
-//  for (Schedulable item in resultList) {
-//    print(item.dateTime.toString() + item.name);
-//  }
-//}
+void main() {
+  DateTime startingTime = DateTime(2020, 1, 1, 15, 25);
+  DateTime endTime = DateTime(2020, 1, 1, 21, 0);
+  List<Schedulable> testingList = [
+    Schedulable(
+        name: 'Event1',
+        dateTime: DateTime(2020, 1, 1, 15, 42),
+        endTime: DateTime(2020, 1, 1, 16, 01),
+        category: 'Event'),
+    Schedulable(
+        name: 'Task1', duration: 120, category: 'Task', toBeScheduled: true),
+    Schedulable(
+        name: 'Task2', duration: 60, category: 'Task', toBeScheduled: true),
+    Schedulable(
+        name: 'Task3', duration: 30, category: 'Task', toBeScheduled: true),
+  ];
+  ScheduleManager manager = ScheduleManager(
+      startingTime: startingTime,
+      endTime: endTime,
+      listForScheduling: testingList);
+  List<Schedulable> resultList = manager.schedule();
+  for (Schedulable item in resultList) {
+    print(item.dateTime.toString() + item.name);
+  }
+}

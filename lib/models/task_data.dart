@@ -8,9 +8,14 @@ class TaskData extends ChangeNotifier {
   int _finishedTaskCount = 0;
 
   List<Task> _tasks = [];
+  List<Schedulable> _schedules = [];
 
   UnmodifiableListView<Task> get tasks {
     return UnmodifiableListView(_tasks);
+  }
+
+  UnmodifiableListView<Schedulable> get schedules {
+    return UnmodifiableListView(_schedules);
   }
 
   int get taskCount {
@@ -71,5 +76,15 @@ class TaskData extends ChangeNotifier {
       }
     }
     return scheduleList;
+  }
+
+  set scheduleList(List<Schedulable> scheduleList) {
+    _schedules = scheduleList;
+    notifyListeners();
+  }
+
+  void deleteSchedulable() async {
+    _schedules = [];
+    notifyListeners();
   }
 }
