@@ -23,14 +23,17 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   Color _tagColor;
   String _tag = '';
   bool _validate = false;
-  int _priorityScore = 33;
+  int _priorityScore;
   Duration _initialTimer = Duration(hours: 0, minutes: 0);
+  Priority priorityData = Priority(
+    priorityLevel: 'Normal',
+    priorityScore: 40,
+  );
 
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
     var size = MediaQuery.of(context).size;
-    Priority priorityData = Priority();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -44,6 +47,234 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
+              padding: EdgeInsets.all(size.height * 0.03),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: size.height * 0.02),
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Category',
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                CategoryTag(
+                                  categoryTag: 'Work',
+                                  tagColor: Colors.red.shade300,
+                                  onPressCallback: () {
+                                    _tag = 'Work';
+                                    _tagColor = Colors.red.shade300;
+                                  },
+                                ),
+                                CategoryTag(
+                                  categoryTag: 'Study',
+                                  tagColor: Colors.yellow,
+                                  onPressCallback: () {
+                                    _tag = 'Study';
+                                    _tagColor = Colors.yellow;
+                                  },
+                                ),
+                                CategoryTag(
+                                  categoryTag: 'Event',
+                                  tagColor: Colors.orangeAccent,
+                                  onPressCallback: () {
+                                    _tag = 'Event';
+                                    _tagColor = Colors.orangeAccent;
+                                  },
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: size.height * 0.02),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                CategoryTag(
+                                  categoryTag: 'LifeStyle',
+                                  tagColor: Colors.blueAccent.shade100,
+                                  onPressCallback: () {
+                                    _tag = 'LifeStyle';
+                                    _tagColor = Colors.blueAccent.shade100;
+                                  },
+                                ),
+                                CategoryTag(
+                                  categoryTag: 'Miscellaneous',
+                                  tagColor: Colors.greenAccent,
+                                  onPressCallback: () {
+                                    _tag = 'Miscellaneous';
+                                    _tagColor = Colors.greenAccent;
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            'Priority',
+                            style: GoogleFonts.lato(
+                              textStyle: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: size.height * 0.02,
+                        ),
+                        SliderWidget(
+                          priorityData: priorityData,
+                        ),
+                        SizedBox(
+                          height: size.height * 0.04,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                'Duration',
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: size.width * .1,
+                            ),
+                            RaisedButton(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                              padding: EdgeInsets.all(12),
+                              textColor: Colors.white,
+                              child: Text(
+                                _initialTimer.compareTo(
+                                            Duration(hours: 0, minutes: 0)) ==
+                                        1
+                                    ? _initialTimer.inHours.toString() +
+                                        "h " +
+                                        (_initialTimer.inMinutes -
+                                                _initialTimer.inHours * 60)
+                                            .toString() +
+                                        'min'
+                                    : "Add Duration",
+                                style: GoogleFonts.lato(
+                                  textStyle: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                              color: Colors.lightBlue,
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext builder) {
+                                      return Container(
+                                        padding: EdgeInsets.only(top: 20),
+                                        height: MediaQuery.of(context)
+                                                .copyWith()
+                                                .size
+                                                .height /
+                                            3,
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: <Widget>[
+                                                SizedBox(
+                                                  width: size.width * .2,
+                                                ),
+                                                Center(
+                                                  child: Text(
+                                                    'Duration',
+                                                    style: GoogleFonts.lato(
+                                                      textStyle: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.w700,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: size.width * .08,
+                                                ),
+                                                RaisedButton(
+                                                  color: Colors.lightBlue,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            18),
+                                                  ),
+                                                  padding: EdgeInsets.all(12),
+                                                  textColor: Colors.white,
+                                                  child: Text('Done'),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                            CupertinoTimerPicker(
+                                              mode: CupertinoTimerPickerMode.hm,
+                                              minuteInterval: 1,
+                                              secondInterval: 1,
+                                              initialTimerDuration:
+                                                  _initialTimer,
+                                              onTimerDurationChanged:
+                                                  (Duration changedTimer) {
+                                                setState(() {
+                                                  _initialTimer = changedTimer;
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               height: size.height * .5,
               decoration: BoxDecoration(
                 color: primaryBackgroundColor,
@@ -60,6 +291,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
               child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Align(
                     alignment: Alignment.topLeft,
@@ -75,7 +307,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: size.height * 0.03,
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20),
@@ -159,230 +391,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    child: Column(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Category',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Column(
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                CategoryTag(
-                                  categoryTag: 'Work',
-                                  tagColor: Colors.red.shade300,
-                                  onPressCallback: () {
-                                    _tag = 'Work';
-                                    _tagColor = Colors.red.shade300;
-                                  },
-                                ),
-                                CategoryTag(
-                                  categoryTag: 'Study',
-                                  tagColor: Colors.yellow,
-                                  onPressCallback: () {
-                                    _tag = 'Study';
-                                    _tagColor = Colors.yellow;
-                                  },
-                                ),
-                                CategoryTag(
-                                  categoryTag: 'Event',
-                                  tagColor: Colors.orangeAccent,
-                                  onPressCallback: () {
-                                    _tag = 'Event';
-                                    _tagColor = Colors.orangeAccent;
-                                  },
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                CategoryTag(
-                                  categoryTag: 'LifeStyle',
-                                  tagColor: Colors.blueAccent.shade100,
-                                  onPressCallback: () {
-                                    _tag = 'LifeStyle';
-                                    _tagColor = Colors.blueAccent.shade100;
-                                  },
-                                ),
-                                CategoryTag(
-                                  categoryTag: 'Miscellaneous',
-                                  tagColor: Colors.greenAccent,
-                                  onPressCallback: () {
-                                    _tag = 'Miscellaneous';
-                                    _tagColor = Colors.greenAccent;
-                                  },
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    child: Column(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            'Priority',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        SliderWidget(
-                          //priorityScore: this.priorityScore.toDouble(),
-                          priorityData: priorityData,
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Duration',
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 40,
-                            ),
-                            RaisedButton(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
-                              ),
-                              padding: EdgeInsets.all(12),
-                              textColor: Colors.white,
-                              child: Text(
-                                _initialTimer.compareTo(
-                                            Duration(hours: 0, minutes: 0)) ==
-                                        1
-                                    ? _initialTimer.inHours.toString() +
-                                        "h " +
-                                        (_initialTimer.inMinutes -
-                                                _initialTimer.inHours * 60)
-                                            .toString() +
-                                        'min'
-                                    : "Add Duration",
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                              color: Colors.lightBlue,
-                              onPressed: () async {
-                                await showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext builder) {
-                                      return Container(
-                                        padding: EdgeInsets.only(top: 20),
-                                        height: MediaQuery.of(context)
-                                                .copyWith()
-                                                .size
-                                                .height /
-                                            3,
-                                        child: Column(
-                                          children: <Widget>[
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  width: 65,
-                                                ),
-                                                Center(
-                                                  child: Text(
-                                                    'Duration',
-                                                    style: GoogleFonts.lato(
-                                                      textStyle: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 25,
-                                                ),
-                                                RaisedButton(
-                                                  color: Colors.lightBlue,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            18),
-                                                  ),
-                                                  padding: EdgeInsets.all(12),
-                                                  textColor: Colors.white,
-                                                  child: Text('Done'),
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                            CupertinoTimerPicker(
-                                              mode: CupertinoTimerPickerMode.hm,
-                                              minuteInterval: 1,
-                                              secondInterval: 1,
-                                              initialTimerDuration:
-                                                  _initialTimer,
-                                              onTimerDurationChanged:
-                                                  (Duration changedTimer) {
-                                                setState(() {
-                                                  _initialTimer = changedTimer;
-                                                });
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    });
-                              },
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -402,10 +410,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 onPressed: () async {
                   setState(() {
                     _newTaskTitle == '' ? _validate = true : _validate = false;
-                    _priorityScore = priorityData.priorityScore == null
-                        ? 66
-                        : priorityData.priorityScore;
-                    //getPriority(_priorityScore);
+                    _priorityScore = priorityData.priorityScore;
                   });
 
                   if (!_validate) {
@@ -430,7 +435,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       'duration': _initialTimer.inMinutes,
                     });
 
-                    Navigator.push(context,
+                    Navigator.pushReplacement(context,
                         MaterialPageRoute(builder: (context) => TasksScreen()));
                   }
                 },

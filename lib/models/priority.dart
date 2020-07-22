@@ -1,6 +1,6 @@
 class Priority {
-  int priorityScore = 33;
-  String priorityLevel = 'Normal';
+  int priorityScore;
+  String priorityLevel;
 
   Priority({this.priorityScore, this.priorityLevel});
 }
