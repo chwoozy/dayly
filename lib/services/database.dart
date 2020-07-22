@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dayly/models/event.dart';
 import 'package:dayly/models/score.dart';
+import 'package:dayly/models/schedulable.dart';
 import 'package:dayly/models/user.dart';
+import 'package:dayly/services/sort_manager.dart';
 import 'package:flutter/widgets.dart';
 import 'package:dayly/models/task_data.dart';
 import 'package:dayly/models/task.dart';
@@ -20,6 +22,9 @@ class DatabaseService {
 
   final CollectionReference scoreCollection =
       Firestore.instance.collection('score');
+  
+//  final CollectionReference scheduleCollection =
+////      Firestore.instance.collection('schedule');
 
   Future updateUserData(
       String email, String displayName, String photoUrl, String method) async {
@@ -167,6 +172,45 @@ class DatabaseService {
     yield* taskCollection.document(uid).collection('tasks').snapshots();
   }
 
+  Stream<QuerySnapshot> getUserScheduleStreamSnapShots(
+      BuildContext context) async* {
+    yield* taskCollection.document(uid).collection('schedule').snapshots();
+  }
+
+  getSchedule(TaskData taskData) async {
+    QuerySnapshot snapshot = await taskCollection
+        .document(uid)
+        .collection('schedule')
+        .getDocuments();
+    List<Schedulable> _scheduleList = [];
+    snapshot.documents.forEach((document) {
+      String name = document.data['name'];
+      String description = document.data['description'];
+      bool isDone = document.data['isDone'];
+      bool toBeScheduled = document.data['toBeScheduled'];
+      int priorityScore = document.data['priorityScore'];
+      int duration = document.data['duration'];
+      String tag = document.data['tag'];
+      DateTime dateTime = document.data['dateTime'].toDate();
+      String category = document.data['category'];
+      DateTime endTime = document.data['endTime'].toDate();
+      Schedulable schedule = Schedulable(
+          name: name,
+          description: description,
+          isDone: isDone,
+          toBeScheduled: toBeScheduled,
+          priorityScore: priorityScore,
+          duration: duration,
+          tag: tag,
+          dateTime: dateTime,
+          category: category,
+          endTime: endTime);
+      _scheduleList.add(schedule);
+    });
+    SortManager().sort(_scheduleList);
+    taskData.scheduleList = _scheduleList;
+  }
+
   getTasks(TaskData taskData) async {
     QuerySnapshot snapshot =
         await taskCollection.document(uid).collection('tasks').getDocuments();
@@ -223,5 +267,15 @@ class DatabaseService {
         .collection('tasks')
         .document(task.documentId);
     return await doc.delete();
+  }
+
+  Future deleteSchedule() async {
+    QuerySnapshot snapshot = await taskCollection
+        .document(uid)
+        .collection('schedule')
+        .getDocuments();
+    snapshot.documents.forEach((document) {
+      document.reference.delete();
+    });
   }
 }

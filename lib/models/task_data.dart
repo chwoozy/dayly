@@ -1,3 +1,4 @@
+import 'package:dayly/models/schedulable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dayly/models/task.dart';
 import 'dart:collection';
@@ -7,9 +8,14 @@ class TaskData extends ChangeNotifier {
   int _finishedTaskCount = 0;
 
   List<Task> _tasks = [];
+  List<Schedulable> _schedules = [];
 
   UnmodifiableListView<Task> get tasks {
     return UnmodifiableListView(_tasks);
+  }
+
+  UnmodifiableListView<Schedulable> get schedules {
+    return UnmodifiableListView(_schedules);
   }
 
   int get taskCount {
@@ -59,6 +65,26 @@ class TaskData extends ChangeNotifier {
 
   set taskList(List<Task> taskList) {
     _tasks = taskList;
+    notifyListeners();
+  }
+
+  List<Schedulable> toSchedule() {
+    List<Schedulable> scheduleList = [];
+    for (int i = 0; i < this.taskCount; i++) {
+      if (!this._tasks[i].isDone) {
+        scheduleList.add(this._tasks[i].toSchedulable());
+      }
+    }
+    return scheduleList;
+  }
+
+  set scheduleList(List<Schedulable> scheduleList) {
+    _schedules = scheduleList;
+    notifyListeners();
+  }
+
+  void deleteSchedulable() async {
+    _schedules = [];
     notifyListeners();
   }
 }

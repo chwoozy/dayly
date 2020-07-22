@@ -28,11 +28,11 @@ class _SliderWidgetState extends State<SliderWidget> {
     assert(
         priorityScore <= this.widget.max && priorityScore >= this.widget.min);
 
-    if (priorityScore < 33) {
+    if (priorityScore < 25) {
       return 'Low';
-    } else if (priorityScore < 66) {
+    } else if (priorityScore < 50) {
       return 'Normal';
-    } else if (priorityScore < 99) {
+    } else if (priorityScore < 75) {
       return 'Important';
     } else {
       return 'Critical';
@@ -56,8 +56,9 @@ class _SliderWidgetState extends State<SliderWidget> {
         ),
         gradient: new LinearGradient(
             colors: [
-              const Color(0xFF00c6ff),
-              const Color(0xFF0072ff),
+              //const Color(0xFF00c6ff),
+              Color(0xFF3A3E88),
+              Color(0xFF3A3E88),
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 1.00),
@@ -104,14 +105,12 @@ class _SliderWidgetState extends State<SliderWidget> {
                     //value: this.widget.priorityScore,
                     min: this.widget.min.toDouble(),
                     max: this.widget.max.toDouble(),
-                    divisions: 3,
+                    divisions: 99,
                     label: getPriority(_value),
-                    //value: this.widget.score,
                     onChanged: (value) {
                       setState(() {
                         _value = value;
-                        this.widget.priorityData.priorityScore = value.round();
-                        //this.widget.priorityData.priorityLevel = getPriority();
+                        this.widget.priorityData.priorityScore = _value.round();
                       });
                     },
                   ),
@@ -122,7 +121,6 @@ class _SliderWidgetState extends State<SliderWidget> {
               width: this.widget.sliderHeight * .1,
             ),
             Text(
-              //'${this.widget.max}',
               'Critical',
               textAlign: TextAlign.center,
               style: TextStyle(

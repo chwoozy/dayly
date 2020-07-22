@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dayly/models/schedulable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -11,17 +12,30 @@ class Task {
   int priorityScore;
   int duration;
 
-  Task(
-      {@required this.name,
-      this.isDone = false,
-      this.description,
-      this.tag,
-      this.documentId,
-      this.priorityScore,
-      this.duration});
+  Task({
+    @required this.name,
+    this.isDone = false,
+    this.description,
+    this.tag,
+    this.documentId,
+    this.priorityScore,
+    this.duration,
+  });
 
   void toggleDone() {
     isDone = !isDone;
+  }
+
+  Schedulable toSchedulable() {
+    return Schedulable(
+      name: this.name,
+      description: this.description,
+      isDone: this.isDone,
+      priorityScore: this.priorityScore,
+      duration: this.duration,
+      category: 'Task',
+      tag: this.tag,
+    );
   }
 
   //Convert to Json format

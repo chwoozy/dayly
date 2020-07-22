@@ -1,4 +1,6 @@
 import 'package:dayly/components/constants.dart';
+import 'package:dayly/pages/Schedule/schedule_screen.dart';
+import 'package:dayly/pages/Schedule/toschedule.dart';
 import 'package:dayly/pages/calendar/calendar.dart';
 import 'package:dayly/pages/leaderboard/leaderboard.dart';
 import 'package:dayly/pages/profile/profile.dart';
@@ -17,6 +19,7 @@ class _HomeState extends State<Home> {
     Calendar(),
     ToDo(),
     Leaderboard(),
+    ToSchedule(),
     Profile(),
   ];
 
@@ -34,6 +37,11 @@ class _HomeState extends State<Home> {
             Icon(Icons.event, size: 30, color: Colors.tealAccent[400]),
             Icon(Icons.assignment, size: 30, color: Colors.tealAccent[400]),
             Icon(Icons.equalizer, size: 30, color: Colors.tealAccent[400]),
+            Icon(
+              Icons.format_list_bulleted,
+              size: 30,
+              color: Colors.tealAccent[400],
+            ),
             Icon(Icons.perm_identity, size: 30, color: Colors.tealAccent[400]),
           ],
           animationDuration: Duration(
