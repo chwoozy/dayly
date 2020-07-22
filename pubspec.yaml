@@ -67,6 +67,7 @@ dependencies:
   # Utilities
   uuid: ^2.1.0
   intl: ^0.16.1
+  font_awesome_flutter: ^8.8.1
 
   
   # Calendar
@@ -100,3 +101,8 @@ flutter:
       fonts:
         - asset: fonts/Lato-Black.ttf
         - asset: fonts/Lato-Regular.ttf
+    - family: Falling
+      fonts:
+        - asset: fonts/fallingsky.otf
+        - asset: fonts/fallingskybold.otf
+          weight: 700

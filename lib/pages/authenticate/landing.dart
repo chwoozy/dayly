@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/rounded-button.dart';
 import 'package:dayly/services/auth.dart';
 
@@ -19,12 +18,11 @@ class _LandingState extends State<Landing> {
       width: double.infinity,
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          backgroundColor: primaryBackgroundColor,
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Container(
-                  height: 200,
+                  height: size.height * 0.3,
                   child: Stack(
                     children: <Widget>[
                       Positioned(
@@ -38,14 +36,14 @@ class _LandingState extends State<Landing> {
                       ),
                     ],
                   )),
-              SizedBox(height: 10.0),
+              SizedBox(height: size.height * 0.01),
               Center(
                 child: Image.asset(
                   'assets/images/landing-main.png',
-                  scale: 2.0,
+                  scale: 1.5,
                 ),
               ),
-              SizedBox(height: 10.0),
+              SizedBox(height: size.height * 0.05),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
@@ -55,20 +53,28 @@ class _LandingState extends State<Landing> {
                       children: <Widget>[
                         Text('Hey there, \nWelcome to Dayly!',
                             style: TextStyle(
-                              fontSize: 30,
-                              color: Colors.black,
+                              fontSize: 40,
                               fontWeight: FontWeight.bold,
                             ))
                       ],
                     )),
               ),
-              SizedBox(height: 15.0),
+              SizedBox(height: size.height * 0.05),
               RoundedButton(
                 text: "LOGIN WITH GOOGLE",
-                color: primaryPurple,
+                color: Colors.tealAccent[400],
+                textColor: Colors.black,
                 press: () async {
                   await _authService.signInWithGoogle();
                   // Navigator.pushNamed(context, '/login');
+                },
+              ),
+              RoundedButton(
+                text: "LOGIN WITH EMAIL",
+                color: Theme.of(context).accentColor,
+                textColor: Colors.black,
+                press: () async {
+                  Navigator.pushNamed(context, '/login');
                 },
               ),
             ],

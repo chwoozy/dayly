@@ -2,6 +2,7 @@ import 'package:dayly/components/constants.dart';
 import 'package:dayly/pages/Schedule/schedule_screen.dart';
 import 'package:dayly/pages/Schedule/toschedule.dart';
 import 'package:dayly/pages/calendar/calendar.dart';
+import 'package:dayly/pages/leaderboard/leaderboard.dart';
 import 'package:dayly/pages/profile/profile.dart';
 import 'package:dayly/pages/todo_list/todo.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,7 @@ class _HomeState extends State<Home> {
   final List<Widget> _children = [
     Calendar(),
     ToDo(),
+    Leaderboard(),
     ToSchedule(),
     Profile(),
   ];
@@ -25,22 +27,22 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        backgroundColor: primaryBackgroundColor,
         body: _children[_currentIndex],
         bottomNavigationBar: CurvedNavigationBar(
           height: 55,
           index: _currentIndex,
-          backgroundColor: primaryBackgroundColor,
-          color: secondaryBackgroundColor,
+          backgroundColor: Theme.of(context).canvasColor,
+          color: Theme.of(context).canvasColor,
           items: <Widget>[
-            Icon(Icons.event, size: 30, color: primaryPurple),
-            Icon(Icons.assignment, size: 30, color: primaryPurple),
+            Icon(Icons.event, size: 30, color: Colors.tealAccent[400]),
+            Icon(Icons.assignment, size: 30, color: Colors.tealAccent[400]),
+            Icon(Icons.equalizer, size: 30, color: Colors.tealAccent[400]),
             Icon(
               Icons.format_list_bulleted,
               size: 30,
-              color: primaryPurple,
+              color: Colors.tealAccent[400],
             ),
-            Icon(Icons.perm_identity, size: 30, color: primaryPurple),
+            Icon(Icons.perm_identity, size: 30, color: Colors.tealAccent[400]),
           ],
           animationDuration: Duration(
             milliseconds: 200,

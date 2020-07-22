@@ -61,7 +61,6 @@ class _AddEventState extends State<AddEvent> {
           if (snapshot.hasData) {
             return Scaffold(
               appBar: AppBar(
-                backgroundColor: primaryPurple,
                 title: Text(widget.currentEvent == null
                     ? "Add Event"
                     : widget.clickAdd == true ? "Add Event" : "Edit Event"),
@@ -184,8 +183,6 @@ class _AddEventState extends State<AddEvent> {
                               : null,
                           decoration: InputDecoration(
                               labelText: "Event Title",
-                              filled: true,
-                              fillColor: Colors.white,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10))),
                         ),
@@ -221,6 +218,7 @@ class _AddEventState extends State<AddEvent> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
                               child: RoundedButton(
+                                textColor: Colors.black,
                                 press: () async {
                                   if (_formKey.currentState.validate()) {
                                     setState(() {
@@ -263,7 +261,7 @@ class _AddEventState extends State<AddEvent> {
                                   }
                                 },
                                 text: 'Save',
-                                color: primaryPurple,
+                                color: Colors.tealAccent[400],
                               ),
                             ),
                     ],

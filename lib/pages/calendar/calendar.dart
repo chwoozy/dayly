@@ -8,6 +8,7 @@ import 'package:dayly/pages/calendar/month_view.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -26,109 +27,99 @@ class _CalendarState extends State<Calendar> {
     _calendarController.displayDate = DateTime.now();
     super.initState();
   }
-  // CalendarController _controller;
-  // Map<DateTime, List<dynamic>> _events;
-  // List<dynamic> _selectedEvents;
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _controller = CalendarController();
-  // }
-
-  // @override
-  // void dispose() {
-  //   _controller.dispose();
-  //   super.dispose();
-  // }
-
-  // Map<DateTime, List<dynamic>> _groupEvents(List<Event> allEvents) {
-  //   Map<DateTime, List<dynamic>> data = {};
-  //   allEvents.forEach((event) {
-  //     DateTime date = DateTime(event.eventFromDate.year,
-  //         event.eventFromDate.month, event.eventFromDate.day, 12);
-  //     if (data[date] == null) data[date] = [];
-  //     data[date].add(event);
-  //   });
-  //   return data;
-  // }
-
-  // List<Event> _getDataSource() {
-  //   List<Event> currEvent = <Event>[];
-  //   final DateTime today = DateTime.now();
-  //   final DateTime startTime =
-  //       DateTime(today.year, today.month, today.day, 9, 0, 0);
-  //   final DateTime endTime = startTime.add(const Duration(hours: 2));
-  //   currEvent.add(
-  //       Event('Conference', startTime, endTime, const Color(0xFF0F8644), false));
-  //   return currEvent;
-  // }
 
   @override
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
+    Size size = MediaQuery.of(context).size;
 
-    return Scaffold(
-        backgroundColor: primaryBackgroundColor,
-        floatingActionButton: FloatingActionButton.extended(
-          backgroundColor: primaryPurple,
-          onPressed: () {
-            Navigator.pushNamed(context, '/addevent').then((value) {
-              setState(() {});
-            });
-          },
-          label: Text("Add Event"),
-        ),
-        appBar: AppBar(
-          title: Text('Calendar'),
-          backgroundColor: primaryPurple,
-          elevation: 0.0,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.calendar_today),
-              onPressed: () async {
-                DateTime dateTime = await showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext builder) {
-                      return MonthView(
-                        user: _user,
-                        selectedDate: _calendarController.displayDate,
-                      );
+    return FutureBuilder<List<Event>>(
+        future: DatabaseService(uid: _user.uid).allEvents,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Scaffold(
+                extendBodyBehindAppBar: true,
+                floatingActionButton: FloatingActionButton(
+                  child: FaIcon(
+                    FontAwesomeIcons.plus,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/addevent').then((value) {
+                      setState(() {});
                     });
-                if (dateTime != null) {
-                  setState(() {
-                    _calendarController.displayDate = dateTime;
-                  });
-                }
-              },
-            ),
-            IconButton(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              icon: Icon(Icons.exit_to_app),
-              onPressed: () async {
-                await _authService.signOutGoogle();
-              },
-            )
-          ],
-        ),
-        body: FutureBuilder<List<Event>>(
-            future: DatabaseService(uid: _user.uid).allEvents,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return SfCalendar(
+                  },
+                ),
+                appBar: AppBar(
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  leading: IconButton(
+                    padding: EdgeInsets.symmetric(horizontal: 20.0),
+                    icon: Icon(Icons.calendar_today),
+                    onPressed: () async {
+                      DateTime dateTime = await showModalBottomSheet(
+                          context: context,
+                          builder: (BuildContext builder) {
+                            return Container(
+                              height: (size.height * 0.4),
+                              child: MonthView(
+                                user: _user,
+                                selectedDate: _calendarController.displayDate,
+                              ),
+                            );
+                          });
+                      if (dateTime != null) {
+                        setState(() {
+                          _calendarController.displayDate = dateTime;
+                        });
+                      }
+                    },
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                      icon: Icon(Icons.exit_to_app),
+                      onPressed: () async {
+                        await _authService.signOutGoogle();
+                      },
+                    )
+                  ],
+                ),
+                body: SfCalendar(
                   view: CalendarView.week,
                   controller: _calendarController,
                   dataSource: EventDataSource(snapshot.data),
-                  todayHighlightColor: primaryPurple,
+                  viewHeaderStyle: ViewHeaderStyle(
+                    dayTextStyle: TextStyle(
+                      fontFamily: 'Falling',
+                      fontSize: 15,
+                    ),
+                    dateTextStyle: TextStyle(
+                      fontFamily: 'Falling',
+                      color: Colors.yellow,
+                      fontSize: 18,
+                    ),
+                  ),
+                  headerStyle: CalendarHeaderStyle(
+                      textStyle: TextStyle(
+                        fontFamily: 'Falling',
+                        fontSize: 25,
+                      ),
+                      textAlign: TextAlign.center),
                   cellBorderColor: Colors.grey[500],
-                  backgroundColor: primaryBackgroundColor,
                   timeSlotViewSettings: TimeSlotViewSettings(
+                    dateFormat: 'd',
+                    dayFormat: 'EEE',
                     timeIntervalHeight: 70,
-                    minimumAppointmentDuration: Duration(minutes: 30),
+                    timeTextStyle: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Falling',
+                    ),
+                    timeInterval: Duration(minutes: 30),
+                    timeFormat: 'h:mm',
                   ),
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
-                    border: Border.all(color: primaryPurple, width: 2),
+                    border: Border.all(color: Colors.tealAccent[400], width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(3)),
                   ),
                   onTap: (CalendarTapDetails details) {
@@ -159,14 +150,10 @@ class _CalendarState extends State<Calendar> {
                       });
                     }
                   },
-                  // monthViewSettings: MonthViewSettings(
-                  //   appointmentDisplayMode:
-                  //       MonthAppointmentDisplayMode.appointment,
-                  // ),
-                );
-              } else {
-                return Loading();
-              }
-            }));
+                ));
+          } else {
+            return Loading();
+          }
+        });
   }
 }

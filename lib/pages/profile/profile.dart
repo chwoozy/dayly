@@ -7,6 +7,7 @@ import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,7 @@ class _ProfileState extends State<Profile> {
   String _email = '';
   String _uid = '';
   String _photoUrl = '';
+  String _method = '';
   bool loading = false;
   bool updating = false;
   bool processing = false;
@@ -62,11 +64,11 @@ class _ProfileState extends State<Profile> {
             _email = snapshot.data.email;
             _uid = snapshot.data.uid;
             _photoUrl = snapshot.data.photoUrl;
+            _method = snapshot.data.method;
 
             return loading
                 ? Loading()
                 : Scaffold(
-                    backgroundColor: primaryBackgroundColor,
                     body: SingleChildScrollView(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +79,7 @@ class _ProfileState extends State<Profile> {
                                 Container(
                                   height: 150,
                                   decoration: BoxDecoration(
-                                    color: primaryPurple,
+                                    color: Colors.tealAccent[400],
                                     // boxShadow: [BoxShadow(blurRadius: 5.0)],
                                     borderRadius: BorderRadius.vertical(
                                         bottom: Radius.circular(49)),
@@ -118,7 +120,7 @@ class _ProfileState extends State<Profile> {
                                 ),
                                 Positioned(
                                   top: 145,
-                                  right: 140,
+                                  right: 230,
                                   child: Container(
                                     width: 40,
                                     decoration: BoxDecoration(
@@ -131,7 +133,10 @@ class _ProfileState extends State<Profile> {
                                     child: IconButton(
                                       splashColor: Colors.transparent,
                                       highlightColor: Colors.transparent,
-                                      icon: Icon(Icons.create),
+                                      icon: Icon(
+                                        Icons.create,
+                                        color: Colors.black,
+                                      ),
                                       onPressed: getImage,
                                     ),
                                   ),
@@ -150,7 +155,7 @@ class _ProfileState extends State<Profile> {
                               height: 30.0,
                             ),
                             Container(
-                                height: size.height - 450,
+                                height: size.height * 0.3,
                                 padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Form(
                                   key: _formKey,
@@ -158,34 +163,78 @@ class _ProfileState extends State<Profile> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
+                                        Text('Gems',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 18,
+                                            )),
+                                        SizedBox(height: 10),
+                                        Row(
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 7),
+                                              child: SvgPicture.asset(
+                                                'assets/images/diamond.svg',
+                                                height: 25,
+                                              ),
+                                            ),
+                                            FutureBuilder(
+                                              future: DatabaseService(
+                                                      uid: snapshot.data.uid)
+                                                  .getPersonalScore,
+                                              builder: (context, snapshot) {
+                                                if (snapshot.hasData) {
+                                                  return Text(
+                                                    snapshot.data.score
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 25,
+                                                    ),
+                                                  );
+                                                } else {
+                                                  return SizedBox(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                    height: 10,
+                                                    width: 10,
+                                                  );
+                                                }
+                                              },
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(height: 20),
                                         Text(
                                           'Email Address',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 13,
+                                            fontSize: 18,
                                           ),
                                         ),
                                         Text(
                                           _email,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 20,
+                                            fontSize: 25,
                                             height: 2,
                                           ),
                                         ),
-                                        SizedBox(height: 10),
+                                        SizedBox(height: 20),
                                         Text(
                                           'Password',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 13,
+                                            fontSize: 18,
                                           ),
                                         ),
                                         TextFormField(
                                           obscureText: true,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 20,
+                                            fontSize: 25,
                                           ),
                                           onChanged: (value) {
                                             setState(() {
@@ -208,7 +257,7 @@ class _ProfileState extends State<Profile> {
                                 )),
                             Center(
                               child: RoundedButton(
-                                color: primaryPurple,
+                                color: Colors.tealAccent[400],
                                 text: 'Save Changes',
                                 press: () async {
                                   print(_email);
@@ -220,8 +269,8 @@ class _ProfileState extends State<Profile> {
                                       await uploadImage(_uploadedImage);
                                     }
                                     DatabaseService(uid: _uid)
-                                        .updateUserData(
-                                            _email, _displayName, _photoUrl)
+                                        .updateUserData(_email, _displayName,
+                                            _photoUrl, _method)
                                         .whenComplete(() async {
                                       setState(() {
                                         loading = false;
@@ -230,14 +279,14 @@ class _ProfileState extends State<Profile> {
                                     });
                                   }
                                 },
-                                textColor: Colors.white,
+                                textColor: Colors.black,
                               ),
                             ),
                             processing
                                 ? Center(child: CircularProgressIndicator())
                                 : Center(
                                     child: RoundedButton(
-                                      color: Colors.grey,
+                                      color: Colors.grey[700],
                                       text: 'Import from Google Calendar',
                                       press: () async {
                                         setState(() {
@@ -254,7 +303,7 @@ class _ProfileState extends State<Profile> {
                                           processing = false;
                                         });
                                       },
-                                      textColor: Colors.black,
+                                      textColor: Colors.white,
                                     ),
                                   ),
                           ]),

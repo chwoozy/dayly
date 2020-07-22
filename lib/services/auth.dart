@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dayly/models/score.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
@@ -62,67 +63,82 @@ class AuthService {
 
   // Sign In with Google
   Future<String> signInWithGoogle() async {
-    final GoogleSignInAccount googleSignInAccount =
-        await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleSignInAuthentication =
-        await googleSignInAccount.authentication;
+    try {
+      final GoogleSignInAccount googleSignInAccount =
+          await _googleSignIn.signIn();
+      final GoogleSignInAuthentication googleSignInAuthentication =
+          await googleSignInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
+      final AuthCredential credential = GoogleAuthProvider.getCredential(
+        accessToken: googleSignInAuthentication.accessToken,
+        idToken: googleSignInAuthentication.idToken,
+      );
 
-    final AuthResult authResult = await _auth.signInWithCredential(credential);
-    final FirebaseUser user = authResult.user;
+      final AuthResult authResult =
+          await _auth.signInWithCredential(credential);
+      final FirebaseUser user = authResult.user;
 
-    // Assertions
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
+      // Assertions
+      assert(!user.isAnonymous);
+      assert(await user.getIdToken() != null);
 
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
+      final FirebaseUser currentUser = await _auth.currentUser();
+      assert(user.uid == currentUser.uid);
 
-    bool isNewUser = !(await DatabaseService(uid: user.uid).checkUser).exists;
-    print(isNewUser.toString());
-    if (isNewUser) {
-      await DatabaseService(uid: user.uid)
-          .updateUserData(user.email, user.displayName, user.photoUrl);
-      print("First time sign up with Google success!");
+      bool isNewUser = await DatabaseService(uid: user.uid).newUser;
+      if (isNewUser) {
+        DatabaseService databaseService = DatabaseService(uid: user.uid);
+        await databaseService.updateUserData(
+            user.email, user.displayName, user.photoUrl, "Google");
+        await databaseService.updateScore(
+            Score(uid: user.uid, name: user.displayName, score: 0));
+        print("First time sign up with Google success!");
+      }
+
+      return 'Sign in with google succeeded: $user';
+    } catch (e) {
+      print(e.toString());
+      return 'Unsuccessful';
     }
-
-    return 'Sign in with google succeeded: $user';
   }
 
-  // // Email Login
-  // Future loginWithEmailAndPassword(String email, String password) async {
-  //   try {
-  //     AuthResult result = await _auth.signInWithEmailAndPassword(
-  //         email: email, password: password);
-  //     FirebaseUser user = result.user;
-  //     return _userFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  // Email Login
+  Future loginWithEmailAndPassword(String email, String password) async {
+    try {
+      AuthResult result = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   // Email Signup
-  // Future signUpWithEmailAndPassword(
-  //     String email, String password, String name) async {
-  //   try {
-  //     AuthResult result = await _auth.createUserWithEmailAndPassword(
-  //         email: email, password: password);
-  //     FirebaseUser user = result.user;
+  Future signUpWithEmailAndPassword(
+      String email, String password, String name) async {
+    try {
+      AuthResult result = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      FirebaseUser user = result.user;
 
-  //     // Create a new collection document for user with the uid
-  //     await DatabaseService(uid: user.uid)
-  //         .updateUserData(name, email, "student", '');
-  //     return _userFromFirebaseUser(user);
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+      // Create a new collection document for user with the uid
+      DatabaseService databaseService = DatabaseService(uid: user.uid);
+      await databaseService.updateUserData(
+          email,
+          name,
+          "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_960_720.png",
+          "Email");
+      await databaseService
+          .updateScore(Score(uid: user.uid, name: name, score: 0));
+      print("Finishing email sign up...");
+      return _userFromFirebaseUser(user);
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   // // Sign Out
   // Future signOut() async {
