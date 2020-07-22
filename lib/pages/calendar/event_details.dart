@@ -18,7 +18,6 @@ class EventDetails extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryPurple,
         title: Text('Event Details'),
         actions: <Widget>[
           FlatButton(
@@ -55,6 +54,7 @@ class EventDetails extends StatelessWidget {
               event.title,
               style: Theme.of(context).textTheme.headline4,
             ),
+            SizedBox(height: 10),
             Text(
               "Begins: ${event.eventFromDate.day} ${DateFormat("MMMM").format(event.eventFromDate)} ${DateFormat("y").format(event.eventFromDate)} ${DateFormat("jm").format(event.eventFromDate)}",
             ),
