@@ -1,39 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:dayly/models/schedulable.dart';
-import 'package:dayly/components/constants.dart';
-import 'package:dayly/models/schedulable.dart';
 import 'package:dayly/pages/todo_list/select_schedulable_screen.dart';
-import 'package:dayly/pages/todo_list/select_time_screen.dart';
 import 'package:dayly/services/database.dart';
-import 'package:flutter/material.dart';
-import 'package:dayly/components//tasks_list.dart';
-import 'package:dayly/pages/todo_list/add_task_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/models/task_data.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/components/loading.dart';
-import 'package:dayly/components/floating_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:dayly/components/schedulable_tile.dart';
-import 'package:dayly/services/sort_manager.dart';
 
 class ScheduleScreen extends StatefulWidget {
-  //final List<Schedulable> finalResult;
-
-  //ScheduleScreen(this.finalResult);
-
   @override
   _ScheduleScreenState createState() => _ScheduleScreenState();
 }
 
 class _ScheduleScreenState extends State<ScheduleScreen> {
   List<Schedulable> _finalResult = [];
-
-  bool _loadingInProgress = true;
-  List<Schedulable> _selectedTask = [];
   List<Schedulable> _listForScheduling = [];
+  bool _loadingInProgress = true;
 
   void _taskEditModalBottomSheet(
       BuildContext context, List<Schedulable> listForScheduling) {
@@ -71,7 +57,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     TaskData tasks = Provider.of<TaskData>(context, listen: true);
     _listForScheduling = tasks.toSchedule();
     return _loadingInProgress
@@ -79,51 +64,31 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
         : WillPopScope(
             onWillPop: () async => false,
             child: Scaffold(
-              floatingActionButton: FloatingActionButton.extended(
-                backgroundColor: Color(0xFF3A3E88),
-                onPressed: () {
-                  _taskEditModalBottomSheet(context, _listForScheduling);
-                },
-                label: Text("Create Schedule"),
-              ),
-              appBar: AppBar(
-                automaticallyImplyLeading: false,
-                elevation: 0.1,
-                //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-                backgroundColor: Color(0xFF3A3E88),
-                title: Text('Schedules'),
-              ),
-              body: this._finalResult.isEmpty
-                  ? Stack(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage("assets/images/bkg.jpg"),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                floatingActionButton: FloatingActionButton.extended(
+                  backgroundColor: Color(0xFF3A3E88),
+                  onPressed: () {
+                    _taskEditModalBottomSheet(context, _listForScheduling);
+                  },
+                  label: Text("Create Schedule"),
+                ),
+                appBar: AppBar(
+                  automaticallyImplyLeading: false,
+                  elevation: 0.1,
+                  //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
+                  backgroundColor: Color(0xFF3A3E88),
+                  title: Text('Schedules'),
+                ),
+                body: Stack(
+                  children: <Widget>[
+                    Container(
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage("assets/images/bkg.jpg"),
+                          fit: BoxFit.cover,
                         ),
-//                        Positioned.fill(
-//                          child: Align(
-//                            alignment: Alignment.center,
-//                            child: RaisedButton(
-//                                color: Colors.white,
-//                                shape: RoundedRectangleBorder(
-//                                  borderRadius: BorderRadius.circular(18),
-//                                ),
-//                                padding: EdgeInsets.all(12),
-//                                textColor: Colors.black,
-//                                child: Text('Create Schedule'),
-//                                onPressed: () {
-//                                  _taskEditModalBottomSheet(
-//                                      context, _listForScheduling);
-//                                }),
-//                          ),
-//                        ),
-                      ],
-                    )
-                  : Column(
+                      ),
+                    ),
+                    Column(
                       children: <Widget>[
                         Expanded(
                           child: ListView(
@@ -137,7 +102,8 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                         ),
                       ],
                     ),
-            ),
+                  ],
+                )),
           );
   }
 }

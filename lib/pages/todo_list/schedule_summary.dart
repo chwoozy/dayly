@@ -1,5 +1,6 @@
 import 'package:dayly/models/schedulable.dart';
 import 'package:dayly/pages/Schedule/schedule_screen.dart';
+import 'package:dayly/pages/Schedule/toschedule.dart';
 import 'package:dayly/pages/todo_list/tasks_screen.dart';
 import 'package:dayly/services/schedule_manager.dart';
 import 'package:dayly/services/sort_manager.dart';
@@ -130,6 +131,7 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Color(0xFF3A3E88),
         onPressed: () async {
+          //Navigator.pop(context);
           await databaseService.deleteSchedule();
           for (Schedulable i in this.finalResult) {
             await Firestore.instance
@@ -149,10 +151,9 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
               'endTime': i.endTime,
             });
           }
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (BuildContext context) => ScheduleScreen()),
+            MaterialPageRoute(builder: (_) => ScheduleScreen()),
           );
         },
         label: Text("Confirm"),

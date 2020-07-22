@@ -112,40 +112,42 @@ class _State extends State<SelectTimeScreen> {
 
     if (totalDuration > workingDuration) {
       showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          // return object of type Dialog
-          return AlertDialog(
-            title: Text("Notice"),
-            content: Text("More time needed to finish these tasks!"),
-            actions: <Widget>[
-              FlatButton(
-                  child: Text('Help Me Compact'),
-                  onPressed: () async {
-                    _compactDuration();
-                    //Navigator.pop(context);
-                    await Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => ScheduleSummary(
-                          listForScheduling: widget.listForScheduling,
-                          startingTime: _startingDateTime,
-                          endTime: _endDateTime,
+          context: context,
+          builder: (BuildContext context) {
+            // return object of type Dialog
+            return AlertDialog(
+              title: Text("Notice"),
+              content: Text("More time needed to finish these tasks!"),
+              actions: <Widget>[
+                FlatButton(
+                    child: Text('Help Me Compact'),
+                    onPressed: () {
+                      setState(() {
+                        _compactDuration();
+                      });
+                      //_compactDuration();
+                      Navigator.of(context).pop();
+                      Navigator.pushReplacement(
+                        this.context,
+                        MaterialPageRoute(
+                          builder: (_) => ScheduleSummary(
+                            listForScheduling: widget.listForScheduling,
+                            startingTime: _startingDateTime,
+                            endTime: _endDateTime,
+                          ),
                         ),
-                      ),
-                    );
-                  }),
-              // usually buttons at the bottom of the dialog
-              FlatButton(
-                child: new Text("Close"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
+                      );
+                    }),
+                // usually buttons at the bottom of the dialog
+                FlatButton(
+                  child: new Text("Close"),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          });
     } else {
       //Navigator.pop(context);
       Navigator.pushReplacement(
