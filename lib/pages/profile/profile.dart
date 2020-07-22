@@ -69,94 +69,97 @@ class _ProfileState extends State<Profile> {
             return loading
                 ? Loading()
                 : Scaffold(
-                    body: SingleChildScrollView(
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              height: 200,
-                              child: Stack(children: <Widget>[
-                                Container(
-                                  height: 150,
-                                  decoration: BoxDecoration(
-                                    color: Colors.tealAccent[400],
-                                    // boxShadow: [BoxShadow(blurRadius: 5.0)],
-                                    borderRadius: BorderRadius.vertical(
-                                        bottom: Radius.circular(49)),
-                                  ),
+                    body: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Container(
+                            height: size.height * 0.2,
+                            child: Stack(children: <Widget>[
+                              Container(
+                                height: 150,
+                                decoration: BoxDecoration(
+                                  color: Colors.tealAccent[400],
+                                  // boxShadow: [BoxShadow(blurRadius: 5.0)],
+                                  borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(49)),
                                 ),
-                                Container(
-                                  height: 200,
-                                  child: Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                            color: primaryBackgroundColor),
-                                        color: primaryBackgroundColor,
-                                      ),
-                                      height: 140,
-                                      width: 140,
-                                      child: Container(
-                                        margin: EdgeInsets.all(4),
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: _uploadedImage != null
-                                                ? FileImage(_uploadedImage)
-                                                : _photoUrl == ''
-                                                    ? AssetImage(
-                                                        'assets/images/avatar.png')
-                                                    : NetworkImage(_photoUrl),
-                                            fit: BoxFit.fill,
-                                          ),
-                                          shape: BoxShape.circle,
-                                          border: Border.all(
-                                              color: Colors.black, width: 2.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Positioned(
-                                  top: 145,
-                                  right: 230,
+                              ),
+                              Container(
+                                height: size.height * 0.2,
+                                child: Align(
+                                  alignment: Alignment.bottomCenter,
                                   child: Container(
-                                    width: 40,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       border: Border.all(
-                                          color: Colors.black, width: 2.0),
-                                      color: Colors.white,
+                                          color: primaryBackgroundColor),
+                                      color: primaryBackgroundColor,
                                     ),
-                                    // User Profile Image
-                                    child: IconButton(
-                                      splashColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      icon: Icon(
-                                        Icons.create,
-                                        color: Colors.black,
+                                    height: size.height * 0.15,
+                                    width: size.width * 0.27,
+                                    child: Container(
+                                      margin: EdgeInsets.all(4),
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image: _uploadedImage != null
+                                              ? FileImage(_uploadedImage)
+                                              : _photoUrl == ''
+                                                  ? AssetImage(
+                                                      'assets/images/avatar.png')
+                                                  : NetworkImage(_photoUrl),
+                                          fit: BoxFit.fill,
+                                        ),
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                            color: Colors.black, width: 2.0),
                                       ),
-                                      onPressed: getImage,
                                     ),
                                   ),
-                                )
-                              ]),
-                            ),
-                            // SizedBox(height: 10.0,),
-                            Center(
+                                ),
+                              ),
+                              Positioned(
+                                top: size.height * 0.15,
+                                right: size.width * 0.38,
+                                child: Container(
+                                  width: size.width * 0.07,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: Colors.black, width: 2.0),
+                                    color: Colors.white,
+                                  ),
+                                  // User Profile Image
+                                  child: IconButton(
+                                    splashColor: Colors.transparent,
+                                    highlightColor: Colors.transparent,
+                                    icon: Icon(
+                                      Icons.create,
+                                      color: Colors.black,
+                                    ),
+                                    onPressed: getImage,
+                                  ),
+                                ),
+                              )
+                            ]),
+                          ),
+                          Container(
+                            height: size.height * 0.05,
+                            child: Center(
                               child: Text(_displayName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
                                     fontSize: 30,
                                   )),
                             ),
-                            SizedBox(
-                              height: 30.0,
-                            ),
-                            Container(
-                                height: size.height * 0.3,
-                                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Container(
+                              height: size.height * 0.3,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.05),
                                 child: Form(
                                   key: _formKey,
                                   child: Column(
@@ -168,7 +171,7 @@ class _ProfileState extends State<Profile> {
                                               fontWeight: FontWeight.w400,
                                               fontSize: 18,
                                             )),
-                                        SizedBox(height: 10),
+                                        SizedBox(height: size.height * 0.01),
                                         Row(
                                           children: <Widget>[
                                             Padding(
@@ -206,7 +209,7 @@ class _ProfileState extends State<Profile> {
                                             )
                                           ],
                                         ),
-                                        SizedBox(height: 20),
+                                        SizedBox(height: size.height * 0.02),
                                         Text(
                                           'Email Address',
                                           style: TextStyle(
@@ -222,7 +225,7 @@ class _ProfileState extends State<Profile> {
                                             height: 2,
                                           ),
                                         ),
-                                        SizedBox(height: 20),
+                                        SizedBox(height: size.height * 0.02),
                                         Text(
                                           'Password',
                                           style: TextStyle(
@@ -252,62 +255,63 @@ class _ProfileState extends State<Profile> {
                                                 style: TextStyle(
                                                   color: Colors.green,
                                                 ))
-                                            : SizedBox(height: 10),
+                                            : SizedBox(
+                                                height: size.height * 0.01),
                                       ]),
-                                )),
-                            Center(
-                              child: RoundedButton(
-                                color: Colors.tealAccent[400],
-                                text: 'Save Changes',
-                                press: () async {
-                                  print(_email);
-                                  if (_formKey.currentState.validate()) {
-                                    setState(() {
-                                      loading = true;
-                                    });
-                                    if (_uploadedImage != null) {
-                                      await uploadImage(_uploadedImage);
-                                    }
-                                    DatabaseService(uid: _uid)
-                                        .updateUserData(_email, _displayName,
-                                            _photoUrl, _method)
-                                        .whenComplete(() async {
-                                      setState(() {
-                                        loading = false;
-                                        updating = true;
-                                      });
-                                    });
+                                ),
+                              )),
+                          Center(
+                            child: RoundedButton(
+                              color: Colors.tealAccent[400],
+                              text: 'Save Changes',
+                              press: () async {
+                                print(_email);
+                                if (_formKey.currentState.validate()) {
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  if (_uploadedImage != null) {
+                                    await uploadImage(_uploadedImage);
                                   }
-                                },
-                                textColor: Colors.black,
-                              ),
+                                  DatabaseService(uid: _uid)
+                                      .updateUserData(_email, _displayName,
+                                          _photoUrl, _method)
+                                      .whenComplete(() async {
+                                    setState(() {
+                                      loading = false;
+                                      updating = true;
+                                    });
+                                  });
+                                }
+                              },
+                              textColor: Colors.black,
                             ),
-                            processing
-                                ? Center(child: CircularProgressIndicator())
-                                : Center(
-                                    child: RoundedButton(
-                                      color: Colors.grey[700],
-                                      text: 'Import from Google Calendar',
-                                      press: () async {
-                                        setState(() {
-                                          processing = true;
-                                        });
-                                        try {
-                                          await _authService
-                                              .getEvents(snapshot.data.uid);
-                                          print("Success!");
-                                        } catch (e) {
-                                          print(e);
-                                        }
-                                        setState(() {
-                                          processing = false;
-                                        });
-                                      },
-                                      textColor: Colors.white,
-                                    ),
+                          ),
+                          processing
+                              ? Center(child: CircularProgressIndicator())
+                              : Center(
+                                  child: RoundedButton(
+                                    color: Colors.grey[700],
+                                    text: 'Import from Google Calendar',
+                                    press: () async {
+                                      setState(() {
+                                        processing = true;
+                                      });
+                                      try {
+                                        await _authService
+                                            .getEvents(snapshot.data.uid);
+                                        print("Success!");
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                      setState(() {
+                                        processing = false;
+                                      });
+                                    },
+                                    textColor: Colors.white,
                                   ),
-                          ]),
-                    ),
+                                ),
+                        ]),
                   );
           } else {
             return Loading();
