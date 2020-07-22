@@ -90,13 +90,14 @@ class TaskTile extends StatelessWidget {
     return TimelineTile(
       alignment: TimelineAlign.manual,
       lineX: 0.1,
-      topLineStyle: LineStyle(color: Color(0xFF3A3E88), width: 3),
+      topLineStyle: LineStyle(color: Colors.white, width: 3),
       indicatorStyle: IndicatorStyle(
         indicatorY: 0.5,
         drawGap: true,
         width: 12,
         height: 12,
-        color: Color(0xFF3A3E88),
+        color: Colors.white,
+        //color: Color(0xFF3A3E88),
       ),
       rightChild: Center(
         child: Padding(
@@ -115,9 +116,7 @@ class TaskTile extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       flex: 2,
-                      child: Icon(
-                        getTagIcon(this.category),
-                      ),
+                      child: Icon(getTagIcon(this.category)),
                     ),
                     Expanded(
                       flex: 5,

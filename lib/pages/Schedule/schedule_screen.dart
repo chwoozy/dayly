@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dayly/models/schedulable.dart';
-import 'package:dayly/pages/todo_list/select_schedulable_screen.dart';
+import 'package:dayly/pages/Schedule/select_schedulable_screen.dart';
 import 'package:dayly/services/database.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/models/task_data.dart';
@@ -65,7 +65,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
             onWillPop: () async => false,
             child: Scaffold(
                 floatingActionButton: FloatingActionButton.extended(
-                  backgroundColor: Color(0xFF3A3E88),
+                  //backgroundColor: Color(0xFF3A3E88),
                   onPressed: () {
                     _taskEditModalBottomSheet(context, _listForScheduling);
                   },
@@ -75,19 +75,19 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   automaticallyImplyLeading: false,
                   elevation: 0.1,
                   //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-                  backgroundColor: Color(0xFF3A3E88),
+                  //backgroundColor: Color(0xFF3A3E88),
                   title: Text('Schedules'),
                 ),
                 body: Stack(
                   children: <Widget>[
-                    Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/bkg.jpg"),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
+//                    Container(
+//                      decoration: BoxDecoration(
+//                        image: DecorationImage(
+//                          image: AssetImage("assets/images/bkg.jpg"),
+//                          fit: BoxFit.cover,
+//                        ),
+//                      ),
+//                    ),
                     Column(
                       children: <Widget>[
                         Expanded(
