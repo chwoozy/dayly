@@ -320,7 +320,7 @@ class _TasksScreenState extends State<TasksScreen> {
               //backgroundColor: Color(0xFF3A3E88),
               title: Text(
                 'ToDo-List',
-                style: TextStyle(fontSize: 20),
+                style: TextStyle(fontFamily: 'Falling', fontSize: 23),
               ),
             ),
             floatingActionButton: FloatingActionButton.extended(
@@ -329,142 +329,83 @@ class _TasksScreenState extends State<TasksScreen> {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AddTaskScreen()));
               },
-              label: Text("Add Task"),
+              label: Text(
+                "Add Task",
+                style: TextStyle(
+                    fontFamily: 'Falling',
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15),
+              ),
             ),
-            body: Stack(
-              children: <Widget>[
-                Container(
-                  //color: primaryBackgroundColor,
-                  height: size.height,
-                  width: size.width,
-                ),
-                Container(
-                  height: size.height * .10,
-                  decoration: BoxDecoration(
-                    //color: Color(0xFF3A3E88),
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.zero,
-                      topRight: Radius.zero,
-                      bottomRight: Radius.circular(30.0),
-                      bottomLeft: Radius.circular(30.0),
-                    ),
-                  ),
-                ),
-                SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-//                        Row(
-//                          children: <Widget>[
-////                            FloatingButton(
-////                              icon: Icons.date_range,
-////                              tag: 'btn1',
-////                              onPressCallback: () {
-////                                _taskEditModalBottomSheet(
-////                                    context, _listForScheduling);
-////                              },
-////                            ),
-//                            Spacer(),
-//                            FloatingButton(
-//                              icon: Icons.add,
-//                              tag: 'btn2',
-//                              onPressCallback: () {
-//                                Navigator.push(
-//                                    context,
-//                                    MaterialPageRoute(
-//                                        builder: (context) => AddTaskScreen()));
-//                              },
-//                            ),
-//                          ],
-//                        ),
-//                        SizedBox(
-//                          height: 10,
-//                        ),
-//                        Align(
-//                          alignment: Alignment.center,
-//                          child: Text(
-//                            'Glance at your day',
-//                            style: GoogleFonts.lato(
-//                              textStyle: TextStyle(
-//                                color: Colors.black,
-//                                fontSize: 35,
-//                                fontWeight: FontWeight.w800,
-//                              ),
-//                            ),
-//                          ),
-//                        ),
-//                        SizedBox(
-//                          height: 20,
-//                        ),
-                        Container(
-                          padding: EdgeInsets.all(20),
-                          height: 120,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(22),
-                            //color: Colors.white,
+            body: SafeArea(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      padding: EdgeInsets.all(20),
+                      height: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(22),
+                        color: Colors.transparent,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          CircularPercentIndicator(
+                            radius: 70.0,
+                            lineWidth: 5.0,
+                            progressColor: Colors.deepPurple,
+                            percent: tasks.finishedTaskCount > tasks.taskCount
+                                ? 1.0
+                                : tasks.finishedTaskCount / tasks.taskCount,
+                            center: Text(tasks.taskCount == 0
+                                ? '0%'
+                                : tasks.finishedTaskCount > tasks.taskCount
+                                    ? '100%'
+                                    : '${(tasks.finishedTaskCount / tasks.taskCount * 100).round()}%'),
                           ),
-                          child: Row(
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Column(
                             children: <Widget>[
-                              CircularPercentIndicator(
-                                radius: 70.0,
-                                lineWidth: 5.0,
-                                progressColor: Colors.purple,
-                                percent: tasks.finishedTaskCount >
-                                        tasks.taskCount
-                                    ? 1.0
-                                    : tasks.finishedTaskCount / tasks.taskCount,
-                                center: Text(tasks.taskCount == 0
-                                    ? '0%'
-                                    : tasks.finishedTaskCount > tasks.taskCount
-                                        ? '100%'
-                                        : '${(tasks.finishedTaskCount / tasks.taskCount * 100).round()}%'),
+                              Container(
+                                child: Text(
+                                  'Daily Progress',
+                                  style: TextStyle(
+                                    fontFamily: 'Falling',
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
                               ),
                               SizedBox(
-                                width: 30,
+                                height: 10,
                               ),
-                              Column(
-                                children: <Widget>[
-                                  Container(
-                                    child: Text(
-                                      'Daily Progress',
-                                      style: GoogleFonts.lato(
-                                        textStyle: TextStyle(
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
+                              Container(
+                                child: Text(
+                                  '${tasks.finishedTaskCount} / ${tasks.taskCount} Tasks For Today',
+                                  style: TextStyle(
+                                    fontFamily: 'Falling',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w500,
                                   ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    child: Text(
-                                      '${tasks.finishedTaskCount} / ${tasks.taskCount} Tasks For Today',
-                                      style: GoogleFonts.lato(
-                                        textStyle: TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                        Expanded(
-                          child: TasksList(),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                    Expanded(
+                      child: TasksList(),
+                    )
+                  ],
+                ),
+              ),
             ),
           );
   }

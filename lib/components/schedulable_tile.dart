@@ -17,8 +17,9 @@ class SchedulableTile extends StatelessWidget {
     return TimelineTile(
       alignment: TimelineAlign.manual,
       lineX: 0.3,
-      topLineStyle: LineStyle(color: Colors.black.withOpacity(0.7)),
+      topLineStyle: LineStyle(color: Colors.white),
       indicatorStyle: IndicatorStyle(
+        color: Colors.white,
         indicatorY: 0.3,
         drawGap: true,
         width: 35,
@@ -47,10 +48,10 @@ class SchedulableTile extends StatelessWidget {
                   this.schedule.dateTime == null
                       ? 'None'
                       : '${this.schedule.dateTime.hour.toString().padLeft(2, '0')} : ${this.schedule.dateTime.minute.toString().padLeft(2, '0')}',
-                  style: GoogleFonts.lato(
-                    fontSize: 18,
-                    color: Colors.black.withOpacity(0.6),
-                    fontWeight: FontWeight.w800,
+                  style: TextStyle(
+                    fontSize: 22,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
         ),
@@ -75,7 +76,7 @@ class SchedulableTile extends StatelessWidget {
             children: <Widget>[
               Text(
                 this.schedule.name,
-                style: GoogleFonts.lato(
+                style: TextStyle(
                   fontSize: 18,
                   color: Colors.white.withOpacity(0.8),
                   fontWeight: FontWeight.bold,
@@ -85,7 +86,7 @@ class SchedulableTile extends StatelessWidget {
               Text(
                 'Duration(With Break): ' +
                     this.schedule.getDuration(this.schedule.duration),
-                style: GoogleFonts.lato(
+                style: TextStyle(
                   fontSize: 16,
                   color: Colors.white.withOpacity(0.8),
                   fontWeight: FontWeight.normal,
@@ -94,7 +95,7 @@ class SchedulableTile extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 this.schedule.description,
-                style: GoogleFonts.lato(
+                style: TextStyle(
                   fontSize: 14,
                   color: Colors.white.withOpacity(0.6),
                   fontWeight: FontWeight.normal,
@@ -126,7 +127,7 @@ class _IconIndicator extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: Colors.black.withOpacity(0.7), width: 2),
             shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white,
           ),
         ),
         Positioned.fill(
@@ -138,7 +139,7 @@ class _IconIndicator extends StatelessWidget {
               child: Icon(
                 iconData,
                 size: size,
-                color: const Color(0xFF9E3773).withOpacity(0.7),
+                color: const Color(0xFF9E3773),
               ),
             ),
           ),

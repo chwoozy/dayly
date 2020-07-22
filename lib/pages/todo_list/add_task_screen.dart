@@ -37,15 +37,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        //automaticallyImplyLeading: false,
         elevation: 0.1,
-        //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-        backgroundColor: Color(0xFF3A3E88),
         title: Text('New Task'),
         actions: <Widget>[
           IconButton(
-            //backgroundColor: Colors.red,
-            //elevation: 0,
             icon: Icon(
               Icons.check,
               color: Colors.white,
@@ -89,11 +84,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
-          Container(
-            color: Color(0xFF3A3E88),
-            height: size.height,
-            width: size.width,
-          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
@@ -108,17 +98,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             'Category',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.02,
+                          height: size.height * 0.03,
                         ),
                         Column(
                           children: <Widget>[
@@ -185,23 +173,21 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             'Priority',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
                         SizedBox(
-                          height: size.height * 0.02,
+                          height: size.height * 0.03,
                         ),
                         SliderWidget(
                           priorityData: priorityData,
                         ),
                         SizedBox(
-                          height: size.height * 0.04,
+                          height: size.height * 0.05,
                         ),
                         Row(
                           children: <Widget>[
@@ -209,12 +195,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               alignment: Alignment.topLeft,
                               child: Text(
                                 'Duration',
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ),
@@ -238,15 +222,13 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                             .toString() +
                                         'min'
                                     : "Add Duration",
-                                style: GoogleFonts.lato(
-                                  textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              color: Color(0xFF3A3E88),
+                              //color: Color(0xFF3A3E88),
                               onPressed: () {
                                 showModalBottomSheet(
                                     context: context,
@@ -270,13 +252,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                 Center(
                                                   child: Text(
                                                     'Duration',
-                                                    style: GoogleFonts.lato(
-                                                      textStyle: TextStyle(
-                                                        color: Colors.black,
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.w700,
-                                                      ),
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w700,
                                                     ),
                                                   ),
                                                 ),
@@ -284,7 +264,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                   width: size.width * .08,
                                                 ),
                                                 RaisedButton(
-                                                  color: Color(0xFF3A3E88),
+                                                  //color: Color(0xFF3A3E88),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -299,18 +279,30 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                                 ),
                                               ],
                                             ),
-                                            CupertinoTimerPicker(
-                                              mode: CupertinoTimerPickerMode.hm,
-                                              minuteInterval: 1,
-                                              secondInterval: 1,
-                                              initialTimerDuration:
-                                                  _initialTimer,
-                                              onTimerDurationChanged:
-                                                  (Duration changedTimer) {
-                                                setState(() {
-                                                  _initialTimer = changedTimer;
-                                                });
-                                              },
+                                            CupertinoTheme(
+                                              data: CupertinoThemeData(
+                                                  textTheme:
+                                                      CupertinoTextThemeData(
+                                                          pickerTextStyle:
+                                                              TextStyle(
+                                                fontSize: 16,
+                                                color: Colors.white,
+                                              ))),
+                                              child: CupertinoTimerPicker(
+                                                mode:
+                                                    CupertinoTimerPickerMode.hm,
+                                                minuteInterval: 1,
+                                                secondInterval: 1,
+                                                initialTimerDuration:
+                                                    _initialTimer,
+                                                onTimerDurationChanged:
+                                                    (Duration changedTimer) {
+                                                  setState(() {
+                                                    _initialTimer =
+                                                        changedTimer;
+                                                  });
+                                                },
+                                              ),
                                             ),
                                           ],
                                         ),
@@ -325,9 +317,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   ),
                 ],
               ),
-              height: size.height * .5,
+              height: size.height * .55,
               decoration: BoxDecoration(
-                color: primaryBackgroundColor,
+                //color: Colors.black,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(30.0),
                   topRight: Radius.circular(30.0),
@@ -343,22 +335,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-//                  Align(
-//                    alignment: Alignment.topLeft,
-//                    child: Text(
-//                      'Create New Task',
-//                      style: GoogleFonts.lato(
-//                        textStyle: TextStyle(
-//                          color: Colors.white,
-//                          fontSize: 30,
-//                          fontWeight: FontWeight.w500,
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-//                  SizedBox(
-//                    height: size.height * 0.03,
-//                  ),
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 20),
                     child: Column(
@@ -367,12 +343,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             'Task Name',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
@@ -411,12 +385,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           alignment: Alignment.topLeft,
                           child: Text(
                             'Task Description',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                         ),
@@ -451,53 +423,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
             ),
           ),
-//          Padding(
-//            padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 60),
-//            child: Align(
-//              alignment: Alignment.topRight,
-//              child: FloatingActionButton(
-//                backgroundColor: Colors.red,
-//                elevation: 0,
-//                child: Icon(
-//                  Icons.check,
-//                  color: Colors.white,
-//                  size: 30,
-//                ),
-//                onPressed: () async {
-//                  setState(() {
-//                    _newTaskTitle == '' ? _validate = true : _validate = false;
-//                    _priorityScore = priorityData.priorityScore;
-//                  });
-//
-//                  if (!_validate) {
-//                    Provider.of<TaskData>(context, listen: false).addTask(
-//                        _newTaskTitle,
-//                        _taskDescription,
-//                        _tag,
-//                        _priorityScore,
-//                        _initialTimer.inMinutes);
-//
-//                    //Add new task to database
-//                    await Firestore.instance
-//                        .collection('task_data')
-//                        .document(_user.uid)
-//                        .collection('tasks')
-//                        .add({
-//                      'taskName': _newTaskTitle,
-//                      'taskDescription': _taskDescription,
-//                      'isDone': false,
-//                      'tag': _tag,
-//                      'priorityScore': _priorityScore,
-//                      'duration': _initialTimer.inMinutes,
-//                    });
-//
-//                    Navigator.pushReplacement(context,
-//                        MaterialPageRoute(builder: (context) => TasksScreen()));
-//                  }
-//                },
-//              ),
-//            ),
-//          ),
         ],
       ),
     );

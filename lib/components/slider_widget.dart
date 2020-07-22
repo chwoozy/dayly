@@ -56,9 +56,10 @@ class _SliderWidgetState extends State<SliderWidget> {
         ),
         gradient: new LinearGradient(
             colors: [
-              //const Color(0xFF00c6ff),
-              Color(0xFF3A3E88),
-              Color(0xFF3A3E88),
+              Colors.tealAccent[400],
+              Colors.teal[400],
+//              Color(0xFF3A3E88),
+//              Color(0xFF3A3E88),
             ],
             begin: const FractionalOffset(0.0, 0.0),
             end: const FractionalOffset(1.0, 1.00),
