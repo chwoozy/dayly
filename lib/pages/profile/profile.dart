@@ -25,6 +25,7 @@ class _ProfileState extends State<Profile> {
   String _email = '';
   String _uid = '';
   String _photoUrl = '';
+  String _method = '';
   bool loading = false;
   bool updating = false;
   bool processing = false;
@@ -63,6 +64,7 @@ class _ProfileState extends State<Profile> {
             _email = snapshot.data.email;
             _uid = snapshot.data.uid;
             _photoUrl = snapshot.data.photoUrl;
+            _method = snapshot.data.method;
 
             return loading
                 ? Loading()
@@ -267,8 +269,8 @@ class _ProfileState extends State<Profile> {
                                       await uploadImage(_uploadedImage);
                                     }
                                     DatabaseService(uid: _uid)
-                                        .updateUserData(
-                                            _email, _displayName, _photoUrl)
+                                        .updateUserData(_email, _displayName,
+                                            _photoUrl, _method)
                                         .whenComplete(() async {
                                       setState(() {
                                         loading = false;

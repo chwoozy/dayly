@@ -22,7 +22,7 @@ class DatabaseService {
       Firestore.instance.collection('score');
 
   Future updateUserData(
-      String email, String displayName, String photoUrl) async {
+      String email, String displayName, String photoUrl, String method) async {
     return await userCollection
         .document(uid)
         .collection('profile')
@@ -31,6 +31,7 @@ class DatabaseService {
       'email': email,
       'displayName': displayName,
       'photoUrl': photoUrl,
+      'method': method,
     });
   }
 
@@ -135,6 +136,7 @@ class DatabaseService {
       displayName: snapshot.data['displayName'],
       email: snapshot.data['email'],
       photoUrl: snapshot.data['photoUrl'],
+      method: snapshot.data['method'],
     );
   }
 

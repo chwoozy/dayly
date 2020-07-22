@@ -1,4 +1,6 @@
 import 'package:dayly/pages/authenticate/landing.dart';
+import 'package:dayly/pages/authenticate/login.dart';
+import 'package:dayly/pages/authenticate/signup.dart';
 import 'package:dayly/pages/calendar/add_event.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/pages/wrapper.dart';
@@ -37,6 +39,8 @@ class Dayly extends StatelessWidget {
             '/landing': (context) => Landing(),
             '/wrapper': (context) => Wrapper(),
             '/addevent': (context) => AddEvent(),
+            '/login': (context) => Login(),
+            '/signup': (context) => SignUp(),
           },
           theme: _themeData),
     );
