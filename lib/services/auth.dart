@@ -80,8 +80,7 @@ class AuthService {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
 
-    bool isNewUser = !(await DatabaseService(uid: user.uid).checkUser).exists;
-    print(isNewUser.toString());
+    bool isNewUser = await DatabaseService(uid: user.uid).newUser;
     if (isNewUser) {
       DatabaseService databaseService = DatabaseService(uid: user.uid);
       await databaseService.updateUserData(

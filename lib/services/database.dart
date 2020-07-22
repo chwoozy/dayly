@@ -74,8 +74,17 @@ class DatabaseService {
         .delete();
   }
 
-  Future<DocumentSnapshot> get checkUser {
-    return userCollection.document(uid).get();
+  Future<bool> get newUser async {
+    DocumentSnapshot result = await userCollection
+        .document(uid)
+        .collection("profile")
+        .document("userinfo")
+        .get();
+    if (result.exists) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   // Get User Data Stream

@@ -42,6 +42,7 @@ class _TasksListState extends State<TasksList> {
                   await databaseService.updateTask(task, task.isDone);
                   if (task.isDone) {
                     await databaseService.addScore(score, 1);
+                    print("+1");
                   }
                 },
                 category: task.tag,
