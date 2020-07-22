@@ -89,7 +89,7 @@ class TaskTile extends StatelessWidget {
     print(this.priority);
     return TimelineTile(
       alignment: TimelineAlign.manual,
-      lineX: 0.1,
+      lineX: 0.17,
       topLineStyle: LineStyle(color: Colors.white, width: 3),
       indicatorStyle: IndicatorStyle(
         indicatorY: 0.5,
@@ -98,6 +98,10 @@ class TaskTile extends StatelessWidget {
         height: 12,
         color: Colors.white,
         //color: Color(0xFF3A3E88),
+      ),
+      leftChild: Icon(
+        getTagIcon(this.category),
+        size: 27,
       ),
       rightChild: Center(
         child: Padding(
@@ -116,34 +120,33 @@ class TaskTile extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       flex: 2,
-                      child: Icon(getTagIcon(this.category)),
+                      child: SizedBox(
+                        width: 1,
+                      ),
                     ),
                     Expanded(
-                      flex: 5,
+                      flex: 6,
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
                             taskTitle,
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w800,
-                                  decoration: isChecked
-                                      ? TextDecoration.lineThrough
-                                      : null),
-                            ),
+                            style: TextStyle(
+                                fontFamily: 'Falling',
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                decoration: isChecked
+                                    ? TextDecoration.lineThrough
+                                    : null),
                           ),
                           Text(
                             taskDescription == null ? '' : taskDescription,
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w500,
-                              ),
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
                             ),
                           ),
                           SizedBox(
@@ -162,12 +165,10 @@ class TaskTile extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   'Duration: ' + getDuration(this.duration),
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
@@ -186,12 +187,10 @@ class TaskTile extends StatelessWidget {
                               Flexible(
                                 child: Text(
                                   'Priority: ${getPriority(this.priority)}',
-                                  style: GoogleFonts.lato(
-                                    textStyle: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w600,
-                                    ),
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ),
@@ -202,11 +201,14 @@ class TaskTile extends StatelessWidget {
                     ),
                     Expanded(
                       flex: 2,
-                      child: Checkbox(
-                        value: isChecked,
-                        materialTapTargetSize: MaterialTapTargetSize.padded,
-                        activeColor: Colors.purple,
-                        onChanged: checkboxCallback,
+                      child: Theme(
+                        data: ThemeData(unselectedWidgetColor: Colors.black87),
+                        child: Checkbox(
+                          value: isChecked,
+                          materialTapTargetSize: MaterialTapTargetSize.padded,
+                          activeColor: Colors.deepPurple,
+                          onChanged: checkboxCallback,
+                        ),
                       ),
                     ),
                   ],
@@ -217,46 +219,5 @@ class TaskTile extends StatelessWidget {
         ),
       ),
     );
-//    return Padding(
-//      padding: EdgeInsets.symmetric(vertical: 5),
-//      child: Container(
-//        padding: EdgeInsets.all(15),
-//        height: 136,
-//        decoration: BoxDecoration(
-//          borderRadius: BorderRadius.circular(25),
-//          color: getTagColor(this.category),
-//        ),
-//        child: ListTile(
-//          title: Text(
-//            taskTitle,
-//            style: GoogleFonts.lato(
-//              textStyle: TextStyle(
-//                  color: Colors.white,
-//                  fontSize: 20,
-//                  fontWeight: FontWeight.w600,
-//                  decoration: isChecked ? TextDecoration.lineThrough : null),
-//            ),
-//          ),
-//          subtitle: taskDescription == null
-//              ? null
-//              : Text(
-//                  taskDescription,
-//                  style: GoogleFonts.lato(
-//                    textStyle: TextStyle(
-//                      color: Colors.white,
-//                      fontSize: 13,
-//                      fontWeight: FontWeight.w700,
-//                    ),
-//                  ),
-//                ),
-//          trailing: Checkbox(
-//            value: isChecked,
-//            materialTapTargetSize: MaterialTapTargetSize.padded,
-//            activeColor: Colors.purple,
-//            onChanged: checkboxCallback,
-//          ),
-//        ),
-//      ),
-//    );
   }
 }

@@ -41,7 +41,7 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
   Widget topAppBar(BuildContext context) => AppBar(
         elevation: 0.1,
         //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-        backgroundColor: Color(0xFF3A3E88),
+        //backgroundColor: Color(0xFF3A3E88),
         title: Text('Summary'),
       );
 
@@ -129,7 +129,7 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: Color(0xFF3A3E88),
+        //backgroundColor: Color(0xFF3A3E88),
         onPressed: () async {
           //Navigator.pop(context);
           await databaseService.deleteSchedule();
@@ -171,18 +171,16 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
                         decoration: BoxDecoration(
-                            border: Border.all(width: 1),
+                            border: Border.all(width: 1, color: Colors.white),
                             borderRadius: BorderRadius.circular(28)),
                         padding: EdgeInsets.all(16),
                         //decoration: ,
                         child: Text(
                           'Here is a summary for your schedule, drag the item to change the schedule!',
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -200,26 +198,6 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
                     ),
                   ],
                 ),
-//                Container(
-//                  padding: EdgeInsets.all(30),
-//                  child: RaisedButton(
-//                    color: Colors.black87,
-//                    shape: RoundedRectangleBorder(
-//                      borderRadius: BorderRadius.circular(18),
-//                    ),
-//                    padding: EdgeInsets.all(12),
-//                    textColor: Colors.white,
-//                    child: Text('Confirm'),
-//                    onPressed: () {
-//                      Navigator.pushReplacement(
-//                        context,
-//                        MaterialPageRoute(
-//                            builder: (BuildContext context) =>
-//                                ScheduleScreen(this.finalResult)),
-//                      );
-//                    },
-//                  ),
-//                )
               ],
             ),
     );

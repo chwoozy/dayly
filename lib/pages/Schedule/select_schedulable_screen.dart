@@ -101,12 +101,10 @@ class _SelectSchedulableScreenState extends State<SelectSchedulableScreen> {
                       children: <Widget>[
                         Text(
                           'Select Task For Scheduling',
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Spacer(),
@@ -129,17 +127,15 @@ class _SelectSchedulableScreenState extends State<SelectSchedulableScreen> {
                       children: <Widget>[
                         Text(
                           'How Do You feel Today?',
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                         Spacer(),
                         RaisedButton(
-                          color: Color(0xFF3A3E88),
+                          //color: Color(0xFF3A3E88),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18),
                           ),
@@ -168,12 +164,10 @@ class _SelectSchedulableScreenState extends State<SelectSchedulableScreen> {
                       children: <Widget>[
                         Text(
                           'Select Your Task',
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ],
@@ -193,9 +187,11 @@ class _SelectSchedulableScreenState extends State<SelectSchedulableScreen> {
                             padding: EdgeInsets.only(left: 10),
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  style: BorderStyle.solid, width: 1),
+                                  style: BorderStyle.solid,
+                                  width: 1,
+                                  color: Colors.white),
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.white,
+                              //color: Colors.white,
                             ),
                             child: StatefulBuilder(
                               builder:
@@ -203,23 +199,19 @@ class _SelectSchedulableScreenState extends State<SelectSchedulableScreen> {
                                 return ListTile(
                                   title: Text(
                                     schedulable.name,
-                                    style: GoogleFonts.lato(
-                                      textStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   subtitle: Text(
                                     'Duration: ' +
                                         getDuration(schedulable.duration),
-                                    style: GoogleFonts.lato(
-                                      textStyle: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w500,
-                                      ),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   trailing: Checkbox(
@@ -241,8 +233,12 @@ class _SelectSchedulableScreenState extends State<SelectSchedulableScreen> {
                       height: MediaQuery.of(context).size.height * .03,
                     ),
                     FloatingActionButton.extended(
-                      backgroundColor: Color(0xFF3A3E88),
-                      label: Text('Next'),
+                      //backgroundColor: Color(0xFF3A3E88),
+                      label: Text(
+                        'Next',
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
                       onPressed: () async {
                         for (Schedulable i in this.widget.listForScheduling) {
                           if (productivityLevel == 'High') {

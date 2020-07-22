@@ -56,13 +56,13 @@ class _TasksListState extends State<TasksList> {
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: Colors.white,
-                      border: Border.all(width: 2, color: Colors.blueGrey),
+                      color: Colors.transparent,
+                      border: Border.all(width: 2, color: Colors.white),
                     ),
                     child: Icon(
                       Icons.delete,
                       size: 30,
-                      color: Colors.blueGrey,
+                      color: Colors.white,
                     ),
                   ),
                 ),

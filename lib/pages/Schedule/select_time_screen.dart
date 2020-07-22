@@ -201,12 +201,10 @@ class _State extends State<SelectTimeScreen> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           'Select Time',
-                          style: GoogleFonts.lato(
-                            textStyle: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),
@@ -230,12 +228,10 @@ class _State extends State<SelectTimeScreen> {
                         children: <Widget>[
                           Text(
                             'Start: ',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Container(
@@ -245,15 +241,23 @@ class _State extends State<SelectTimeScreen> {
                             width:
                                 MediaQuery.of(context).copyWith().size.width /
                                     4,
-                            child: CupertinoDatePicker(
-                              use24hFormat: true,
-                              mode: CupertinoDatePickerMode.time,
-                              initialDateTime: _startingDateTime,
-                              onDateTimeChanged: (dateTime) {
-                                setState(() {
-                                  _startingDateTime = dateTime;
-                                });
-                              },
+                            child: CupertinoTheme(
+                              data: CupertinoThemeData(
+                                  textTheme: CupertinoTextThemeData(
+                                      dateTimePickerTextStyle: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ))),
+                              child: CupertinoDatePicker(
+                                use24hFormat: true,
+                                mode: CupertinoDatePickerMode.time,
+                                initialDateTime: _startingDateTime,
+                                onDateTimeChanged: (dateTime) {
+                                  setState(() {
+                                    _startingDateTime = dateTime;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -262,12 +266,10 @@ class _State extends State<SelectTimeScreen> {
                         children: <Widget>[
                           Text(
                             'End: ',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Container(
@@ -277,15 +279,23 @@ class _State extends State<SelectTimeScreen> {
                             width:
                                 MediaQuery.of(context).copyWith().size.width /
                                     3,
-                            child: CupertinoDatePicker(
-                              use24hFormat: true,
-                              mode: CupertinoDatePickerMode.time,
-                              initialDateTime: _endDateTime,
-                              onDateTimeChanged: (dateTime) {
-                                setState(() {
-                                  _endDateTime = dateTime;
-                                });
-                              },
+                            child: CupertinoTheme(
+                              data: CupertinoThemeData(
+                                  textTheme: CupertinoTextThemeData(
+                                      dateTimePickerTextStyle: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ))),
+                              child: CupertinoDatePicker(
+                                use24hFormat: true,
+                                mode: CupertinoDatePickerMode.time,
+                                initialDateTime: _endDateTime,
+                                onDateTimeChanged: (dateTime) {
+                                  setState(() {
+                                    _endDateTime = dateTime;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -299,22 +309,18 @@ class _State extends State<SelectTimeScreen> {
                         children: <Widget>[
                           Text(
                             'Duration: ',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
                             '(For task without duration) ',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 9,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 9,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -324,16 +330,24 @@ class _State extends State<SelectTimeScreen> {
                             MediaQuery.of(context).copyWith().size.height / 10,
                         width:
                             MediaQuery.of(context).copyWith().size.width / 1.6,
-                        child: CupertinoTimerPicker(
-                          mode: CupertinoTimerPickerMode.hm,
-                          minuteInterval: 15,
-                          secondInterval: 1,
-                          initialTimerDuration: _initialDuration,
-                          onTimerDurationChanged: (Duration changedTimer) {
-                            setState(() {
-                              _initialDuration = changedTimer;
-                            });
-                          },
+                        child: CupertinoTheme(
+                          data: CupertinoThemeData(
+                              textTheme: CupertinoTextThemeData(
+                                  pickerTextStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ))),
+                          child: CupertinoTimerPicker(
+                            mode: CupertinoTimerPickerMode.hm,
+                            minuteInterval: 15,
+                            secondInterval: 1,
+                            initialTimerDuration: _initialDuration,
+                            onTimerDurationChanged: (Duration changedTimer) {
+                              setState(() {
+                                _initialDuration = changedTimer;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -345,22 +359,18 @@ class _State extends State<SelectTimeScreen> {
                         children: <Widget>[
                           Text(
                             'Break Time: ',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
                             '(Time between each task) ',
-                            style: GoogleFonts.lato(
-                              textStyle: TextStyle(
-                                color: Colors.black,
-                                fontSize: 10,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -370,16 +380,24 @@ class _State extends State<SelectTimeScreen> {
                             MediaQuery.of(context).copyWith().size.height / 10,
                         width:
                             MediaQuery.of(context).copyWith().size.width / 1.6,
-                        child: CupertinoTimerPicker(
-                          mode: CupertinoTimerPickerMode.hm,
-                          minuteInterval: 5,
-                          secondInterval: 1,
-                          initialTimerDuration: _bufferTime,
-                          onTimerDurationChanged: (Duration changedTimer) {
-                            setState(() {
-                              _bufferTime = changedTimer;
-                            });
-                          },
+                        child: CupertinoTheme(
+                          data: CupertinoThemeData(
+                              textTheme: CupertinoTextThemeData(
+                                  pickerTextStyle: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ))),
+                          child: CupertinoTimerPicker(
+                            mode: CupertinoTimerPickerMode.hm,
+                            minuteInterval: 5,
+                            secondInterval: 1,
+                            initialTimerDuration: _bufferTime,
+                            onTimerDurationChanged: (Duration changedTimer) {
+                              setState(() {
+                                _bufferTime = changedTimer;
+                              });
+                            },
+                          ),
                         ),
                       ),
                     ],
@@ -388,25 +406,21 @@ class _State extends State<SelectTimeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       FloatingActionButton.extended(
-                        backgroundColor: Color(0xFF3A3E88),
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.circular(18),
-//                        ),
-//                        padding: EdgeInsets.all(12),
-//                        textColor: Colors.white,
-                        label: Text('Previous'),
+                        label: Text(
+                          'Previous',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
                         onPressed: () {
                           Navigator.pop(context);
                         },
                       ),
                       FloatingActionButton.extended(
-                        backgroundColor: Color(0xFF3A3E88),
-//                        shape: RoundedRectangleBorder(
-//                          borderRadius: BorderRadius.circular(18),
-//                        ),
-//                        padding: EdgeInsets.all(12),
-//                        textColor: Colors.white,
-                        label: Text('Confirm'),
+                        label: Text(
+                          'Confirm',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
                         onPressed: () {
                           _startingDateTime.isAfter(_endDateTime)
                               ? _showDialog()
