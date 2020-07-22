@@ -1,5 +1,5 @@
 import 'package:dayly/models/schedulable.dart';
-import 'package:dayly/pages/todo_list/schedule_summary.dart';
+import 'package:dayly/pages/Schedule/schedule_summary.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';

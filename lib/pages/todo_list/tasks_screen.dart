@@ -1,7 +1,7 @@
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/models/schedulable.dart';
-import 'package:dayly/pages/todo_list/select_schedulable_screen.dart';
-import 'package:dayly/pages/todo_list/select_time_screen.dart';
+import 'package:dayly/pages/Schedule/select_schedulable_screen.dart';
+import 'package:dayly/pages/Schedule/select_time_screen.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components//tasks_list.dart';
@@ -317,11 +317,14 @@ class _TasksScreenState extends State<TasksScreen> {
               automaticallyImplyLeading: false,
               elevation: 0.1,
               //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-              backgroundColor: Color(0xFF3A3E88),
-              title: Text('ToDo-List'),
+              //backgroundColor: Color(0xFF3A3E88),
+              title: Text(
+                'ToDo-List',
+                style: TextStyle(fontSize: 20),
+              ),
             ),
             floatingActionButton: FloatingActionButton.extended(
-              backgroundColor: Color(0xFF3A3E88),
+              //backgroundColor: Color(0xFF3A3E88),
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AddTaskScreen()));
@@ -331,14 +334,14 @@ class _TasksScreenState extends State<TasksScreen> {
             body: Stack(
               children: <Widget>[
                 Container(
-                  color: primaryBackgroundColor,
+                  //color: primaryBackgroundColor,
                   height: size.height,
                   width: size.width,
                 ),
                 Container(
                   height: size.height * .10,
                   decoration: BoxDecoration(
-                    color: Color(0xFF3A3E88),
+                    //color: Color(0xFF3A3E88),
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.zero,
                       topRight: Radius.zero,
@@ -401,7 +404,7 @@ class _TasksScreenState extends State<TasksScreen> {
                           height: 120,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(22),
-                            color: Colors.white,
+                            //color: Colors.white,
                           ),
                           child: Row(
                             children: <Widget>[
