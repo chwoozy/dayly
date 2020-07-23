@@ -21,7 +21,7 @@ class _LandingState extends State<Landing> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size mediaQuery = MediaQuery.of(context).size;
     int max = randomLanding.length;
     int r = rand.nextInt(max);
     print(r);
@@ -31,8 +31,8 @@ class _LandingState extends State<Landing> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Container(
-            height: size.height * 0.2,
-            width: size.width,
+            height: mediaQuery.height * 0.2,
+            width: mediaQuery.width,
             child: Container(
               decoration: BoxDecoration(
                   image: DecorationImage(
@@ -40,30 +40,31 @@ class _LandingState extends State<Landing> {
                 image: AssetImage('assets/images/landing-bar.png'),
               )),
             )),
-        SizedBox(height: size.height * 0.05),
+        SizedBox(height: mediaQuery.height * 0.05),
         Center(
           child: SvgPicture.asset(
             randomLanding[r],
-            height: size.height * 0.3,
+            height: mediaQuery.height * 0.25,
           ),
         ),
-        SizedBox(height: size.height * 0.05),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text('Hey there, \nWelcome to Dayly!',
+        SizedBox(height: mediaQuery.height * 0.05),
+        Container(
+          height: mediaQuery.height * 0.10,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: Text('Hey there, \nWelcome to Dayly!',
                       style: TextStyle(
-                        fontSize: size.aspectRatio * 70,
                         fontWeight: FontWeight.bold,
-                      ))
-                ],
-              )),
+                        fontSize: 30,
+                      )),
+                )),
+          ),
         ),
-        SizedBox(height: size.height * 0.05),
+        SizedBox(height: mediaQuery.height * 0.05),
         RoundedButton(
           text: "LOGIN WITH GOOGLE",
           color: Colors.tealAccent[400],
