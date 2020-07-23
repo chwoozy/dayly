@@ -69,7 +69,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     Size mediaQuery = MediaQuery.of(context).size;
-    double sidebarSize = mediaQuery.width * 0.45;
+    double sidebarSize = mediaQuery.width * 0.65;
     double menuHeight = mediaQuery.height / 2;
 
     return StreamBuilder<UserData>(
@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
                     ),
                     AnimatedPositioned(
                       duration: Duration(milliseconds: 1500),
-                      left: isSidebarOpen ? 0 : -sidebarSize + 5,
+                      left: isSidebarOpen ? 0 : -sidebarSize + 10,
                       top: 0,
                       curve: Curves.elasticOut,
                       child: SizedBox(
@@ -109,7 +109,7 @@ class _HomeState extends State<Home> {
                               });
                             }
 
-                            if (details.localPosition.dx > sidebarSize - 5 &&
+                            if (details.localPosition.dx > sidebarSize - 10 &&
                                 details.delta.distanceSquared > 2) {
                               setState(() {
                                 isSidebarOpen = true;
