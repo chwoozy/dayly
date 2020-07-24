@@ -95,8 +95,8 @@ class _ProfileState extends State<Profile> {
                                           color: primaryBackgroundColor),
                                       color: primaryBackgroundColor,
                                     ),
-                                    height: size.height * 0.15,
-                                    width: size.width * 0.27,
+                                    height: size.height * 0.14,
+                                    width: size.height * 0.14,
                                     child: Container(
                                       margin: EdgeInsets.all(4),
                                       decoration: BoxDecoration(
@@ -119,9 +119,9 @@ class _ProfileState extends State<Profile> {
                               ),
                               Positioned(
                                 top: size.height * 0.15,
-                                right: size.width * 0.38,
+                                right: size.width * 0.35,
                                 child: Container(
-                                  width: size.width * 0.07,
+                                  width: size.width * 0.10,
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
@@ -135,6 +135,7 @@ class _ProfileState extends State<Profile> {
                                     icon: Icon(
                                       Icons.create,
                                       color: Colors.black,
+                                      size: size.width * 0.05,
                                     ),
                                     onPressed: getImage,
                                   ),
@@ -156,7 +157,7 @@ class _ProfileState extends State<Profile> {
                             height: size.height * 0.03,
                           ),
                           Container(
-                              height: size.height * 0.3,
+                              height: size.height * 0.4,
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: size.width * 0.05),

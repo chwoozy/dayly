@@ -13,7 +13,8 @@ import 'package:syncfusion_flutter_core/core.dart';
 void main() {
   SyncfusionLicense.registerLicense(
       'NT8mJyc2IWhia31ifWN9ZmpoYmF8YGJ8ampqanNiYmlmamlmanMDHmgwOzw8PSQ2OiQTND4yOj99MDw+');
-  runApp(DevicePreview(builder: (context) => Dayly()));
+  // runApp(DevicePreview(builder: (context) => Dayly()));
+  runApp(Dayly());
 }
 
 final ThemeData _themeData = ThemeData(
@@ -35,7 +36,7 @@ class Dayly extends StatelessWidget {
     return StreamProvider<User>.value(
       value: AuthService().user,
       child: MaterialApp(
-          builder: DevicePreview.appBuilder,
+          // builder: DevicePreview.appBuilder,
           initialRoute: '/wrapper',
           routes: {
             '/landing': (context) => Landing(),
