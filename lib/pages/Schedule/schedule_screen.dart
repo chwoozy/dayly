@@ -91,27 +91,22 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                 appBar: AppBar(
                   automaticallyImplyLeading: false,
                   elevation: 0.1,
-                  //backgroundColor: Color.fromRGBO(64, 75, 96, .9),
-                  //backgroundColor: Color(0xFF3A3E88),
                   title: Text('Schedules'),
                 ),
                 body: Stack(
                   children: <Widget>[
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.2,
-                      width: MediaQuery.of(context).size.width,
-                      decoration: BoxDecoration(
-                          color: Colors.black38,
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20))),
-                    ),
+//                    Container(
+//                      height: MediaQuery.of(context).size.height * 0.2,
+//                      width: MediaQuery.of(context).size.width,
+//                      decoration: BoxDecoration(
+//                          color: Colors.tealAccent[400],
+//                          borderRadius: BorderRadius.only(
+//                              bottomLeft: Radius.circular(20),
+//                              bottomRight: Radius.circular(20))),
+//                    ),
                     SafeArea(
                       child: Column(
                         children: <Widget>[
-//                      SizedBox(
-//                        height: 15,
-//                      ),
                           Container(
                             alignment: Alignment.centerLeft,
                             padding: EdgeInsets.symmetric(
@@ -135,12 +130,13 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                   MediaQuery.of(context).size.height * 0.2,
                             ),
                             padding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 10),
+                                vertical: 10, horizontal: 10),
                             decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage('assets/images/quotes.jpg'),
-                                  fit: BoxFit.cover,
-                                ),
+//                                image: DecorationImage(
+//                                  image: AssetImage('assets/images/quotes.jpg'),
+//                                  fit: BoxFit.cover,
+//                                ),
+                                //color: Colors.tealAccent[400],
                                 borderRadius: BorderRadius.circular(22),
                                 border: Border.all(color: Colors.white)),
                             child: Column(
