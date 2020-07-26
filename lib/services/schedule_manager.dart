@@ -63,7 +63,6 @@ class ScheduleManager {
                   category: i.category));
               break;
             } else if ((j.end - j.start) == i.duration) {
-              //result.removeAt(0);
               j.occupied = true;
               i.dateTime = intToTime(j.start);
               i.endTime = intToTime(j.end);
@@ -81,7 +80,6 @@ class ScheduleManager {
               i.dateTime = intToTime(j.start);
               i.endTime = intToTime(j.end);
               j.occupied = true;
-              i.duration -= j.end - j.start;
               Schedulable newSchedule = Schedulable(
                   name: i.name,
                   description: i.description,
@@ -93,7 +91,6 @@ class ScheduleManager {
                   endTime: i.endTime = intToTime(j.end));
               finalResult.add(newSchedule);
               i.duration -= j.end - j.start;
-              //break;
             }
           }
         }
@@ -164,28 +161,28 @@ class ScheduleManager {
   }
 }
 
-void main() {
-  DateTime startingTime = DateTime(2020, 1, 1, 15, 25);
-  DateTime endTime = DateTime(2020, 1, 1, 21, 0);
-  List<Schedulable> testingList = [
-    Schedulable(
-        name: 'Event1',
-        dateTime: DateTime(2020, 1, 1, 15, 42),
-        endTime: DateTime(2020, 1, 1, 16, 01),
-        category: 'Event'),
-    Schedulable(
-        name: 'Task1', duration: 120, category: 'Task', toBeScheduled: true),
-    Schedulable(
-        name: 'Task2', duration: 60, category: 'Task', toBeScheduled: true),
-    Schedulable(
-        name: 'Task3', duration: 30, category: 'Task', toBeScheduled: true),
-  ];
-  ScheduleManager manager = ScheduleManager(
-      startingTime: startingTime,
-      endTime: endTime,
-      listForScheduling: testingList);
-  List<Schedulable> resultList = manager.schedule();
-  for (Schedulable item in resultList) {
-    print(item.dateTime.toString() + item.name);
-  }
-}
+//void main() {
+//  DateTime startingTime = DateTime(2020, 1, 1, 15, 25);
+//  DateTime endTime = DateTime(2020, 1, 1, 21, 0);
+//  List<Schedulable> testingList = [
+//    Schedulable(
+//        name: 'Event1',
+//        dateTime: DateTime(2020, 1, 1, 15, 42),
+//        endTime: DateTime(2020, 1, 1, 16, 01),
+//        category: 'Event'),
+//    Schedulable(
+//        name: 'Task1', duration: 120, category: 'Task', toBeScheduled: true),
+//    Schedulable(
+//        name: 'Task2', duration: 60, category: 'Task', toBeScheduled: true),
+//    Schedulable(
+//        name: 'Task3', duration: 30, category: 'Task', toBeScheduled: true),
+//  ];
+//  ScheduleManager manager = ScheduleManager(
+//      startingTime: startingTime,
+//      endTime: endTime,
+//      listForScheduling: testingList);
+//  List<Schedulable> resultList = manager.schedule();
+////  for (Schedulable item in resultList) {
+////    print(item.dateTime.toString() + item.name);
+////  }
+//}

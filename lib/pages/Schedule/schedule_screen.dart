@@ -56,7 +56,11 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     await databaseService.getTasks(taskData);
     await databaseService.getSchedule(taskData);
     _quote = await fetchQuote();
-    _finalResult = taskData.schedules;
+    for (Schedulable item in taskData.schedules) {
+      _finalResult.add(item);
+    }
+    //_finalResult = taskData.schedules;
+    _finalResult.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     setState(() {
       _loadingInProgress = false;
     });
