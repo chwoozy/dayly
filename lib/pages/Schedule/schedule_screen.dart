@@ -59,7 +59,6 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
     for (Schedulable item in taskData.schedules) {
       _finalResult.add(item);
     }
-    //_finalResult = taskData.schedules;
     _finalResult.sort((a, b) => a.dateTime.compareTo(b.dateTime));
     setState(() {
       _loadingInProgress = false;
@@ -96,54 +95,104 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                   //backgroundColor: Color(0xFF3A3E88),
                   title: Text('Schedules'),
                 ),
-                body: SafeArea(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 15,
-                      ),
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        //height: MediaQuery.of(context).size.height * 0.2,
-                        constraints: BoxConstraints(
-                          minHeight: MediaQuery.of(context).size.height * 0.2,
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/quote.jpg'),
-                              fit: BoxFit.cover,
+                body: Stack(
+                  children: <Widget>[
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.2,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                          color: Colors.black38,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20),
+                              bottomRight: Radius.circular(20))),
+                    ),
+                    SafeArea(
+                      child: Column(
+                        children: <Widget>[
+//                      SizedBox(
+//                        height: 15,
+//                      ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 15, horizontal: 20),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.format_quote),
+                                SizedBox(width: 10),
+                                Text(
+                                  'Quote Of The Day',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
                             ),
-                            borderRadius: BorderRadius.circular(22),
-                            border: Border.all(color: Colors.white)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              ' " ' + _quote.quoteText + ' " ',
-                              style: TextStyle(
-                                  fontSize: 25, fontStyle: FontStyle.italic),
+                          ),
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.95,
+                            //height: MediaQuery.of(context).size.height * 0.2,
+                            constraints: BoxConstraints(
+                              minHeight:
+                                  MediaQuery.of(context).size.height * 0.2,
                             ),
-                            Text(
-                              '-' + _quote.quoteAuthor,
-                              style: TextStyle(fontSize: 15),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 10),
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/quotes.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
+                                borderRadius: BorderRadius.circular(22),
+                                border: Border.all(color: Colors.white)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SizedBox(
+                                  height: 20,
+                                ),
+                                Text(
+                                  ' " ' + _quote.quoteText + ' " ',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontStyle: FontStyle.italic),
+                                ),
+                                Text(
+                                  '-' + _quote.quoteAuthor,
+                                  style: TextStyle(fontSize: 15),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                          Container(
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.format_list_bulleted),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  'Your Schedule',
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            child: ListView(
+                                scrollDirection: Axis.vertical,
+                                children: List.generate(
+                                    this._finalResult.length, (index) {
+                                  return SchedulableTile(
+                                      schedule: this._finalResult[index],
+                                      key: ValueKey(index));
+                                })),
+                          ),
+                        ],
                       ),
-                      Expanded(
-                        child: ListView(
-                            scrollDirection: Axis.vertical,
-                            children: List.generate(this._finalResult.length,
-                                (index) {
-                              return SchedulableTile(
-                                  schedule: this._finalResult[index],
-                                  key: ValueKey(index));
-                            })),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 )),
           );
   }
