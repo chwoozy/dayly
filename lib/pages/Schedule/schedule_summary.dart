@@ -6,7 +6,6 @@ import 'package:dayly/services/schedule_manager.dart';
 import 'package:dayly/services/sort_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components/schedulable_tile.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/models/user.dart';
