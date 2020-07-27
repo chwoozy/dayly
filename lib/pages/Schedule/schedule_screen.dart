@@ -169,7 +169,7 @@ class _ScheduleScreenState extends State<ScheduleScreen> {
                                   width: 10,
                                 ),
                                 Text(
-                                  'Your Schedule',
+                                  'Your Schedule Of The Day',
                                   style: TextStyle(fontSize: 20),
                                 ),
                               ],
