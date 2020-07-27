@@ -6,7 +6,6 @@ import 'package:dayly/services/schedule_manager.dart';
 import 'package:dayly/services/sort_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/components/schedulable_tile.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:dayly/services/database.dart';
 import 'package:dayly/models/user.dart';
@@ -70,18 +69,21 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
       }
     }
     widget.sortManager.sort(widget.listForScheduling);
-    for (int i = 0; i < widget.listForScheduling.length; i++) {
-      print(widget.listForScheduling[i].name);
-      print(widget.listForScheduling[i].duration);
-    }
+//    for (int i = 0; i < widget.listForScheduling.length; i++) {
+//      print(widget.listForScheduling[i].name);
+//      print(widget.listForScheduling[i].duration);
+//    }
     final ScheduleManager scheduleManager = ScheduleManager(
         startingTime: this.widget.startingTime,
         endTime: this.widget.endTime,
         listForScheduling: this.widget.listForScheduling);
+    //print(this.widget.startingTime);
+    //print(this.widget.listForScheduling);
     finalResult = scheduleManager.schedule();
-    for (Schedulable item in finalResult) {
-      print(item.dateTime.toString() + item.name);
-    }
+//    for (Schedulable item in finalResult) {
+//      print(item.dateTime.toString() + item.name);
+//      print(item.endTime.toString() + item.name);
+//    }
     setState(() {
       _loading = false;
     });

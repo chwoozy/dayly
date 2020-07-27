@@ -40,7 +40,7 @@ class SchedulableTile extends StatelessWidget {
                       : '${this.schedule.dateTime.hour.toString().padLeft(2, '0')} : ${this.schedule.dateTime.minute.toString().padLeft(2, '0')}',
                   style: GoogleFonts.lato(
                     fontSize: 18,
-                    color: Colors.black.withOpacity(0.6),
+                    color: Colors.white,
                     fontWeight: FontWeight.w800,
                   ),
                 )
@@ -66,8 +66,8 @@ class SchedulableTile extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomLeft,
               colors: [
-                Color(0xFFDB84B1),
-                Color(0xFF3A3E88),
+                Colors.yellow,
+                Colors.orangeAccent,
               ],
             ),
           ),
@@ -78,7 +78,7 @@ class SchedulableTile extends StatelessWidget {
                 this.schedule.name,
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.black.withOpacity(0.8),
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -88,7 +88,7 @@ class SchedulableTile extends StatelessWidget {
                     this.schedule.getDuration(this.schedule.duration),
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.black.withOpacity(0.8),
                   fontWeight: FontWeight.normal,
                 ),
               ),
@@ -97,7 +97,7 @@ class SchedulableTile extends StatelessWidget {
                 this.schedule.description,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white.withOpacity(0.6),
+                  color: Colors.black.withOpacity(0.6),
                   fontWeight: FontWeight.normal,
                 ),
               )
