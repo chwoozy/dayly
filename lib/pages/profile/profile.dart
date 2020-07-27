@@ -6,6 +6,7 @@ import 'package:dayly/models/user.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -302,6 +303,24 @@ class _ProfileState extends State<Profile> {
                                         await _authService
                                             .getEvents(snapshot.data.uid);
                                         print("Success!");
+                                        showCupertinoDialog(
+                                            context: context,
+                                            builder: (_) {
+                                              return CupertinoAlertDialog(
+                                                title: Text(
+                                                    "Import from Google Calendar"),
+                                                content: Text(
+                                                    "Sucessfully imported!"),
+                                                actions: <Widget>[
+                                                  CupertinoDialogAction(
+                                                    child: Text("Dismiss"),
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            });
                                       } catch (e) {
                                         print(e);
                                       }

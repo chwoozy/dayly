@@ -52,7 +52,7 @@ class LeaderboardFields extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 9),
+                              fontSize: 15),
                         )));
 
     return FutureBuilder(

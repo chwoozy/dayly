@@ -115,7 +115,7 @@ class _CalendarState extends State<Calendar> {
                       fontFamily: 'Falling',
                     ),
                     timeInterval: Duration(minutes: 30),
-                    timeFormat: 'h:mm',
+                    timeFormat: 'HH:mm',
                   ),
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
