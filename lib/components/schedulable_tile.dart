@@ -66,8 +66,8 @@ class SchedulableTile extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomLeft,
               colors: [
-                Colors.yellow,
-                Colors.orangeAccent,
+                Colors.yellowAccent,
+                Colors.yellowAccent,
               ],
             ),
           ),
