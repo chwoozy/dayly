@@ -33,8 +33,11 @@ final ThemeData _themeData = ThemeData(
 class Dayly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<User>.value(
-      value: AuthService().user,
+    return MultiProvider(
+      providers: [
+        StreamProvider<User>.value(value: AuthService().user),
+        Provider<AuthService>.value(value: AuthService()),
+      ],
       child: MaterialApp(
           // builder: DevicePreview.appBuilder,
           initialRoute: '/wrapper',
