@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:dayly/models/notification_manager.dart';
 import 'package:dayly/models/score.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:dayly/models/user.dart';
@@ -55,6 +56,9 @@ class AuthService {
                   : value.recurrence[0].substring(6),
         );
         await DatabaseService(uid: uid).updateEvent(newEvent);
+        if (!newEvent.eventFromDate.isBefore(DateTime.now())) {
+          await notificationManager.scheduleNotification(newEvent);
+        }
       });
       print("Complete import from Google Calendar!");
     });

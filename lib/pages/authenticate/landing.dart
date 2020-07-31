@@ -24,7 +24,6 @@ class _LandingState extends State<Landing> {
     Size mediaQuery = MediaQuery.of(context).size;
     int max = randomLanding.length;
     int r = rand.nextInt(max);
-    print(r);
 
     return Scaffold(
         body: Column(

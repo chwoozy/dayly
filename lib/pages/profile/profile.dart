@@ -19,7 +19,6 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final _formKey = GlobalKey<FormState>();
-  final AuthService _authService = AuthService();
 
   // Form States
   String _displayName = '';
@@ -55,6 +54,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     final _user = Provider.of<User>(context);
     Size size = MediaQuery.of(context).size;
+    AuthService authService = Provider.of<AuthService>(context);
 
     return StreamBuilder<UserData>(
         stream: DatabaseService(uid: _user.uid).userData,
@@ -300,7 +300,7 @@ class _ProfileState extends State<Profile> {
                                         processing = true;
                                       });
                                       try {
-                                        await _authService
+                                        await authService
                                             .getEvents(snapshot.data.uid);
                                         print("Success!");
                                         showCupertinoDialog(
@@ -323,6 +323,19 @@ class _ProfileState extends State<Profile> {
                                             });
                                       } catch (e) {
                                         print(e);
+                                        CupertinoAlertDialog(
+                                          title: Text("Import failed!"),
+                                          content: Text(
+                                              "Ensure that you are connected to a Google Calendar account."),
+                                          actions: <Widget>[
+                                            CupertinoDialogAction(
+                                              child: Text("Ok"),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ],
+                                        );
                                       }
                                       setState(() {
                                         processing = false;
