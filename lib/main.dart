@@ -12,7 +12,7 @@ import 'package:syncfusion_flutter_core/core.dart';
 
 void main() {
   SyncfusionLicense.registerLicense(
-      'NT8mJyc2IWhia31ifWN9ZmpoYmF8YGJ8ampqanNiYmlmamlmanMDHmgwOzw8PSQ2OiQTND4yOj99MDw+');
+      'NT8mJyc2IWhia31hfWN9Z2doYmF8YGJ8ampqanNiYmlmamlmanMDHmgwOzw8PSQ2OiQTND4yOj99MDw+');
   // runApp(DevicePreview(builder: (context) => Dayly()));
   runApp(Dayly());
 }
@@ -27,7 +27,7 @@ final ThemeData _themeData = ThemeData(
   floatingActionButtonTheme: FloatingActionButtonThemeData(
     backgroundColor: Colors.tealAccent[400],
   ),
-  accentColor: Colors.red[400],
+  accentColor: Colors.indigoAccent[700],
 );
 
 class Dayly extends StatelessWidget {
@@ -45,8 +45,6 @@ class Dayly extends StatelessWidget {
             '/landing': (context) => Landing(),
             '/wrapper': (context) => Wrapper(),
             '/addevent': (context) => AddEvent(),
-            '/login': (context) => Login(),
-            '/signup': (context) => SignUp(),
           },
           theme: _themeData),
     );

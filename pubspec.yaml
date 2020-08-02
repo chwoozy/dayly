@@ -76,9 +76,8 @@ dependencies:
   # Notifications
   flutter_local_notifications: ^1.4.4+2
   
-  # Calendar
-  table_calendar: ^2.2.3
-  syncfusion_flutter_calendar: ^18.1.59-beta
+  # Calendar\
+  syncfusion_flutter_calendar: 18.1.59-beta
   
 
 

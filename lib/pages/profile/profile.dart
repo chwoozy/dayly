@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
-import 'package:dayly/components/rounded-button.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:dayly/services/database.dart';
@@ -11,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:dayly/components/primary_button.dart';
+import 'package:dayly/components/outlined_button.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -79,7 +80,7 @@ class _ProfileState extends State<Profile> {
                               Container(
                                 height: 150,
                                 decoration: BoxDecoration(
-                                  color: Colors.tealAccent[400],
+                                  color: Colors.indigoAccent[700],
                                   // boxShadow: [BoxShadow(blurRadius: 5.0)],
                                   borderRadius: BorderRadius.vertical(
                                       bottom: Radius.circular(49)),
@@ -263,85 +264,89 @@ class _ProfileState extends State<Profile> {
                                 ),
                               )),
                           Center(
-                            child: RoundedButton(
-                              color: Colors.tealAccent[400],
-                              text: 'Save Changes',
-                              press: () async {
-                                print(_email);
-                                if (_formKey.currentState.validate()) {
-                                  setState(() {
-                                    loading = true;
-                                  });
-                                  if (_uploadedImage != null) {
-                                    await uploadImage(_uploadedImage);
-                                  }
-                                  DatabaseService(uid: _uid)
-                                      .updateUserData(_email, _displayName,
-                                          _photoUrl, _method)
-                                      .whenComplete(() async {
+                            child: Container(
+                              width: size.width * 0.95,
+                              child: PrimaryButton(
+                                title: "Save Changes",
+                                onTap: () async {
+                                  if (_formKey.currentState.validate()) {
                                     setState(() {
-                                      loading = false;
-                                      updating = true;
+                                      loading = true;
                                     });
-                                  });
-                                }
-                              },
-                              textColor: Colors.black,
+                                    if (_uploadedImage != null) {
+                                      await uploadImage(_uploadedImage);
+                                    }
+                                    DatabaseService(uid: _uid)
+                                        .updateUserData(_email, _displayName,
+                                            _photoUrl, _method)
+                                        .whenComplete(() async {
+                                      setState(() {
+                                        loading = false;
+                                        updating = true;
+                                      });
+                                    });
+                                  }
+                                },
+                              ),
                             ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.02,
                           ),
                           processing
                               ? Center(child: CircularProgressIndicator())
                               : Center(
-                                  child: RoundedButton(
-                                    color: Colors.grey[700],
-                                    text: 'Import from Google Calendar',
-                                    press: () async {
-                                      setState(() {
-                                        processing = true;
-                                      });
-                                      try {
-                                        await authService
-                                            .getEvents(snapshot.data.uid);
-                                        print("Success!");
-                                        showCupertinoDialog(
-                                            context: context,
-                                            builder: (_) {
-                                              return CupertinoAlertDialog(
-                                                title: Text(
-                                                    "Import from Google Calendar"),
-                                                content: Text(
-                                                    "Sucessfully imported!"),
-                                                actions: <Widget>[
-                                                  CupertinoDialogAction(
-                                                    child: Text("Dismiss"),
-                                                    onPressed: () {
-                                                      Navigator.pop(context);
-                                                    },
-                                                  ),
-                                                ],
-                                              );
-                                            });
-                                      } catch (e) {
-                                        print(e);
-                                        CupertinoAlertDialog(
-                                          title: Text("Import failed!"),
-                                          content: Text(
-                                              "Ensure that you are connected to a Google Calendar account."),
-                                          actions: <Widget>[
-                                            CupertinoDialogAction(
-                                              child: Text("Ok"),
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      }
-                                      setState(() {
-                                        processing = false;
-                                      });
-                                    },
-                                    textColor: Colors.white,
+                                  child: Container(
+                                    width: size.width * 0.95,
+                                    child: OutlinedButton(
+                                        title: "Import from Google Calendar",
+                                        onTap: () async {
+                                          setState(() {
+                                            processing = true;
+                                          });
+                                          try {
+                                            await authService
+                                                .getEvents(snapshot.data.uid);
+                                            print("Success!");
+                                            showCupertinoDialog(
+                                                context: context,
+                                                builder: (_) {
+                                                  return CupertinoAlertDialog(
+                                                    title: Text(
+                                                        "Import from Google Calendar"),
+                                                    content: Text(
+                                                        "Sucessfully imported!"),
+                                                    actions: <Widget>[
+                                                      CupertinoDialogAction(
+                                                        child: Text("Dismiss"),
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                      ),
+                                                    ],
+                                                  );
+                                                });
+                                          } catch (e) {
+                                            print(e);
+                                            CupertinoAlertDialog(
+                                              title: Text("Import failed!"),
+                                              content: Text(
+                                                  "Ensure that you are connected to a Google Calendar account."),
+                                              actions: <Widget>[
+                                                CupertinoDialogAction(
+                                                  child: Text("Ok"),
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          }
+                                          setState(() {
+                                            processing = false;
+                                          });
+                                        }),
                                   ),
                                 ),
                         ]),
