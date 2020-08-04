@@ -22,12 +22,12 @@ class _PrimaryButtonState extends State<PrimaryButton> {
             color: Colors.indigoAccent[700],
             borderRadius: BorderRadius.circular(50),
           ),
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.symmetric(horizontal: sizeQuery.width * 0.1, vertical: sizeQuery.height * 0.02),
           margin: EdgeInsets.symmetric(horizontal: sizeQuery.width * 0.08),
           child: Center(
             child: Text(
               widget.title,
-              style: TextStyle(fontSize: textSizeQuery * 25),
+              style: TextStyle(fontSize: textSizeQuery * 15),
             ),
           )),
     );

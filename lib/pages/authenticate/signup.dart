@@ -42,7 +42,7 @@ class _SignUpState extends State<SignUp> {
                 children: <Widget>[
                   Text(
                     "Sign up to Dayly",
-                    style: TextStyle(fontSize: textQuery * 35),
+                    style: TextStyle(fontSize: textQuery * 25),
                   ),
                   SizedBox(
                     height: sizeQuery.height * 0.02,
@@ -82,7 +82,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 labelText: "Your Name",
                                 labelStyle: TextStyle(
-                                  fontSize: textQuery * 18,
+                                  fontSize: textQuery * 15,
                                   color: Colors.grey,
                                 )),
                             validator: (value) => value.length < 1
@@ -136,7 +136,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 labelText: "Email Address",
                                 labelStyle: TextStyle(
-                                  fontSize: textQuery * 18,
+                                  fontSize: textQuery * 15,
                                   color: Colors.grey,
                                 )),
                             validator: (value) => EmailValidator.validate(value)
@@ -190,7 +190,7 @@ class _SignUpState extends State<SignUp> {
                                 ),
                                 labelText: "Password",
                                 labelStyle: TextStyle(
-                                  fontSize: textQuery * 18,
+                                  fontSize: textQuery * 15,
                                   color: Colors.grey,
                                 )),
                             obscureText: true,

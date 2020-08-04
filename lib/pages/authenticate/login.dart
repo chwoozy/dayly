@@ -36,10 +36,10 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Text(
                     "Login To Continue",
-                    style: TextStyle(fontSize: textQuery * 35),
+                    style: TextStyle(fontSize: textQuery * 25),
                   ),
                   SizedBox(
-                    height: sizeQuery.height * 0.05,
+                    height: sizeQuery.height * 0.03,
                   ),
                   Container(
                     height: sizeQuery.height * 0.08,
@@ -78,7 +78,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 labelText: "Email Address",
                                 labelStyle: TextStyle(
-                                  fontSize: textQuery * 18,
+                                  fontSize: textQuery * 15,
                                   color: Colors.grey,
                                 )),
                             validator: (value) => value.isEmpty
@@ -134,7 +134,7 @@ class _LoginState extends State<Login> {
                                 ),
                                 labelText: "Password",
                                 labelStyle: TextStyle(
-                                  fontSize: textQuery * 18,
+                                  fontSize: textQuery * 15,
                                   color: Colors.grey,
                                 )),
                             obscureText: true,
@@ -190,7 +190,7 @@ class _LoginState extends State<Login> {
                           color: Colors.blue[900],
                           borderRadius: BorderRadius.circular(50),
                         ),
-                        padding: EdgeInsets.all(20),
+                        padding: EdgeInsets.symmetric(horizontal: sizeQuery.width * 0.1, vertical: sizeQuery.height * 0.02),
                         margin: EdgeInsets.symmetric(
                             horizontal: sizeQuery.width * 0.08),
                         child: Center(
@@ -206,14 +206,11 @@ class _LoginState extends State<Login> {
                               ),
                               Text(
                                 "Login with Google",
-                                style: TextStyle(fontSize: textQuery * 25),
+                                style: TextStyle(fontSize: textQuery * 15),
                               ),
                             ],
                           ),
                         )),
-                  ),
-                  SizedBox(
-                    height: 12.0,
                   ),
                   Text(
                     error,

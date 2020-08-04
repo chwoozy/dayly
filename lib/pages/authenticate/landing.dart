@@ -12,7 +12,6 @@ class Landing extends StatefulWidget {
 }
 
 class _LandingState extends State<Landing> {
-  final AuthService _authService = AuthService();
   List<String> randomLanding = [
     'assets/images/landing-1.png',
     'assets/images/landing-2.png',
@@ -110,7 +109,7 @@ class _LandingState extends State<Landing> {
                         child: Text(
                           "Plan Out Your Day",
                           style: TextStyle(
-                            fontSize: sizeQuery * 35,
+                            fontSize: sizeQuery * 25,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -123,7 +122,7 @@ class _LandingState extends State<Landing> {
                         ),
                         child: Text(
                           "Dayly helps you plan your day!  Tell us your events, what you need done, and we'll handle the rest.",
-                          style: TextStyle(fontSize: sizeQuery * 27),
+                          style: TextStyle(fontSize: sizeQuery * 20),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -154,7 +153,7 @@ class _LandingState extends State<Landing> {
                       child: Text(
                     "Get Started",
                     style: TextStyle(
-                      fontSize: sizeQuery * 25,
+                      fontSize: sizeQuery * 20,
                     ),
                   )),
                   margin: EdgeInsets.all(mediaQuery.width * 0.1),
@@ -205,7 +204,7 @@ class _LandingState extends State<Landing> {
           ),
         ),
         AnimatedContainer(
-            padding: EdgeInsets.all(32),
+            padding: EdgeInsets.only(top: 22, left: 22, right: 22),
             height: _signupHeight,
             duration: Duration(
               milliseconds: 1000,
