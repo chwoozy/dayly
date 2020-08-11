@@ -1,6 +1,7 @@
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/menu_button.dart';
+import 'package:dayly/components/splash_screen.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/pages/Schedule/schedule_screen.dart';
 import 'package:dayly/pages/Schedule/toschedule.dart';
@@ -280,7 +281,7 @@ class _HomeState extends State<Home> {
               // )
             );
           } else {
-            return Loading();
+            return SplashScreen();
           }
         });
   }

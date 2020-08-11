@@ -4,13 +4,9 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      curve: Curves.fastLinearToSlowEaseIn,
-      duration: Duration(
-        milliseconds: 1000,
-      ),
+    return Container(
       child: Center(
-          child: SpinKitWanderingCubes(
+          child: SpinKitFadingFour(
         color: Theme.of(context).accentColor,
         size: 50.0,
       )),

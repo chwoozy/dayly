@@ -1,3 +1,4 @@
+import 'package:dayly/components/loading.dart';
 import 'package:dayly/pages/authenticate/landing.dart';
 import 'package:dayly/pages/authenticate/login.dart';
 import 'package:dayly/pages/authenticate/signup.dart';

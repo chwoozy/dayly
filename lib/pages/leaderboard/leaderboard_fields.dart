@@ -30,19 +30,19 @@ class LeaderboardFields extends StatelessWidget {
             ? Padding(
                 padding: const EdgeInsets.all(3.0),
                 child:
-                    SvgPicture.asset('assets/images/gold-cup.svg', height: 18),
+                    SvgPicture.asset('assets/images/gold-cup.svg', height: 13),
               )
             : i == 2
                 ? Padding(
                     padding: const EdgeInsets.all(3.0),
                     child: SvgPicture.asset('assets/images/silver-cup.svg',
-                        height: 18),
+                        height: 13),
                   )
                 : i == 3
                     ? Padding(
                         padding: const EdgeInsets.all(3.0),
                         child: SvgPicture.asset('assets/images/bronze-cup.svg',
-                            height: 18),
+                            height: 13),
                       )
                     : CircleAvatar(
                         backgroundColor: Colors.orange,
@@ -52,7 +52,7 @@ class LeaderboardFields extends StatelessWidget {
                           style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15),
+                              fontSize: 13),
                         )));
 
     return FutureBuilder(
@@ -82,8 +82,8 @@ class LeaderboardFields extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 20.0, vertical: 10.0),
                                 child: Container(
-                                    width: 60,
-                                    height: 60,
+                                    width: 45,
+                                    height: 45,
                                     decoration: BoxDecoration(
                                       color: Colors.red,
                                       image: DecorationImage(
@@ -93,7 +93,7 @@ class LeaderboardFields extends StatelessWidget {
                                           Radius.circular(15.0)),
                                     )),
                               ),
-                              Positioned(top: -15, left: -12, child: badge),
+                              Positioned(top: -15, left: -10, child: badge),
                             ],
                           ),
                           Text(
@@ -101,7 +101,7 @@ class LeaderboardFields extends StatelessWidget {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 15),
                           ),
                         ],
                       ),
@@ -114,7 +114,7 @@ class LeaderboardFields extends StatelessWidget {
                             padding: const EdgeInsets.only(right: 7),
                             child: SvgPicture.asset(
                               'assets/images/diamond.svg',
-                              height: 25,
+                              height: 15,
                             ),
                           ),
                           Text(
@@ -122,7 +122,7 @@ class LeaderboardFields extends StatelessWidget {
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 15),
                           ),
                         ],
                       ),

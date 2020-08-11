@@ -5,6 +5,7 @@ import 'package:dayly/pages/authenticate/signup.dart';
 import 'package:flutter/material.dart';
 import 'package:dayly/services/auth.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:keyboard_visibility/keyboard_visibility.dart';
 
 class Landing extends StatefulWidget {
   @override
@@ -28,11 +29,24 @@ class _LandingState extends State<Landing> {
   double _loginHeight;
   double _loginOpacity = 1;
   double _headingMargin;
+  bool _keyboardVisible = false;
 
   setPageState(int page) {
     setState(() {
       _pageState = page;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    KeyboardVisibilityNotification().addNewListener(
+      onChange: (bool visible) {
+        setState(() {
+          _keyboardVisible = visible;
+        });
+      },
+    );
   }
 
   @override
@@ -60,7 +74,7 @@ class _LandingState extends State<Landing> {
         break;
       case 1:
         _backgroundColor = Colors.indigoAccent[700];
-        _loginYOffset = mediaQuery.height * 0.32;
+        _loginYOffset = _keyboardVisible ? 20 : mediaQuery.height * 0.32;
         _loginXOffset = 0;
         _loginWidth = _windowWidth;
         _signupYOffset = _windowHeight;
@@ -72,7 +86,7 @@ class _LandingState extends State<Landing> {
         _loginYOffset = mediaQuery.height * 0.33;
         _loginXOffset = mediaQuery.width * 0.05;
         _loginWidth = _windowWidth - (mediaQuery.width * 0.1);
-        _signupYOffset = mediaQuery.height * 0.38;
+        _signupYOffset = _keyboardVisible ? 20 : mediaQuery.height * 0.38;
         _loginOpacity = 0.9;
         _headingMargin = mediaQuery.height * 0.04;
         break;
@@ -185,7 +199,7 @@ class _LandingState extends State<Landing> {
           ),
         ),
         AnimatedContainer(
-          padding: EdgeInsets.all(32),
+          padding: EdgeInsets.symmetric(horizontal: 32),
           height: _loginHeight,
           width: _loginWidth,
           duration: Duration(

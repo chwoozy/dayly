@@ -151,7 +151,7 @@ class _ProfileState extends State<Profile> {
                               child: Text(_displayName,
                                   style: TextStyle(
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 30,
+                                    fontSize: 20,
                                   )),
                             ),
                           ),
@@ -172,7 +172,7 @@ class _ProfileState extends State<Profile> {
                                         Text('Gems',
                                             style: TextStyle(
                                               fontWeight: FontWeight.w400,
-                                              fontSize: 18,
+                                              fontSize: 10,
                                             )),
                                         SizedBox(height: size.height * 0.01),
                                         Row(
@@ -182,7 +182,7 @@ class _ProfileState extends State<Profile> {
                                                   right: 7),
                                               child: SvgPicture.asset(
                                                 'assets/images/diamond.svg',
-                                                height: 25,
+                                                height: 15,
                                               ),
                                             ),
                                             FutureBuilder(
@@ -197,7 +197,7 @@ class _ProfileState extends State<Profile> {
                                                     style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.w600,
-                                                      fontSize: 25,
+                                                      fontSize: 15,
                                                     ),
                                                   );
                                                 } else {
@@ -217,14 +217,14 @@ class _ProfileState extends State<Profile> {
                                           'Email Address',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                            fontSize: 10,
                                           ),
                                         ),
                                         Text(
                                           _email,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 25,
+                                            fontSize: 15,
                                             height: 2,
                                           ),
                                         ),
@@ -233,14 +233,14 @@ class _ProfileState extends State<Profile> {
                                           'Password',
                                           style: TextStyle(
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 18,
+                                            fontSize: 10,
                                           ),
                                         ),
                                         TextFormField(
                                           obscureText: true,
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
-                                            fontSize: 25,
+                                            fontSize: 15,
                                           ),
                                           onChanged: (value) {
                                             setState(() {
@@ -349,6 +349,20 @@ class _ProfileState extends State<Profile> {
                                         }),
                                   ),
                                 ),
+                          SizedBox(
+                            height: size.height * 0.02,
+                          ),
+                          Center(
+                            child: Container(
+                              width: size.width * 0.95,
+                              child: PrimaryButton(
+                                title: "Sign out",
+                                onTap: () async {
+                                  await authService.signOutGoogle();
+                                },
+                              ),
+                            ),
+                          ),
                         ]),
                   );
           } else {
