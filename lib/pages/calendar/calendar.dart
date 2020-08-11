@@ -98,7 +98,7 @@ class _CalendarState extends State<Calendar> {
         _enableFloating = true;
         break;
       case 1:
-        _eventYOffset = _keyboardVisible ? 20 : sizeQuery.height * 0.32;
+        _eventYOffset = sizeQuery.height * 0.32;
         _eventXOffset = 0;
         _createYOffset = _windowHeight;
         _createXOffset = 0;

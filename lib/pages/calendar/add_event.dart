@@ -272,7 +272,6 @@ class _AddEventState extends State<AddEvent> {
                                         .updateEvent(_event);
                                     await notificationManager
                                         .scheduleNotification(_event);
-                                    Navigator.pop(context);
                                     setState(() {
                                       processing = false;
                                     });
