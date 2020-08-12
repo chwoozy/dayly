@@ -44,6 +44,7 @@ class ScheduleManager {
 
     for (Schedulable i in listForScheduling) {
       if (i.category == 'Task' && i.toBeScheduled) {
+        print(i.name);
         for (Itl.Interval j in result) {
           if (j.occupied) {
             continue;
