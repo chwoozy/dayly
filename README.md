@@ -25,7 +25,7 @@ dayly is a mobile app that features a smart planner that provides the main funct
 [Milestone 3](https://docs.google.com/document/d/1UclQvh5bE_WcDL-LwRlEg85-DEZeORoOSYIH9SeG058/edit?usp=sharing) 
 
 ## Built With
- [Flutter](https://flutter.dev/) - UI Toolkit, built with Flutter 1.17.5
+ [Flutter](https://flutter.dev/) - UI Toolkit, built with Flutter 1.17.5  
  [Dart](https://dart.dev/) - Frontend Integration  
  [Ruby](https://dart.dev/) - Backend Integration  
  [Firebase](https://firebase.google.com/) - Backend Database 
