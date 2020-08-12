@@ -1,3 +1,5 @@
+import 'package:dayly/components/constants.dart';
+import 'package:dayly/components/loading.dart';
 import 'package:dayly/pages/authenticate/landing.dart';
 import 'package:dayly/pages/authenticate/login.dart';
 import 'package:dayly/pages/authenticate/signup.dart';
@@ -8,11 +10,9 @@ import 'package:dayly/services/auth.dart';
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:syncfusion_flutter_core/core.dart';
 
 void main() {
-  SyncfusionLicense.registerLicense(
-      'NT8mJyc2IWhia31hfWN9Z2doYmF8YGJ8ampqanNiYmlmamlmanMDHmgwOzw8PSQ2OiQTND4yOj99MDw+');
+  startupTag;
   // runApp(DevicePreview(builder: (context) => Dayly()));
   runApp(Dayly());
 }

@@ -55,7 +55,7 @@ class MonthView extends StatelessWidget {
                 headerStyle: CalendarHeaderStyle(
                     textStyle: TextStyle(
                       fontFamily: 'Falling',
-                      fontSize: 25,
+                      fontSize: 20,
                     ),
                     textAlign: TextAlign.center),
                 selectionDecoration: BoxDecoration(
@@ -68,19 +68,19 @@ class MonthView extends StatelessWidget {
                     monthCellStyle: MonthCellStyle(
                       textStyle: TextStyle(
                         fontFamily: 'Falling',
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                       trailingDatesTextStyle: TextStyle(
                         color: Color(0xFF5E5E5E),
                         fontFamily: 'Falling',
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                       leadingDatesTextStyle: TextStyle(
                         color: Color(0xFF5E5E5E),
                         fontFamily: 'Falling',
-                        fontSize: 20,
+                        fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                     )),

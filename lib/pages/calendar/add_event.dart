@@ -1,8 +1,5 @@
-import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
-import 'package:dayly/components/rounded-button.dart';
 import 'package:dayly/models/notification_manager.dart';
-import 'package:dayly/pages/calendar/event_details.dart';
 import 'package:dayly/models/event.dart';
 import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
@@ -10,12 +7,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:dayly/components/primary_button.dart';
 
 class AddEvent extends StatefulWidget {
   final Event currentEvent;
   final bool clickAdd;
+  final Function actionable;
 
-  const AddEvent({Key key, this.currentEvent, this.clickAdd}) : super(key: key);
+  const AddEvent({
+    Key key,
+    this.currentEvent,
+    this.clickAdd,
+    @required this.actionable,
+  }) : super(key: key);
 
   @override
   _AddEventState createState() => _AddEventState();
@@ -59,32 +63,42 @@ class _AddEventState extends State<AddEvent> {
 
   @override
   Widget build(BuildContext context) {
+    Size sizeQuery = MediaQuery.of(context).size;
+
     return FutureBuilder<User>(
         future: Future.value(Provider.of<User>(context)),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Scaffold(
-              appBar: AppBar(
-                title: Text(widget.currentEvent == null
-                    ? "Add Event"
-                    : widget.clickAdd == true ? "Add Event" : "Edit Event"),
-              ),
+              backgroundColor: Colors.grey[900],
               key: _key,
               body: Form(
                 key: _formKey,
                 child: Container(
+                  height: sizeQuery.height * 0.68,
                   alignment: Alignment.center,
                   child: ListView(
                     children: <Widget>[
+                      Center(
+                        child: Text(
+                          widget.currentEvent == null
+                              ? "Add Event"
+                              : widget.clickAdd == true
+                                  ? "Add Event"
+                                  : "Edit Event",
+                          style: TextStyle(fontSize: 20.0),
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            Flexible(
+                            Container(
+                              width: sizeQuery.width * 0.28,
                               child: ListTile(
-                                leading: Icon(Icons.access_time),
                                 title: Text(
-                                  "Begins: ${_eventFromDate.day} ${DateFormat('MMMM').format(_eventFromDate)} ${DateFormat('jm').format(_eventFromDate)}",
+                                  "${_eventFromDate.day} ${DateFormat('MMMM').format(_eventFromDate)}\n${DateFormat('jm').format(_eventFromDate)}",
                                   style: TextStyle(
                                     fontSize: 15.0,
                                   ),
@@ -128,10 +142,12 @@ class _AddEventState extends State<AddEvent> {
                                 },
                               ),
                             ),
-                            Flexible(
+                            Icon(Icons.arrow_right),
+                            Container(
+                              width: sizeQuery.width * 0.28,
                               child: ListTile(
                                 title: Text(
-                                  "Ends: ${_eventToDate.day} ${DateFormat('MMMM').format(_eventToDate)} ${DateFormat('jm').format(_eventToDate)}",
+                                  "${_eventToDate.day} ${DateFormat('MMMM').format(_eventToDate)}\n${DateFormat('jm').format(_eventToDate)}",
                                   style: TextStyle(
                                     fontSize: 15.0,
                                   ),
@@ -221,9 +237,11 @@ class _AddEventState extends State<AddEvent> {
                           : Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: RoundedButton(
-                                textColor: Colors.black,
-                                press: () async {
+                              child: PrimaryButton(
+                                title: widget.clickAdd == true
+                                    ? "Create Event"
+                                    : "Save Changes",
+                                onTap: () async {
                                   if (_formKey.currentState.validate()) {
                                     setState(() {
                                       processing = true;
@@ -254,20 +272,12 @@ class _AddEventState extends State<AddEvent> {
                                         .updateEvent(_event);
                                     await notificationManager
                                         .scheduleNotification(_event);
-                                    Navigator.pop(context);
                                     setState(() {
                                       processing = false;
                                     });
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (_) => EventDetails(
-                                                  event: _event,
-                                                )));
+                                    widget.actionable(_event);
                                   }
                                 },
-                                text: 'Save',
-                                color: Colors.tealAccent[400],
                               ),
                             ),
                     ],
