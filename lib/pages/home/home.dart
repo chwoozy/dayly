@@ -164,9 +164,6 @@ class _HomeState extends State<Home> {
                                             ]),
                                           ),
                                         ),
-                                        Divider(
-                                          thickness: 4,
-                                        ),
                                         Container(
                                             padding: EdgeInsets.symmetric(
                                                 horizontal:

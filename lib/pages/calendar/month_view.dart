@@ -4,6 +4,7 @@ import 'package:dayly/models/user.dart';
 import 'package:dayly/services/database.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import 'package:syncfusion_flutter_core/theme.dart';
 
 // class MonthView extends StatefulWidget {
 //   final User user;
@@ -50,6 +51,7 @@ class MonthView extends StatelessWidget {
             return SfCalendar(
                 view: CalendarView.month,
                 cellBorderColor: Color(0xFF303030),
+                todayHighlightColor: Colors.indigoAccent,
                 headerStyle: CalendarHeaderStyle(
                     textStyle: TextStyle(
                       fontFamily: 'Falling',

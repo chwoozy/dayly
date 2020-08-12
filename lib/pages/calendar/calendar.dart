@@ -40,6 +40,7 @@ class _CalendarState extends State<Calendar> {
             return Scaffold(
                 extendBodyBehindAppBar: true,
                 floatingActionButton: FloatingActionButton(
+                  backgroundColor: Colors.indigoAccent[700],
                   child: FaIcon(
                     FontAwesomeIcons.plus,
                   ),
@@ -87,6 +88,7 @@ class _CalendarState extends State<Calendar> {
                 body: SfCalendar(
                   view: CalendarView.week,
                   controller: _calendarController,
+                  todayHighlightColor: Colors.indigoAccent,
                   dataSource: EventDataSource(snapshot.data),
                   viewHeaderStyle: ViewHeaderStyle(
                     dayTextStyle: TextStyle(
@@ -119,7 +121,7 @@ class _CalendarState extends State<Calendar> {
                   ),
                   selectionDecoration: BoxDecoration(
                     color: Colors.transparent,
-                    border: Border.all(color: Colors.tealAccent[400], width: 2),
+                    border: Border.all(color: Colors.indigoAccent, width: 2),
                     borderRadius: BorderRadius.all(Radius.circular(3)),
                   ),
                   onTap: (CalendarTapDetails details) {

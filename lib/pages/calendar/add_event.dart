@@ -1,6 +1,7 @@
 import 'package:dayly/components/constants.dart';
 import 'package:dayly/components/loading.dart';
 import 'package:dayly/components/rounded-button.dart';
+import 'package:dayly/models/notification_manager.dart';
 import 'package:dayly/pages/calendar/event_details.dart';
 import 'package:dayly/models/event.dart';
 import 'package:dayly/models/user.dart';
@@ -51,6 +52,9 @@ class _AddEventState extends State<AddEvent> {
         widget.currentEvent != null ? widget.currentEvent.recurrenceRule : null;
     processing = false;
     _errorMsg = '';
+    notificationManager
+        .setListenerForLowerVersions(onNotificationInLowerVersions);
+    notificationManager.setOnNotificationClick(onNotificationClick);
   }
 
   @override
@@ -248,6 +252,8 @@ class _AddEventState extends State<AddEvent> {
                                     await DatabaseService(
                                             uid: snapshot.data.uid)
                                         .updateEvent(_event);
+                                    await notificationManager
+                                        .scheduleNotification(_event);
                                     Navigator.pop(context);
                                     setState(() {
                                       processing = false;
@@ -273,6 +279,14 @@ class _AddEventState extends State<AddEvent> {
             return Loading();
           }
         });
+  }
+
+  onNotificationInLowerVersions(ReceivedNotification receivedNotification) {
+    print('Notification Received ${receivedNotification.id}');
+  }
+
+  onNotificationClick(String payload) {
+    print('Payload $payload');
   }
 
   @override

@@ -1,3 +1,4 @@
+import 'package:dayly/models/event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'dart:io' show File, Platform;
@@ -20,11 +21,12 @@ class NotificationManager {
     if (Platform.isIOS) {
       requestIOSPermission();
     }
+    initializePlatformSpecifics();
   }
 
   initializePlatformSpecifics() {
     var initializationSettingsAndroid =
-        AndroidInitializationSettings('app_notf_icon');
+        AndroidInitializationSettings('app_notf');
     var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -57,11 +59,15 @@ class NotificationManager {
     });
   }
 
+  Future selectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: ' + payload);
+    }
+  }
+
   setOnNotificationClick(Function onNotificationClick) async {
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: (String payload) async {
-      onNotificationClick(payload);
-    });
+        onSelectNotification: selectNotification);
   }
 
   Future<void> showNotification() async {
@@ -87,28 +93,34 @@ class NotificationManager {
     );
   }
 
-  Future<void> scheduleNotification(DateTime scheduledTime) async {
+  Future<void> scheduleNotification(Event event) async {
     var androidChannelSpecifics = AndroidNotificationDetails(
-      'CHANNEL_ID',
-      'CHANNEL_NAME',
-      'CHANNEL_DESCRIPTION',
+      event.eid,
+      event.title,
+      event.description,
       importance: Importance.Max,
       priority: Priority.High,
       playSound: true,
       timeoutAfter: 5000,
       styleInformation: DefaultStyleInformation(true, true),
     );
-    var iosChannelSpecifics = IOSNotificationDetails();
+    var iosChannelSpecifics = IOSNotificationDetails(
+      sound: 'my_sound.aiff',
+    );
     var platformChannelSpecifics =
         NotificationDetails(androidChannelSpecifics, iosChannelSpecifics);
     await flutterLocalNotificationsPlugin.schedule(
       0,
-      'Title',
-      'Body',
-      scheduledTime,
+      event.title,
+      event.description,
+      event.eventFromDate,
       platformChannelSpecifics,
       payload: 'Payload',
     );
+  }
+
+  Future<void> cancelNotification(String eid) async {
+    // await flutterLocalNotificationsPlugin.cancel(eid);
   }
 }
 
