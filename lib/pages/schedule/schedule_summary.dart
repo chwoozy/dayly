@@ -69,21 +69,11 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
       }
     }
     widget.sortManager.sort(widget.listForScheduling);
-//    for (int i = 0; i < widget.listForScheduling.length; i++) {
-//      print(widget.listForScheduling[i].name);
-//      print(widget.listForScheduling[i].duration);
-//    }
     final ScheduleManager scheduleManager = ScheduleManager(
         startingTime: this.widget.startingTime,
         endTime: this.widget.endTime,
         listForScheduling: this.widget.listForScheduling);
-    //print(this.widget.startingTime);
-    //print(this.widget.listForScheduling);
     finalResult = scheduleManager.schedule();
-//    for (Schedulable item in finalResult) {
-//      print(item.dateTime.toString() + item.name);
-//      print(item.endTime.toString() + item.name);
-//    }
     setState(() {
       _loading = false;
     });
@@ -126,6 +116,17 @@ class _ScheduleSummaryState extends State<ScheduleSummary> {
         }
         final schedulable = finalResult.removeAt(oldIndex);
         finalResult.insert(newIndex, schedulable);
+        List<Schedulable> newListForScheduling = [];
+        for (Schedulable item in finalResult) {
+          item.toBeScheduled = true;
+          newListForScheduling.add(item);
+          //print(item.name + item.category);
+        }
+        final ScheduleManager newScheduleManager = ScheduleManager(
+            startingTime: this.widget.startingTime,
+            endTime: this.widget.endTime,
+            listForScheduling: newListForScheduling);
+        finalResult = newScheduleManager.schedule();
       });
     }
 
