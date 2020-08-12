@@ -86,9 +86,9 @@ class EventDetails extends StatelessWidget {
                     if (_executeAction == 1) {
                       await DatabaseService(uid: _user.uid).deleteEvent(event);
                       actionable(null, 1);
-                    } else {
+                    } else if (_executeAction == 0) {
                       actionable(event, 0);
-                    }
+                    } else {}
                   },
                   child: Container(
                     child: FaIcon(
